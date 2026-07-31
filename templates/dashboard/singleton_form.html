@@ -1,0 +1,25 @@
+{% extends "dashboard/base.html" %}
+{% block crumb %}Content{% endblock %}
+
+{% block actions %}
+<a class="btn btn-ghost btn-sm" href="/" target="_blank" rel="noopener">Preview ↗</a>
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  {% if spec.description %}<div class="alert alert-info">{{ spec.description }}</div>{% endif %}
+  {% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors|first }}</div>{% endif %}
+
+  {% for title, fields in field_groups %}
+  <div class="card">
+    {% if title %}<h2>{{ title }}</h2><div class="card-note">&nbsp;</div>{% endif %}
+    <div class="grid grid-2">
+      {% for field in fields %}{% include "dashboard/partials/_field.html" with field=field %}{% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <button type="submit" class="btn">Save changes</button>
+</form>
+{% endblock %}

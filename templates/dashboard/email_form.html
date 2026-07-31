@@ -1,0 +1,68 @@
+{% extends "dashboard/base.html" %}
+{% block crumb %}Global{% endblock %}
+
+{% block content %}
+{% if instance.last_test_at %}
+  {% if instance.last_test_ok %}
+  <div class="alert alert-success">Last test email succeeded on {{ instance.last_test_at|date:"j M Y, H:i" }}.</div>
+  {% else %}
+  <div class="alert alert-error">Last test failed on {{ instance.last_test_at|date:"j M Y, H:i" }} — {{ instance.last_test_error }}</div>
+  {% endif %}
+{% endif %}
+
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% if spec.description %}<div class="alert alert-info">{{ spec.description }}</div>{% endif %}
+  {% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors|first }}</div>{% endif %}
+
+  {% for title, fields in field_groups %}
+  <div class="card">
+    {% if title %}<h2>{{ title }}</h2><div class="card-note">&nbsp;</div>{% endif %}
+    <div class="grid grid-2">
+      {% for field in fields %}{% include "dashboard/partials/_field.html" with field=field %}{% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <button type="submit" class="btn">Save settings</button>
+</form>
+
+<div class="card" style="margin-top:24px">
+  <h2>Send a test email</h2>
+  <div class="card-note">Save your settings first, then send yourself a test to confirm delivery.</div>
+  <form method="post" action="{% url 'dashboard:send_test_email' %}">
+    {% csrf_token %}
+    <div class="grid grid-2">
+      <div class="field" style="margin:0">
+        <label for="test-recipient">Send test to</label>
+        <input class="fld" type="email" id="test-recipient" name="recipient" value="{{ instance.notify_email|default:request.user.email }}" placeholder="you@example.com">
+      </div>
+      <div class="field" style="margin:0;display:flex;align-items:flex-end">
+        <button type="submit" class="btn" style="width:100%">Send test email</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Common providers</h2>
+  <div class="card-note">Typical settings — check your provider's help page if unsure.</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Provider</th><th>SMTP server</th><th>Port</th><th>Security</th><th>Password to use</th></tr></thead>
+      <tbody>
+        <tr><td>Gmail / Google Workspace</td><td>smtp.gmail.com</td><td>587</td><td>TLS</td><td>App password (2-step verification required)</td></tr>
+        <tr><td>Zoho Mail (India)</td><td>smtp.zoho.in</td><td>587</td><td>TLS</td><td>App password</td></tr>
+        <tr><td>Hostinger</td><td>smtp.hostinger.com</td><td>587</td><td>TLS</td><td>Mailbox password</td></tr>
+        <tr><td>Microsoft 365</td><td>smtp.office365.com</td><td>587</td><td>TLS</td><td>Mailbox / app password</td></tr>
+        <tr><td>Brevo / SendGrid</td><td>smtp-relay.brevo.com / smtp.sendgrid.net</td><td>587</td><td>TLS</td><td>API key</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="help" style="margin-top:14px">
+    The password is stored in this site's database and is never shown again after saving.
+    Use a provider <strong>app password</strong> rather than your main account password, and
+    make sure <em>Send from</em> matches the username — most providers reject mismatched senders.
+  </div>
+</div>
+{% endblock %}

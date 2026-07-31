@@ -1,0 +1,79 @@
+{% extends "dashboard/base.html" %}
+{% block crumb %}<a href="{% url 'dashboard:collection_list' 'projects' %}">Projects</a>{% endblock %}
+
+{% block actions %}
+<a class="btn btn-ghost btn-sm" href="{% url 'dashboard:collection_list' 'projects' %}">Back to list</a>
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors|first }}</div>{% endif %}
+
+  <div class="card">
+    <h2>Project details</h2>
+    <div class="card-note">The card image shows in the grid; the case-study image heads the pop-up.</div>
+    <div class="grid grid-2">
+      {% for field in form %}{% include "dashboard/partials/_field.html" with field=field %}{% endfor %}
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Key numbers</h2>
+    <div class="card-note">Shown as tiles inside the project pop-up.</div>
+    {{ metrics.management_form }}
+    <div data-rows="metrics">
+      {% for form_row in metrics %}
+      <div class="inline-row">
+        {{ form_row.id }}
+        <div class="inline-grid">
+          {% for field in form_row.visible_fields %}{% include "dashboard/partials/_field.html" with field=field %}{% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <template id="empty-metrics">
+      <div class="inline-row">
+        {{ metrics.empty_form.id }}
+        <div class="inline-grid">
+          {% for field in metrics.empty_form.visible_fields %}{% include "dashboard/partials/_field.html" with field=field %}{% endfor %}
+        </div>
+      </div>
+    </template>
+    <button type="button" class="btn btn-ghost btn-sm" data-add-row="metrics">Add another number</button>
+  </div>
+
+  <div class="card">
+    <h2>Gallery</h2>
+    <div class="card-note">Up to three images look best in the pop-up grid.</div>
+    {{ gallery.management_form }}
+    <div data-rows="gallery">
+      {% for form_row in gallery %}
+      <div class="inline-row">
+        {{ form_row.id }}
+        <div class="inline-grid">
+          {% for field in form_row.visible_fields %}{% include "dashboard/partials/_field.html" with field=field %}{% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <template id="empty-gallery">
+      <div class="inline-row">
+        {{ gallery.empty_form.id }}
+        <div class="inline-grid">
+          {% for field in gallery.empty_form.visible_fields %}{% include "dashboard/partials/_field.html" with field=field %}{% endfor %}
+        </div>
+      </div>
+    </template>
+    <button type="button" class="btn btn-ghost btn-sm" data-add-row="gallery">Add another image</button>
+  </div>
+
+  <button type="submit" class="btn">Save project</button>
+  <a class="btn btn-ghost" href="{% url 'dashboard:collection_list' 'projects' %}">Cancel</a>
+</form>
+
+<form method="post" action="{% url 'dashboard:collection_delete' 'projects' object.pk %}" data-confirm="Delete this project? This cannot be undone." style="margin-top:24px">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger btn-sm">Delete project</button>
+</form>
+{% endblock %}

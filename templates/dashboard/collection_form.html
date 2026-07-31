@@ -1,0 +1,29 @@
+{% extends "dashboard/base.html" %}
+{% block crumb %}<a href="{% url 'dashboard:collection_list' key %}">{{ spec.label }}</a>{% endblock %}
+
+{% block actions %}
+<a class="btn btn-ghost btn-sm" href="{% url 'dashboard:collection_list' key %}">Back to list</a>
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors|first }}</div>{% endif %}
+  <div class="card">
+    <div class="grid grid-2">
+      {% for field in form %}{% include "dashboard/partials/_field.html" with field=field %}{% endfor %}
+    </div>
+  </div>
+  <button type="submit" class="btn">{% if object %}Save changes{% else %}Create {{ spec.singular }}{% endif %}</button>
+  {% if object %}
+  <a class="btn btn-ghost" href="{% url 'dashboard:collection_list' key %}">Cancel</a>
+  {% endif %}
+</form>
+
+{% if object %}
+<form method="post" action="{% url 'dashboard:collection_delete' key object.pk %}" data-confirm="Delete this {{ spec.singular }}? This cannot be undone." style="margin-top:24px">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger btn-sm">Delete {{ spec.singular }}</button>
+</form>
+{% endif %}
+{% endblock %}

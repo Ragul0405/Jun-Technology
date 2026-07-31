@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.sqlite3
+db.sqlite3
+
+.env
+.venv/
+venv/
+env/
+
+staticfiles/
+
+# media/ is intentionally NOT ignored - uploaded images ship with the repo.
+# Images uploaded on the live dashboard afterwards will not be in git, so
+# pull them back down (or re-upload locally) before the next deploy.
+
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log

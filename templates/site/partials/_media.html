@@ -1,0 +1,5 @@
+{% comment %}
+Image slot. Renders the uploaded image, or the same neutral placeholder frame
+the design used while an image was still missing.
+Params: image, alt, placeholder, circle (bool), loading
+{% endcomment %}{% if image %}<img src="{{ image.url }}" alt="{{ alt|default:'' }}" loading="{{ loading|default:'lazy' }}" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover{% if circle %};border-radius:50%{% endif %}">{% else %}<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;background:var(--w04,rgba(255,255,255,.04));border:1px dashed var(--w12,rgba(255,255,255,.12));color:var(--tx36,rgba(232,236,248,.36));font-size:11.5px;line-height:1.5{% if circle %};border-radius:50%{% endif %}">{{ placeholder|default:"" }}</div>{% endif %}

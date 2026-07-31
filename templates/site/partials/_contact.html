@@ -1,0 +1,89 @@
+{% load site_extras %}
+  <section id="contact" data-screen-label="Contact" style="position:relative;z-index:1;padding:100px 40px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        {% if contact.eyebrow %}<div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc1,#8fb4ff)">{{ contact.eyebrow }}</div>{% endif %}
+        <h2 style="margin:{% if contact.eyebrow %}16px{% else %}0{% endif %} 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">{{ contact.heading }}</h2>
+        <p style="margin:14px auto 0;max-width:540px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">{{ contact.subheading }}</p>
+      </div>
+      <div style="margin-top:52px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;align-items:start">
+        <div data-reveal style="display:flex;flex-direction:column;gap:12px;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          {% for detail in contact_details %}
+          <div data-lift style="display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease" style-hover="border-color:rgba(143,180,255,.3)">
+            <div style="width:38px;height:38px;flex:none;border-radius:12px;background:{{ detail.accent_icon_bg }};border:1px solid var(--w09,rgba(255,255,255,.09));display:flex;align-items:center;justify-content:center">{% icon detail.icon stroke=detail.accent_stroke size="17px" %}</div>
+            <div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx42,rgba(232,236,248,.42))">{{ detail.label }}</div><div style="margin-top:5px;font-size:14.5px">{% if detail.link %}<a data-contact-link href="{{ detail.link }}">{{ detail.value }}</a>{% else %}{{ detail.value }}{% endif %}</div></div>
+          </div>
+          {% endfor %}
+          {% if contact.show_map %}
+          <div data-map style="position:relative;margin-top:6px;height:230px;border-radius:22px;overflow:hidden;border:1px solid var(--w08,rgba(255,255,255,.08));background:var(--pnlC,#070a16);transition:border-color .5s ease" style-hover="border-color:rgba(59,130,246,.4)">
+            {% if contact.map_iframe_url %}
+            <iframe src="{{ contact.map_iframe_url }}" title="{{ contact.map_label }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.3) invert(.02)"></iframe>
+            {% else %}
+            <svg viewBox="0 0 520 260" style="position:absolute;inset:0;width:100%;height:100%">
+              <rect width="520" height="260" fill="var(--pnlC,#070a16)"></rect>
+              <g stroke="var(--map1,#16203c)" stroke-width="1.4">
+                <path d="M-20 60H540M-20 132H540M-20 204H540M70 -20V280M180 -20V280M300 -20V280M420 -20V280"></path>
+              </g>
+              <g stroke="var(--map2,#1d2b4f)" stroke-width="4" stroke-linecap="round">
+                <path d="M-20 96H540M240 -20V280"></path>
+              </g>
+              <g fill="var(--map3,#0e152a)" stroke="var(--map2,#18243f)" stroke-width="1">
+                <rect x="86" y="14" width="78" height="34" rx="4"></rect>
+                <rect x="196" y="146" width="30" height="44" rx="4"></rect>
+                <rect x="320" y="14" width="86" height="34" rx="4"></rect>
+                <rect x="320" y="146" width="86" height="44" rx="4"></rect>
+                <rect x="86" y="146" width="94" height="44" rx="4"></rect>
+                <rect x="436" y="216" width="70" height="30" rx="4"></rect>
+              </g>
+              <path d="M-20 178C60 178 120 216 220 216S400 178 540 190" stroke="var(--map2,#152343)" stroke-width="10" fill="none" stroke-linecap="round"></path>
+              <text x="24" y="52" fill="var(--map4,#3d4a6b)" font-size="10" font-family="DM Sans" letter-spacing="2">{{ contact.map_street_label }}</text>
+              <text x="252" y="248" fill="var(--map4,#3d4a6b)" font-size="10" font-family="DM Sans" letter-spacing="2">{{ contact.map_area_label }}</text>
+              <circle data-map-pulse cx="240" cy="96" r="10" fill="#3b82f6" opacity=".35"></circle>
+              <circle data-map-pulse2 cx="240" cy="96" r="20" fill="#3b82f6" opacity=".14"></circle>
+              <circle cx="240" cy="96" r="5" fill="#60a5fa"></circle>
+            </svg>
+            {% endif %}
+            <div style="position:absolute;left:14px;bottom:14px;padding:9px 14px;border-radius:12px;background:var(--bgA78,rgba(4,6,15,.78));border:1px solid var(--w1,rgba(255,255,255,.1));backdrop-filter:blur(10px);font-size:12px">{{ contact.map_label }}</div>
+          </div>
+          {% endif %}
+        </div>
+
+        <div data-reveal data-delay="120" style="opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <form data-form method="post" action="{% url 'core:contact_submit' %}" style="position:relative;padding:30px;border-radius:26px;border:1px solid var(--w08,rgba(255,255,255,.08));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w014,rgba(255,255,255,.014)));backdrop-filter:blur(18px);box-shadow:0 50px 100px -50px rgba(0,0,0,.95);display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            {% csrf_token %}
+            <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
+            <div data-field style="position:relative;grid-column:span 1">
+              <input data-input name="name" required maxlength="120" style="width:100%;padding:22px 14px 10px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease">
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Your Name</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <div data-field style="position:relative;grid-column:span 1">
+              <input data-input name="email" type="email" required maxlength="254" style="width:100%;padding:22px 14px 10px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease">
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Email Address</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <div data-field style="position:relative;grid-column:span 1">
+              <input data-input name="phone" maxlength="40" style="width:100%;padding:22px 14px 10px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease">
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Mobile Number</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <div data-field style="position:relative;grid-column:span 1">
+              <input data-input name="subject" required maxlength="200" style="width:100%;padding:22px 14px 10px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease">
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Subject</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <div data-field style="position:relative;grid-column:span 2">
+              <textarea data-input name="message" rows="5" required style="width:100%;padding:24px 14px 12px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;resize:vertical;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease"></textarea>
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Tell us about your project…</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <button data-submit data-ripple data-magnetic="5" data-cursor="expand" type="submit" style="position:relative;overflow:hidden;grid-column:span 2;padding:17px;border:none;border-radius:16px;font-family:'Sora',sans-serif;font-size:14.5px;font-weight:500;color:#fff;background:linear-gradient(120deg,#3b82f6,#6d5cff);cursor:pointer;box-shadow:0 20px 44px -20px rgba(70,110,255,.95);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease">
+              <span data-submit-label style="position:relative;z-index:2;display:inline-flex;align-items:center;gap:10px;transition:opacity .3s ease">{{ contact.submit_label }}</span>
+              <span data-spinner style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:3"><span style="width:18px;height:18px;border-radius:50%;border:2px solid var(--w35,rgba(255,255,255,.35));border-top-color:#fff;animation:spinSlow .8s linear infinite"></span></span>
+              <span data-check style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;gap:9px;z-index:3;font-family:'Sora',sans-serif;font-size:14.5px"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" style="width:18px;height:18px"><path d="M20 6 9 17l-5-5"></path></svg>{{ contact.success_message }}</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>

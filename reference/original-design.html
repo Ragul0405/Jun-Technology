@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  body { margin:0; background:var(--bg,#04060f); color:var(--tx,#e8ecf8); font-family:'DM Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  * { box-sizing:border-box; }
+  a { color:var(--acc1,#8fb4ff); text-decoration:none; }
+  a:hover { color:var(--tx,#ffffff); }
+  input, textarea, button { font-family:inherit; }
+  ::selection { background:rgba(59,130,246,.4); }
+  @keyframes auroraA { 0%{transform:translate3d(-6%,-4%,0) scale(1)} 50%{transform:translate3d(10%,8%,0) scale(1.25)} 100%{transform:translate3d(-6%,-4%,0) scale(1)} }
+  @keyframes auroraB { 0%{transform:translate3d(6%,6%,0) scale(1.1)} 50%{transform:translate3d(-12%,-6%,0) scale(.9)} 100%{transform:translate3d(6%,6%,0) scale(1.1)} }
+  @keyframes auroraC { 0%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(-8%,12%,0) scale(1.2)} 100%{transform:translate3d(0,0,0) scale(1)} }
+  @keyframes morph { 0%{border-radius:42% 58% 63% 37%/44% 38% 62% 56%} 33%{border-radius:62% 38% 34% 66%/58% 62% 38% 42%} 66%{border-radius:35% 65% 55% 45%/55% 32% 68% 45%} 100%{border-radius:42% 58% 63% 37%/44% 38% 62% 56%} }
+  @keyframes floatY { 0%{transform:translateY(0)} 50%{transform:translateY(-16px)} 100%{transform:translateY(0)} }
+  @keyframes spinSlow { to { transform:rotate(360deg) } }
+  @keyframes spinRev { to { transform:rotate(-360deg) } }
+  @keyframes conic { to { transform:rotate(360deg) } }
+  @keyframes pulseRing { 0%{transform:scale(.6);opacity:.9} 100%{transform:scale(2.6);opacity:0} }
+  @keyframes marquee { from{transform:translate3d(0,0,0)} to{transform:translate3d(-50%,0,0)} }
+  @keyframes scrollDot { 0%{transform:translateY(0);opacity:0} 25%{opacity:1} 100%{transform:translateY(20px);opacity:0} }
+  @keyframes wordUp { to { transform:translateY(0) rotate(0); opacity:1 } }
+  @keyframes loaderSpin { 0%{transform:rotate(0) scale(1)} 50%{transform:rotate(180deg) scale(.84)} 100%{transform:rotate(360deg) scale(1)} }
+  @keyframes dash { to { stroke-dashoffset:-260 } }
+  @keyframes pixBlink { 0%,100%{opacity:.35} 50%{opacity:1} }
+  @media (max-width:900px){ [data-hide-mobile]{ display:none !important } }
+  [data-root][data-theme="light"]{
+    --bg:#f2f5fb;--tx:#0b1224;
+    --tx9:rgba(11,18,36,.92);--tx72:rgba(11,18,36,.8);--tx7:rgba(11,18,36,.78);--tx66:rgba(11,18,36,.7);
+    --tx62:rgba(11,18,36,.66);--tx6:rgba(11,18,36,.64);--tx58:rgba(11,18,36,.62);--tx55:rgba(11,18,36,.6);
+    --tx5:rgba(11,18,36,.56);--tx48:rgba(11,18,36,.54);--tx45:rgba(11,18,36,.52);--tx42:rgba(11,18,36,.5);
+    --tx4:rgba(11,18,36,.48);--tx36:rgba(11,18,36,.45);
+    --w01:rgba(255,255,255,.5);--w012:rgba(255,255,255,.55);--w014:rgba(255,255,255,.58);--w015:rgba(255,255,255,.6);
+    --w02:rgba(255,255,255,.62);--w03:rgba(255,255,255,.7);--w035:rgba(255,255,255,.74);--w04:rgba(255,255,255,.78);
+    --w05:rgba(255,255,255,.82);--w055:rgba(255,255,255,.86);--w06:rgba(255,255,255,.9);--w075:rgba(255,255,255,.96);
+    --w07:rgba(11,18,36,.09);--w08:rgba(11,18,36,.1);--w09:rgba(11,18,36,.11);--w1:rgba(11,18,36,.13);
+    --w12:rgba(11,18,36,.15);--w13:rgba(11,18,36,.07);--w16:rgba(11,18,36,.2);--w18:rgba(11,18,36,.16);
+    --w24:rgba(11,18,36,.28);--w35:rgba(11,18,36,.3);--w5:rgba(255,255,255,.6);
+    --bgA95:rgba(255,255,255,.95);--bgA94:rgba(242,245,251,.95);--bgA82:rgba(240,244,251,.86);
+    --bgA78:rgba(255,255,255,.86);--bgA74:rgba(242,245,251,.6);--bgA7:rgba(255,255,255,.8);
+    --bgA62:rgba(255,255,255,.78);--bgA6:rgba(255,255,255,.76);--bgA45:rgba(255,255,255,.35);
+    --pnl6:rgba(255,255,255,.72);--pnl8:rgba(255,255,255,.85);--pnl85:rgba(255,255,255,.9);--pnl78:rgba(255,255,255,.88);
+    --pnlA:rgba(255,255,255,.97);--pnlB:rgba(246,248,253,.98);--pnlC:#e8edf7;
+    --acc1:#1d4ed8;--acc2:#6d28d9;--acc4:#1e3a8a;--acc5:#1d4ed8;
+    --mapBg:#e8edf7;--map1:#d3dcee;--map2:#bfcbe6;--map3:#dde4f2;--map4:#7c8bab;
+  }
+</style>
+</helmet>
+
+<div data-root style="position:relative;min-height:100vh;background:var(--bg,#04060f);color:var(--tx,#e8ecf8);overflow:hidden">
+
+  <div data-fx style="position:fixed;inset:0;pointer-events:none;z-index:0">
+    <div style="position:absolute;width:60vw;height:60vw;left:-14vw;top:-18vw;background:radial-gradient(circle at 50% 50%,rgba(59,130,246,.5),transparent 62%);filter:blur(60px);animation:auroraA 26s ease-in-out infinite"></div>
+    <div style="position:absolute;width:52vw;height:52vw;right:-12vw;top:6vh;background:radial-gradient(circle at 50% 50%,rgba(124,92,255,.4),transparent 62%);filter:blur(70px);animation:auroraB 32s ease-in-out infinite"></div>
+    <div style="position:absolute;width:70vw;height:60vw;left:10vw;top:52vh;background:radial-gradient(circle at 50% 50%,rgba(37,99,235,.24),transparent 60%);filter:blur(90px);animation:auroraC 40s ease-in-out infinite"></div>
+    <canvas data-particles style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+    <div data-spotlight style="position:absolute;left:0;top:0;width:760px;height:760px;margin:-380px 0 0 -380px;background:radial-gradient(circle,rgba(96,150,255,.14),rgba(96,150,255,.05) 38%,transparent 66%);opacity:0;transition:opacity .6s ease"></div>
+    <div style="position:absolute;inset:0;opacity:.055;background-image:radial-gradient(var(--w5,rgba(255,255,255,.5)) .6px,transparent .7px),radial-gradient(var(--w35,rgba(255,255,255,.35)) .6px,transparent .7px);background-size:3px 3px,5px 5px;background-position:0 0,2px 1px"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 0%,transparent 40%,var(--bgA74,rgba(4,6,15,.74)) 100%)"></div>
+  </div>
+
+  <div data-progress style="position:fixed;left:0;top:0;height:2px;width:0%;z-index:120;background:linear-gradient(90deg,var(--a,#3b82f6),var(--b,#7c5cff));box-shadow:0 0 18px rgba(80,130,255,.9)"></div>
+
+  <div data-cursor-layer data-hide-mobile style="position:fixed;inset:0;z-index:200;pointer-events:none">
+    <div data-cursor-ring style="position:absolute;left:0;top:0;width:36px;height:36px;margin:-18px 0 0 -18px;border:1px solid rgba(150,180,255,.55);border-radius:50%;opacity:0;transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),margin .3s cubic-bezier(.16,1,.3,1),background .3s ease,border-color .3s ease,opacity .3s ease;display:flex;align-items:center;justify-content:center;overflow:hidden">
+      <span data-cursor-text style="font-family:'Sora',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#fff;opacity:0;white-space:nowrap;transition:opacity .2s ease"></span>
+    </div>
+    <div data-cursor-dot style="position:absolute;left:0;top:0;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:linear-gradient(120deg,var(--a,#3b82f6),var(--b,#7c5cff));opacity:0;transition:opacity .3s ease;box-shadow:0 0 14px rgba(90,130,255,.9)"></div>
+  </div>
+
+  <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+    <div data-loader style="position:fixed;inset:0;z-index:300;background:var(--bg,#04060f);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)">
+      <div style="position:relative;width:96px;height:96px;display:flex;align-items:center;justify-content:center">
+        <div style="position:absolute;inset:0;background:linear-gradient(140deg,#3b82f6,#1d4ed8 55%,#7c5cff);animation:morph 4s ease-in-out infinite,loaderSpin 2.8s cubic-bezier(.65,0,.35,1) infinite;opacity:.92"></div>
+        <div style="position:absolute;inset:8px;background:var(--bg,#04060f);border-radius:50%"></div>
+        <img src="assets/jun-logo-mark.png" alt="Jun Technology" width="46" height="38" style="position:relative;display:block;width:46px;height:auto">
+      </div>
+      <div style="width:220px;height:2px;background:var(--w09,rgba(255,255,255,.09));border-radius:2px;overflow:hidden">
+        <div data-loader-bar style="width:0%;height:100%;background:linear-gradient(90deg,#3b82f6,#7c5cff);transition:width .28s linear"></div>
+      </div>
+      <div style="font-family:'Sora',sans-serif;font-size:10.5px;letter-spacing:.36em;text-transform:uppercase;color:var(--tx4,rgba(232,236,248,.4))">Jun Technology</div>
+    </div>
+  </sc-if>
+
+  <header data-nav style="position:fixed;left:0;right:0;top:0;z-index:110;display:flex;justify-content:center;padding:20px 24px;transition:padding .45s cubic-bezier(.16,1,.3,1)">
+    <nav style="width:100%;max-width:1200px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:13px 18px;border-radius:22px;border:1px solid var(--w08,rgba(255,255,255,.08));background:linear-gradient(160deg,var(--w06,rgba(255,255,255,.06)),var(--w02,rgba(255,255,255,.02)));backdrop-filter:blur(18px);box-shadow:0 20px 50px -32px rgba(0,0,0,.95)">
+      <a href="#home" data-cursor="expand" style="display:flex;align-items:center;gap:11px;color:var(--tx,#fff)">
+        <span data-logo-mark style="position:relative;width:40px;height:40px;flex:none;border-radius:12px;background:linear-gradient(160deg,rgba(255,255,255,.97),rgba(226,236,255,.9));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px -12px rgba(29,78,216,.7);transition:transform .55s cubic-bezier(.16,1,.3,1),box-shadow .55s ease">
+          <img src="assets/jun-logo-mark.png" alt="Jun Technology" width="26" height="21" style="display:block;width:26px;height:auto">
+        </span>
+        <span style="display:flex;flex-direction:column;line-height:1.15">
+          <span style="font-family:'Sora',sans-serif;font-weight:600;font-size:14px;letter-spacing:.01em"><span style="color:var(--acc5,#4f93ff)">JUN</span>TECHNOLOGY</span>
+          <span style="font-size:8px;letter-spacing:.3em;color:var(--tx36,rgba(232,236,248,.36));text-transform:uppercase">Software Solutions</span>
+        </span>
+      </a>
+      <div data-nav-links data-hide-mobile style="position:relative;display:flex;align-items:center;gap:2px">
+        <div data-nav-pill style="position:absolute;left:0;top:0;height:100%;width:0;border-radius:12px;background:var(--w07,rgba(255,255,255,.07));opacity:0;transition:transform .5s cubic-bezier(.16,1,.3,1),width .5s cubic-bezier(.16,1,.3,1),opacity .4s ease"></div>
+        <a href="#home" data-navlink="home" data-cursor="expand" style="position:relative;padding:9px 13px;font-size:13.5px;color:var(--tx66,rgba(232,236,248,.66));transition:color .3s ease">Home</a>
+        <a href="#about" data-navlink="about" data-cursor="expand" style="position:relative;padding:9px 13px;font-size:13.5px;color:var(--tx66,rgba(232,236,248,.66));transition:color .3s ease">About</a>
+        <a href="#services" data-navlink="services" data-cursor="expand" style="position:relative;padding:9px 13px;font-size:13.5px;color:var(--tx66,rgba(232,236,248,.66));transition:color .3s ease">Services</a>
+        <a href="#work" data-navlink="work" data-cursor="expand" style="position:relative;padding:9px 13px;font-size:13.5px;color:var(--tx66,rgba(232,236,248,.66));transition:color .3s ease">Work</a>
+        <a href="#voices" data-navlink="voices" data-cursor="expand" style="position:relative;padding:9px 13px;font-size:13.5px;color:var(--tx66,rgba(232,236,248,.66));transition:color .3s ease">Testimonials</a>
+        <a href="#contact" data-navlink="contact" data-cursor="expand" style="position:relative;padding:9px 13px;font-size:13.5px;color:var(--tx66,rgba(232,236,248,.66));transition:color .3s ease">Contact</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button data-theme-toggle data-cursor="expand" aria-label="Toggle colour theme" style="position:relative;width:40px;height:40px;flex:none;border-radius:13px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:background .35s ease,border-color .35s ease" style-hover="background:var(--w075,rgba(255,255,255,.075))">
+          <span data-theme-ico="dark" style="position:absolute;display:flex;transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .4s ease">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc1,#8fb4ff)" stroke-width="1.6" style="width:17px;height:17px"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path></svg>
+          </span>
+          <span data-theme-ico="light" style="position:absolute;display:flex;opacity:0;transform:rotate(-90deg) scale(.5);transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .4s ease">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.7" style="width:18px;height:18px"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"></path></svg>
+          </span>
+        </button>
+        <a href="#contact" data-magnetic="5" data-ripple data-cursor="expand" data-hide-mobile style="position:relative;flex:none;white-space:nowrap;overflow:hidden;padding:11px 19px;border-radius:14px;font-family:'Sora',sans-serif;font-size:13px;font-weight:500;color:#fff;background:linear-gradient(120deg,#3b82f6,#6d5cff);box-shadow:0 14px 34px -16px rgba(70,110,255,.95);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease">Get Quote</a>
+        <button data-burger aria-label="Menu" style="display:none;width:42px;height:42px;border-radius:13px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer">
+          <span data-burger-line style="display:block;width:16px;height:1.5px;background:var(--tx,#e8ecf8);transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .3s ease"></span>
+          <span data-burger-line style="display:block;width:16px;height:1.5px;background:var(--tx,#e8ecf8);transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .3s ease"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <div data-mobile-menu style="position:fixed;inset:0;z-index:105;background:var(--bgA94,rgba(4,6,15,.94));backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;opacity:0;pointer-events:none;transition:opacity .5s ease">
+    <a href="#home" data-navlink-m style="font-family:'Sora',sans-serif;font-size:28px;padding:10px;color:var(--tx,#fff)">Home</a>
+    <a href="#about" data-navlink-m style="font-family:'Sora',sans-serif;font-size:28px;padding:10px;color:var(--tx,#fff)">About</a>
+    <a href="#services" data-navlink-m style="font-family:'Sora',sans-serif;font-size:28px;padding:10px;color:var(--tx,#fff)">Services</a>
+    <a href="#work" data-navlink-m style="font-family:'Sora',sans-serif;font-size:28px;padding:10px;color:var(--tx,#fff)">Work</a>
+    <a href="#voices" data-navlink-m style="font-family:'Sora',sans-serif;font-size:28px;padding:10px;color:var(--tx,#fff)">Testimonials</a>
+    <a href="#contact" data-navlink-m style="font-family:'Sora',sans-serif;font-size:28px;padding:10px;color:var(--tx,#fff)">Contact</a>
+  </div>
+
+  <section id="home" data-screen-label="Hero" style="position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:168px 40px 90px">
+    <div style="width:100%;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:64px;align-items:center">
+      <div data-hero-parallax="1.4">
+        <div data-reveal data-delay="60" style="opacity:0;transform:translateY(20px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <div style="display:inline-flex;align-items:center;gap:10px;padding:8px 15px 8px 11px;border-radius:100px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));backdrop-filter:blur(10px);font-size:12.5px;color:var(--tx72,rgba(232,236,248,.72))">
+            <span style="position:relative;width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80"><span style="position:absolute;inset:0;border-radius:50%;background:#4ade80;animation:pulseRing 2.4s ease-out infinite"></span></span>
+            Trusted by 150+ businesses worldwide
+          </div>
+        </div>
+        <h1 style="margin:26px 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(40px,5.4vw,74px);line-height:1.04;letter-spacing:-.035em">
+          <span style="display:block;overflow:hidden;padding-bottom:.05em"><span style="display:inline-block;transform:translateY(110%) rotate(4deg);opacity:0;animation:wordUp .95s cubic-bezier(.16,1,.3,1) .25s forwards">We&nbsp;</span><span style="display:inline-block;transform:translateY(110%) rotate(4deg);opacity:0;animation:wordUp .95s cubic-bezier(.16,1,.3,1) .32s forwards">Build&nbsp;</span><span style="display:inline-block;transform:translateY(110%) rotate(4deg);opacity:0;animation:wordUp .95s cubic-bezier(.16,1,.3,1) .39s forwards">Modern</span></span>
+          <span style="display:block;overflow:hidden;padding-bottom:.05em"><span style="display:inline-block;transform:translateY(110%) rotate(4deg);opacity:0;animation:wordUp .95s cubic-bezier(.16,1,.3,1) .46s forwards;background:linear-gradient(100deg,#60a5fa,#3b82f6 45%,#7c5cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">Websites&nbsp;</span><span style="display:inline-block;transform:translateY(110%) rotate(4deg);opacity:0;animation:wordUp .95s cubic-bezier(.16,1,.3,1) .53s forwards;background:linear-gradient(100deg,#60a5fa,#3b82f6 45%,#7c5cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">That&nbsp;</span><span style="display:inline-block;transform:translateY(110%) rotate(4deg);opacity:0;animation:wordUp .95s cubic-bezier(.16,1,.3,1) .6s forwards;background:linear-gradient(100deg,#60a5fa,#3b82f6 45%,#7c5cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">Grow</span></span>
+          <span style="display:block;overflow:hidden;padding-bottom:.05em"><span style="display:inline-block;transform:translateY(110%) rotate(4deg);opacity:0;animation:wordUp .95s cubic-bezier(.16,1,.3,1) .67s forwards">Your&nbsp;</span><span style="display:inline-block;transform:translateY(110%) rotate(4deg);opacity:0;animation:wordUp .95s cubic-bezier(.16,1,.3,1) .74s forwards">Business</span></span>
+        </h1>
+        <p data-reveal data-delay="620" style="max-width:520px;margin:26px 0 0;font-size:16.5px;line-height:1.7;color:var(--tx6,rgba(232,236,248,.6));opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);text-wrap:pretty">Expert solutions in web development, UI/UX design, SEO and custom applications — engineered to scale with your business.</p>
+        <div data-reveal data-delay="720" style="display:flex;flex-wrap:wrap;gap:14px;margin-top:36px;opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <a href="#contact" data-magnetic="8" data-ripple data-cursor="expand" style="position:relative;overflow:hidden;padding:16px 28px;border-radius:18px;font-family:'Sora',sans-serif;font-size:14.5px;font-weight:500;color:#fff;background:linear-gradient(120deg,#3b82f6,#6d5cff);box-shadow:0 20px 44px -18px rgba(70,110,255,.95);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease">Get Started</a>
+          <a href="#work" data-magnetic="8" data-ripple data-cursor="expand" style="position:relative;overflow:hidden;padding:16px 28px;border-radius:18px;font-family:'Sora',sans-serif;font-size:14.5px;font-weight:500;color:var(--tx,#e8ecf8);border:1px solid var(--w13,rgba(255,255,255,.13));background:var(--w035,rgba(255,255,255,.035));backdrop-filter:blur(10px);transition:transform .35s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease" style-hover="background:var(--w075,rgba(255,255,255,.075));border-color:var(--w24,rgba(255,255,255,.24))">View Our Work</a>
+        </div>
+        <div data-reveal data-delay="820" style="display:flex;flex-wrap:wrap;gap:34px;margin-top:50px;opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--tx55,rgba(232,236,248,.55))"><span style="width:5px;height:5px;border-radius:50%;background:#3b82f6"></span>100+ Projects Delivered</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--tx55,rgba(232,236,248,.55))"><span style="width:5px;height:5px;border-radius:50%;background:#7c5cff"></span>98% Client Satisfaction</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--tx55,rgba(232,236,248,.55))"><span style="width:5px;height:5px;border-radius:50%;background:#60a5fa"></span>Built SEO-first</div>
+        </div>
+      </div>
+
+      <div data-hero-parallax="-2.4" data-hide-mobile style="position:relative;height:520px;display:flex;align-items:center;justify-content:center;perspective:1400px">
+        <div style="position:absolute;width:330px;height:330px;background:linear-gradient(140deg,rgba(59,130,246,.5),rgba(124,92,255,.4));filter:blur(30px);animation:morph 14s ease-in-out infinite,floatY 9s ease-in-out infinite"></div>
+        <div style="position:absolute;width:430px;height:430px;border:1px solid var(--w09,rgba(255,255,255,.09));border-radius:50%;animation:spinSlow 34s linear infinite">
+          <span style="position:absolute;left:50%;top:-4px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#3b82f6;box-shadow:0 0 16px #3b82f6"></span>
+        </div>
+        <div style="position:absolute;width:340px;height:340px;border:1px dashed var(--w12,rgba(255,255,255,.12));border-radius:50%;animation:spinRev 24s linear infinite">
+          <span style="position:absolute;right:-3px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:#7c5cff;box-shadow:0 0 14px #7c5cff"></span>
+        </div>
+        <div data-orbit-stack style="position:relative;width:340px;height:400px;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.16,1,.3,1)">
+          <div style="position:absolute;inset:0;transform:translateZ(-90px) translate(-38px,34px) rotate(-9deg);border-radius:26px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w01,rgba(255,255,255,.01)));backdrop-filter:blur(6px)"></div>
+          <div style="position:absolute;inset:0;transform:translateZ(-45px) translate(28px,-24px) rotate(7deg);border-radius:26px;border:1px solid var(--w08,rgba(255,255,255,.08));background:linear-gradient(160deg,var(--w06,rgba(255,255,255,.06)),var(--w015,rgba(255,255,255,.015)));backdrop-filter:blur(8px)"></div>
+          <div style="position:absolute;inset:0;border-radius:26px;padding:1px;overflow:hidden;box-shadow:0 50px 100px -40px rgba(0,0,0,.95)">
+            <div style="position:absolute;left:50%;top:50%;width:150%;height:150%;margin:-75% 0 0 -75%;background:conic-gradient(from 0deg,transparent,#3b82f6,transparent 38%,#7c5cff,transparent 72%);animation:conic 7s linear infinite;opacity:.85"></div>
+            <div style="position:relative;height:100%;border-radius:25px;background:linear-gradient(165deg,var(--pnlA,rgba(13,19,40,.97)),var(--pnlB,rgba(6,8,18,.98)));backdrop-filter:blur(18px);padding:24px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <span style="font-family:'Sora',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--tx45,rgba(232,236,248,.45))">Build Health</span>
+                <span style="display:flex;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:#4ade80"></span><span style="width:6px;height:6px;border-radius:50%;background:var(--w18,rgba(255,255,255,.18))"></span><span style="width:6px;height:6px;border-radius:50%;background:var(--w18,rgba(255,255,255,.18))"></span></span>
+              </div>
+              <div>
+                <div style="font-family:'Sora',sans-serif;font-size:46px;font-weight:600;letter-spacing:-.04em;line-height:1;background:linear-gradient(100deg,var(--tx,#fff),var(--acc1,#8fb4ff));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">99.8<span style="font-size:22px">%</span></div>
+                <div style="margin-top:6px;font-size:12.5px;color:var(--tx48,rgba(232,236,248,.48))">Average uptime across shipped platforms</div>
+              </div>
+              <svg viewBox="0 0 300 110" style="width:100%;height:106px">
+                <defs><linearGradient id="jtspark" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#7c5cff"/></linearGradient></defs>
+                <path d="M0 92 C30 88 46 62 74 60 C104 58 116 78 146 68 C176 58 186 26 216 22 C248 18 270 34 300 10 L300 110 L0 110 Z" fill="url(#jtspark)" opacity=".12"></path>
+                <path d="M0 92 C30 88 46 62 74 60 C104 58 116 78 146 68 C176 58 186 26 216 22 C248 18 270 34 300 10" fill="none" stroke="url(#jtspark)" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="9 6" style="animation:dash 6s linear infinite"></path>
+              </svg>
+              <div style="margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="padding:12px;border-radius:14px;background:var(--w04,rgba(255,255,255,.04));border:1px solid var(--w06,rgba(255,255,255,.06))"><div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:600">1.2s</div><div style="font-size:11px;color:var(--tx45,rgba(232,236,248,.45))">Median LCP</div></div>
+                <div style="padding:12px;border-radius:14px;background:var(--w04,rgba(255,255,255,.04));border:1px solid var(--w06,rgba(255,255,255,.06))"><div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:600">A+</div><div style="font-size:11px;color:var(--tx45,rgba(232,236,248,.45))">Core Web Vitals</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;left:-10px;bottom:24px;padding:13px 17px;border-radius:16px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--pnl8,rgba(9,12,26,.8));backdrop-filter:blur(14px);animation:floatY 7s ease-in-out infinite;box-shadow:0 24px 50px -28px rgba(0,0,0,.95)">
+          <div style="font-family:'Sora',sans-serif;font-size:12.5px">Award Winning</div>
+          <div style="font-size:10.5px;color:var(--tx45,rgba(232,236,248,.45));letter-spacing:.06em">Digital Agency 2024</div>
+        </div>
+      </div>
+    </div>
+    <a href="#stats" data-cursor="expand" style="position:absolute;left:50%;bottom:32px;margin-left:-12px;width:24px;height:38px;border:1px solid var(--w16,rgba(255,255,255,.16));border-radius:14px;display:flex;justify-content:center;padding-top:8px">
+      <span style="width:3px;height:8px;border-radius:2px;background:linear-gradient(#3b82f6,#7c5cff);animation:scrollDot 1.9s ease-in-out infinite"></span>
+    </a>
+  </section>
+
+  <section id="stats" data-screen-label="Stats" style="position:relative;z-index:1;padding:20px 40px 60px">
+    <div style="max-width:1200px;margin:0 auto;padding:42px 30px;border-radius:28px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(16px);display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:28px;box-shadow:0 40px 90px -50px rgba(0,0,0,.95)">
+      <div data-reveal data-delay="0" style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)">
+        <div data-stat-icon style="width:42px;height:42px;margin:0 auto 14px;border-radius:13px;border:1px solid var(--w1,rgba(255,255,255,.1));background:rgba(59,130,246,.14);display:flex;align-items:center;justify-content:center;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc1,#8fb4ff)" stroke-width="1.6" style="width:19px;height:19px"><path d="M4 18V9M10 18V5M16 18v-6M22 18H2"></path></svg>
+        </div>
+        <div data-count="100" data-suffix="+" style="font-family:'Sora',sans-serif;font-size:clamp(32px,3.3vw,44px);font-weight:600;letter-spacing:-.035em;background:linear-gradient(100deg,var(--tx,#fff),var(--acc1,#8fb4ff));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">0</div>
+        <div style="margin-top:6px;font-size:13px;color:var(--tx5,rgba(232,236,248,.5))">Projects Delivered</div>
+      </div>
+      <div data-reveal data-delay="90" style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)">
+        <div data-stat-icon style="width:42px;height:42px;margin:0 auto 14px;border-radius:13px;border:1px solid var(--w1,rgba(255,255,255,.1));background:rgba(124,92,255,.14);display:flex;align-items:center;justify-content:center;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc2,#c4b5fd)" stroke-width="1.6" style="width:19px;height:19px"><path d="M20 6 9 17l-5-5"></path></svg>
+        </div>
+        <div data-count="98" data-suffix="%" style="font-family:'Sora',sans-serif;font-size:clamp(32px,3.3vw,44px);font-weight:600;letter-spacing:-.035em;background:linear-gradient(100deg,var(--tx,#fff),var(--acc2,#c4b5fd));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">0</div>
+        <div style="margin-top:6px;font-size:13px;color:var(--tx5,rgba(232,236,248,.5))">Client Satisfaction</div>
+      </div>
+      <div data-reveal data-delay="180" style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)">
+        <div data-stat-icon style="width:42px;height:42px;margin:0 auto 14px;border-radius:13px;border:1px solid var(--w1,rgba(255,255,255,.1));background:rgba(96,165,250,.14);display:flex;align-items:center;justify-content:center;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.6" style="width:19px;height:19px"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+        </div>
+        <div data-count="5" data-suffix="+" style="font-family:'Sora',sans-serif;font-size:clamp(32px,3.3vw,44px);font-weight:600;letter-spacing:-.035em;background:linear-gradient(100deg,var(--tx,#fff),#60a5fa);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">0</div>
+        <div style="margin-top:6px;font-size:13px;color:var(--tx5,rgba(232,236,248,.5))">Years Experience</div>
+      </div>
+      <div data-reveal data-delay="270" style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)">
+        <div data-stat-icon style="width:42px;height:42px;margin:0 auto 14px;border-radius:13px;border:1px solid var(--w1,rgba(255,255,255,.1));background:rgba(59,130,246,.14);display:flex;align-items:center;justify-content:center;transition:transform .7s cubic-bezier(.16,1,.3,1)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc1,#8fb4ff)" stroke-width="1.6" style="width:19px;height:19px"><path d="M16 20v-2a4 4 0 0 0-8 0v2"></path><circle cx="12" cy="8" r="3.4"></circle></svg>
+        </div>
+        <div data-count="50" data-suffix="+" style="font-family:'Sora',sans-serif;font-size:clamp(32px,3.3vw,44px);font-weight:600;letter-spacing:-.035em;background:linear-gradient(100deg,var(--tx,#fff),var(--acc1,#8fb4ff));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">0</div>
+        <div style="margin-top:6px;font-size:13px;color:var(--tx5,rgba(232,236,248,.5))">Happy Clients</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" data-screen-label="About" style="position:relative;z-index:1;padding:100px 40px">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:62px;align-items:center">
+      <div data-reveal style="opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)">
+        <div data-parallax="-38" style="position:relative">
+          <div data-tilt="7" style="position:relative;border-radius:26px;padding:1px;overflow:hidden;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.16,1,.3,1);box-shadow:0 50px 100px -46px rgba(0,0,0,.95)">
+            <div style="position:absolute;left:50%;top:50%;width:170%;height:170%;margin:-85% 0 0 -85%;background:conic-gradient(from 90deg,transparent,#3b82f6,transparent 40%,#7c5cff,transparent 78%);animation:conic 9s linear infinite;opacity:.7"></div>
+            <div style="position:relative;border-radius:25px;overflow:hidden;background:var(--pnlC,#080b18)">
+              <div data-zoom style="position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;transition:transform 1.1s cubic-bezier(.16,1,.3,1)">
+                <image-slot id="jt-about" shape="rect" fit="cover" placeholder="Drop your team / studio photo"></image-slot>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;right:-14px;bottom:-22px;padding:14px 18px;border-radius:18px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--pnl85,rgba(9,12,26,.85));backdrop-filter:blur(16px);animation:floatY 8s ease-in-out infinite">
+            <div style="font-family:'Sora',sans-serif;font-size:13px">Since 2019</div>
+            <div style="font-size:10.5px;letter-spacing:.06em;color:var(--tx45,rgba(232,236,248,.45))">Silicon Valley, CA</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc1,#8fb4ff)">About Us</div>
+          <h2 style="margin:16px 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.3vw,43px);line-height:1.12;letter-spacing:-.035em;text-wrap:balance">Crafting digital excellence since 2019</h2>
+          <p style="margin:18px 0 0;font-size:15.5px;line-height:1.75;color:var(--tx58,rgba(232,236,248,.58));max-width:540px;text-wrap:pretty">Jun Technology is a premium web development and digital solutions agency. We craft high-performance, visually striking websites and applications that help businesses stand out, scale up and win in the digital world.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:13px;margin-top:30px">
+          <div data-reveal data-delay="120" style="opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+            <div data-lift style="padding:20px 22px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .5s ease" style-hover="border-color:rgba(143,180,255,.32);box-shadow:0 30px 60px -34px rgba(59,130,246,.85)">
+              <div style="font-family:'Sora',sans-serif;font-size:15px;font-weight:500">Our Mission</div>
+              <div style="margin-top:7px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">Empower businesses with cutting-edge digital solutions that drive measurable growth and lasting online presence.</div>
+            </div>
+          </div>
+          <div data-reveal data-delay="220" style="opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+            <div data-lift style="padding:20px 22px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .5s ease" style-hover="border-color:rgba(196,181,253,.32);box-shadow:0 30px 60px -34px rgba(124,92,255,.85)">
+              <div style="font-family:'Sora',sans-serif;font-size:15px;font-weight:500">Our Vision</div>
+              <div style="margin-top:7px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">To be the most trusted technology partner for ambitious businesses across the globe, at every stage of scale.</div>
+            </div>
+          </div>
+          <div data-reveal data-delay="320" style="opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+            <div data-lift style="padding:20px 22px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .5s ease" style-hover="border-color:rgba(96,165,250,.32);box-shadow:0 30px 60px -34px rgba(37,99,235,.8)">
+              <div style="font-family:'Sora',sans-serif;font-size:15px;font-weight:500">Why Choose Us</div>
+              <div style="margin-top:7px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">Strategic thinking, beautiful design and technical precision — websites that don't just look great, they perform.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" data-screen-label="Services" style="position:relative;z-index:1;padding:100px 40px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc2,#c4b5fd)">What We Offer</div>
+        <h2 style="margin:16px 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">Our core services</h2>
+        <p style="margin:14px auto 0;max-width:560px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">From concept to launch, we deliver end-to-end digital solutions designed to grow your business.</p>
+      </div>
+      <div style="margin-top:54px;display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:20px">
+        <div data-reveal data-delay="0" style="opacity:0;transform:translateY(30px) scale(.9);filter:blur(9px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .85s ease">
+          <div data-service data-magnetic="6" data-cursor="expand" style="position:relative;overflow:hidden;height:100%;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .55s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease">
+            <div data-shine style="position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,var(--w13,rgba(255,255,255,.13)),transparent);transform:skewX(-18deg);pointer-events:none;transition:left .85s cubic-bezier(.16,1,.3,1)"></div>
+            <div data-svc-icon style="width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.16,1,.3,1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:21px;height:21px"><path d="m9 17-5-5 5-5M15 7l5 5-5 5"></path></svg>
+            </div>
+            <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:16.5px;font-weight:500">Website Development</div>
+            <div style="margin-top:9px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">Modern, fast and scalable websites built with the latest technologies and best practices.</div>
+            <div data-arrow style="margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--acc1,#8fb4ff);transition:gap .35s ease">Learn more <span>→</span></div>
+          </div>
+        </div>
+        <div data-reveal data-delay="80" style="opacity:0;transform:translateY(30px) scale(.9);filter:blur(9px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .85s ease">
+          <div data-service data-magnetic="6" data-cursor="expand" style="position:relative;overflow:hidden;height:100%;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .55s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease">
+            <div data-shine style="position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,var(--w13,rgba(255,255,255,.13)),transparent);transform:skewX(-18deg);pointer-events:none;transition:left .85s cubic-bezier(.16,1,.3,1)"></div>
+            <div data-svc-icon style="width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.16,1,.3,1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:21px;height:21px"><rect x="3" y="4" width="18" height="14" rx="2.5"></rect><path d="M3 9h18M8 18v2M16 18v2"></path></svg>
+            </div>
+            <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:16.5px;font-weight:500">UI/UX Design</div>
+            <div style="margin-top:9px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">Beautiful, intuitive interfaces crafted to convert visitors into loyal customers.</div>
+            <div data-arrow style="margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--acc1,#8fb4ff);transition:gap .35s ease">Learn more <span>→</span></div>
+          </div>
+        </div>
+        <div data-reveal data-delay="160" style="opacity:0;transform:translateY(30px) scale(.9);filter:blur(9px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .85s ease">
+          <div data-service data-magnetic="6" data-cursor="expand" style="position:relative;overflow:hidden;height:100%;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .55s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease">
+            <div data-shine style="position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,var(--w13,rgba(255,255,255,.13)),transparent);transform:skewX(-18deg);pointer-events:none;transition:left .85s cubic-bezier(.16,1,.3,1)"></div>
+            <div data-svc-icon style="width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.16,1,.3,1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:21px;height:21px"><path d="M4 14V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8M2 18h20"></path><path d="m14 8-4 4 4 4"></path></svg>
+            </div>
+            <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:16.5px;font-weight:500">Website Redesign</div>
+            <div style="margin-top:9px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">Revamp your existing site with a fresh, modern look that reflects your brand today.</div>
+            <div data-arrow style="margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--acc1,#8fb4ff);transition:gap .35s ease">Learn more <span>→</span></div>
+          </div>
+        </div>
+        <div data-reveal data-delay="240" style="opacity:0;transform:translateY(30px) scale(.9);filter:blur(9px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .85s ease">
+          <div data-service data-magnetic="6" data-cursor="expand" style="position:relative;overflow:hidden;height:100%;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .55s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease">
+            <div data-shine style="position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,var(--w13,rgba(255,255,255,.13)),transparent);transform:skewX(-18deg);pointer-events:none;transition:left .85s cubic-bezier(.16,1,.3,1)"></div>
+            <div data-svc-icon style="width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.16,1,.3,1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:21px;height:21px"><path d="M4 5h2l2.4 10.4A2 2 0 0 0 10.3 17h7.4a2 2 0 0 0 2-1.6L21 8H7"></path><circle cx="10.5" cy="20" r="1.3"></circle><circle cx="18" cy="20" r="1.3"></circle></svg>
+            </div>
+            <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:16.5px;font-weight:500">E-Commerce Development</div>
+            <div style="margin-top:9px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">Powerful online stores built to drive sales, streamline operations and delight buyers.</div>
+            <div data-arrow style="margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--acc1,#8fb4ff);transition:gap .35s ease">Learn more <span>→</span></div>
+          </div>
+        </div>
+        <div data-reveal data-delay="0" style="opacity:0;transform:translateY(30px) scale(.9);filter:blur(9px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .85s ease">
+          <div data-service data-magnetic="6" data-cursor="expand" style="position:relative;overflow:hidden;height:100%;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .55s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease">
+            <div data-shine style="position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,var(--w13,rgba(255,255,255,.13)),transparent);transform:skewX(-18deg);pointer-events:none;transition:left .85s cubic-bezier(.16,1,.3,1)"></div>
+            <div data-svc-icon style="width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.16,1,.3,1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:21px;height:21px"><circle cx="11" cy="11" r="6.5"></circle><path d="m20 20-4.4-4.4"></path></svg>
+            </div>
+            <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:16.5px;font-weight:500">SEO Optimization</div>
+            <div style="margin-top:9px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">Data-driven SEO strategies that lift rankings and bring qualified organic traffic.</div>
+            <div data-arrow style="margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--acc1,#8fb4ff);transition:gap .35s ease">Learn more <span>→</span></div>
+          </div>
+        </div>
+        <div data-reveal data-delay="80" style="opacity:0;transform:translateY(30px) scale(.9);filter:blur(9px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .85s ease">
+          <div data-service data-magnetic="6" data-cursor="expand" style="position:relative;overflow:hidden;height:100%;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .55s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease">
+            <div data-shine style="position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,var(--w13,rgba(255,255,255,.13)),transparent);transform:skewX(-18deg);pointer-events:none;transition:left .85s cubic-bezier(.16,1,.3,1)"></div>
+            <div data-svc-icon style="width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.16,1,.3,1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:21px;height:21px"><path d="M4 10v4M4 12c8 0 8-6 16-6v12c-8 0-8-6-16-6"></path></svg>
+            </div>
+            <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:16.5px;font-weight:500">Website Promotion</div>
+            <div style="margin-top:9px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">Digital marketing campaigns that increase visibility and grow your customer base.</div>
+            <div data-arrow style="margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--acc1,#8fb4ff);transition:gap .35s ease">Learn more <span>→</span></div>
+          </div>
+        </div>
+        <div data-reveal data-delay="160" style="opacity:0;transform:translateY(30px) scale(.9);filter:blur(9px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .85s ease">
+          <div data-service data-magnetic="6" data-cursor="expand" style="position:relative;overflow:hidden;height:100%;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .55s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease">
+            <div data-shine style="position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,var(--w13,rgba(255,255,255,.13)),transparent);transform:skewX(-18deg);pointer-events:none;transition:left .85s cubic-bezier(.16,1,.3,1)"></div>
+            <div data-svc-icon style="width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.16,1,.3,1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:21px;height:21px"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"></path><circle cx="12" cy="12" r="3.2"></circle></svg>
+            </div>
+            <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:16.5px;font-weight:500">Maintenance &amp; Support</div>
+            <div style="margin-top:9px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">24/7 monitoring, updates and support to keep your website secure and performing.</div>
+            <div data-arrow style="margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--acc1,#8fb4ff);transition:gap .35s ease">Learn more <span>→</span></div>
+          </div>
+        </div>
+        <div data-reveal data-delay="240" style="opacity:0;transform:translateY(30px) scale(.9);filter:blur(9px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .85s ease">
+          <div data-service data-magnetic="6" data-cursor="expand" style="position:relative;overflow:hidden;height:100%;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .55s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease">
+            <div data-shine style="position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,var(--w13,rgba(255,255,255,.13)),transparent);transform:skewX(-18deg);pointer-events:none;transition:left .85s cubic-bezier(.16,1,.3,1)"></div>
+            <div data-svc-icon style="width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.16,1,.3,1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:21px;height:21px"><path d="M12 3 4 7v6c0 4.4 3.4 7.3 8 8 4.6-.7 8-3.6 8-8V7z"></path><path d="m9 12 2 2 4-4"></path></svg>
+            </div>
+            <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:16.5px;font-weight:500">Custom Web Applications</div>
+            <div style="margin-top:9px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">Bespoke web apps and portals tailored to your unique business workflows.</div>
+            <div data-arrow style="margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--acc1,#8fb4ff);transition:gap .35s ease">Learn more <span>→</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" data-screen-label="Portfolio" style="position:relative;z-index:1;padding:100px 40px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc1,#8fb4ff)">Our Portfolio</div>
+        <h2 style="margin:16px 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">Work we're proud of</h2>
+        <p style="margin:14px auto 0;max-width:560px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">A selection of projects that showcase our expertise, creativity and dedication to quality.</p>
+      </div>
+      <div data-filters style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:34px">
+        <button data-filter="all" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">All</button>
+        <button data-filter="business" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">Business</button>
+        <button data-filter="ecommerce" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">E-Commerce</button>
+        <button data-filter="healthcare" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">Healthcare</button>
+        <button data-filter="education" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">Education</button>
+        <button data-filter="restaurant" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">Restaurant</button>
+      </div>
+      <div data-grid style="margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(318px,1fr));gap:22px">
+
+        <div data-card data-cat="business" data-reveal data-delay="0" style="opacity:0;transform:translateY(30px) scale(.94);filter:blur(8px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1),filter .8s ease">
+          <div data-tilt="6" data-project="0" data-cursor-label="View Project" style="position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--pnl6,rgba(9,12,26,.6));transform-style:preserve-3d;transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease;cursor:pointer">
+            <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden">
+              <div data-zoom style="position:absolute;inset:0;transition:transform 1.1s cubic-bezier(.16,1,.3,1)"><image-slot id="jt-p1" shape="rect" fit="cover" placeholder="CoreLogic CRM screen"></image-slot></div>
+              <div data-scrim style="position:absolute;inset:0;background:linear-gradient(to top,var(--bgA95,rgba(4,6,15,.95)) 4%,var(--bgA45,rgba(4,6,15,.45)) 45%,transparent);opacity:.5;transition:opacity .5s ease;pointer-events:none"></div>
+              <div style="position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:100px;font-size:11px;background:var(--bgA62,rgba(4,6,15,.62));border:1px solid var(--w12,rgba(255,255,255,.12));backdrop-filter:blur(8px);pointer-events:none">Business</div>
+            </div>
+            <div style="padding:20px 22px 22px">
+              <div style="font-family:'Sora',sans-serif;font-size:17px;font-weight:500">CoreLogic CRM</div>
+              <div style="margin-top:5px;font-size:12px;letter-spacing:.06em;color:var(--acc1,#8fb4ff)">React · Node.js</div>
+              <div data-slideup style="max-height:0;opacity:0;overflow:hidden;transition:max-height .55s cubic-bezier(.16,1,.3,1),opacity .45s ease">
+                <div style="padding-top:12px;font-size:13.5px;line-height:1.65;color:var(--tx58,rgba(232,236,248,.58))">Enterprise CRM with analytics dashboard and client management.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-card data-cat="ecommerce" data-reveal data-delay="80" style="opacity:0;transform:translateY(30px) scale(.94);filter:blur(8px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1),filter .8s ease">
+          <div data-tilt="6" data-project="1" data-cursor-label="View Project" style="position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--pnl6,rgba(9,12,26,.6));transform-style:preserve-3d;transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease;cursor:pointer">
+            <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden">
+              <div data-zoom style="position:absolute;inset:0;transition:transform 1.1s cubic-bezier(.16,1,.3,1)"><image-slot id="jt-p2" shape="rect" fit="cover" placeholder="ShopVault Store screen"></image-slot></div>
+              <div data-scrim style="position:absolute;inset:0;background:linear-gradient(to top,var(--bgA95,rgba(4,6,15,.95)) 4%,var(--bgA45,rgba(4,6,15,.45)) 45%,transparent);opacity:.5;transition:opacity .5s ease;pointer-events:none"></div>
+              <div style="position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:100px;font-size:11px;background:var(--bgA62,rgba(4,6,15,.62));border:1px solid var(--w12,rgba(255,255,255,.12));backdrop-filter:blur(8px);pointer-events:none">E-Commerce</div>
+            </div>
+            <div style="padding:20px 22px 22px">
+              <div style="font-family:'Sora',sans-serif;font-size:17px;font-weight:500">ShopVault Store</div>
+              <div style="margin-top:5px;font-size:12px;letter-spacing:.06em;color:var(--acc1,#8fb4ff)">Next.js · Stripe</div>
+              <div data-slideup style="max-height:0;opacity:0;overflow:hidden;transition:max-height .55s cubic-bezier(.16,1,.3,1),opacity .45s ease">
+                <div style="padding-top:12px;font-size:13.5px;line-height:1.65;color:var(--tx58,rgba(232,236,248,.58))">Full-featured commerce platform with real-time inventory and payments.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-card data-cat="healthcare" data-reveal data-delay="160" style="opacity:0;transform:translateY(30px) scale(.94);filter:blur(8px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1),filter .8s ease">
+          <div data-tilt="6" data-project="2" data-cursor-label="View Project" style="position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--pnl6,rgba(9,12,26,.6));transform-style:preserve-3d;transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease;cursor:pointer">
+            <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden">
+              <div data-zoom style="position:absolute;inset:0;transition:transform 1.1s cubic-bezier(.16,1,.3,1)"><image-slot id="jt-p3" shape="rect" fit="cover" placeholder="MediConnect screen"></image-slot></div>
+              <div data-scrim style="position:absolute;inset:0;background:linear-gradient(to top,var(--bgA95,rgba(4,6,15,.95)) 4%,var(--bgA45,rgba(4,6,15,.45)) 45%,transparent);opacity:.5;transition:opacity .5s ease;pointer-events:none"></div>
+              <div style="position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:100px;font-size:11px;background:var(--bgA62,rgba(4,6,15,.62));border:1px solid var(--w12,rgba(255,255,255,.12));backdrop-filter:blur(8px);pointer-events:none">Healthcare</div>
+            </div>
+            <div style="padding:20px 22px 22px">
+              <div style="font-family:'Sora',sans-serif;font-size:17px;font-weight:500">MediConnect</div>
+              <div style="margin-top:5px;font-size:12px;letter-spacing:.06em;color:var(--acc1,#8fb4ff)">React · Firebase</div>
+              <div data-slideup style="max-height:0;opacity:0;overflow:hidden;transition:max-height .55s cubic-bezier(.16,1,.3,1),opacity .45s ease">
+                <div style="padding-top:12px;font-size:13.5px;line-height:1.65;color:var(--tx58,rgba(232,236,248,.58))">Appointment scheduling and patient management portal for clinics.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-card data-cat="education" data-reveal data-delay="0" style="opacity:0;transform:translateY(30px) scale(.94);filter:blur(8px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1),filter .8s ease">
+          <div data-tilt="6" data-project="3" data-cursor-label="View Project" style="position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--pnl6,rgba(9,12,26,.6));transform-style:preserve-3d;transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease;cursor:pointer">
+            <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden">
+              <div data-zoom style="position:absolute;inset:0;transition:transform 1.1s cubic-bezier(.16,1,.3,1)"><image-slot id="jt-p4" shape="rect" fit="cover" placeholder="LearnSphere LMS screen"></image-slot></div>
+              <div data-scrim style="position:absolute;inset:0;background:linear-gradient(to top,var(--bgA95,rgba(4,6,15,.95)) 4%,var(--bgA45,rgba(4,6,15,.45)) 45%,transparent);opacity:.5;transition:opacity .5s ease;pointer-events:none"></div>
+              <div style="position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:100px;font-size:11px;background:var(--bgA62,rgba(4,6,15,.62));border:1px solid var(--w12,rgba(255,255,255,.12));backdrop-filter:blur(8px);pointer-events:none">Education</div>
+            </div>
+            <div style="padding:20px 22px 22px">
+              <div style="font-family:'Sora',sans-serif;font-size:17px;font-weight:500">LearnSphere LMS</div>
+              <div style="margin-top:5px;font-size:12px;letter-spacing:.06em;color:var(--acc1,#8fb4ff)">Vue.js · Django</div>
+              <div data-slideup style="max-height:0;opacity:0;overflow:hidden;transition:max-height .55s cubic-bezier(.16,1,.3,1),opacity .45s ease">
+                <div style="padding-top:12px;font-size:13.5px;line-height:1.65;color:var(--tx58,rgba(232,236,248,.58))">Learning management system with live classes, quizzes and progress tracking.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-card data-cat="restaurant" data-reveal data-delay="80" style="opacity:0;transform:translateY(30px) scale(.94);filter:blur(8px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1),filter .8s ease">
+          <div data-tilt="6" data-project="4" data-cursor-label="View Project" style="position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--pnl6,rgba(9,12,26,.6));transform-style:preserve-3d;transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease;cursor:pointer">
+            <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden">
+              <div data-zoom style="position:absolute;inset:0;transition:transform 1.1s cubic-bezier(.16,1,.3,1)"><image-slot id="jt-p5" shape="rect" fit="cover" placeholder="TasteBud Online screen"></image-slot></div>
+              <div data-scrim style="position:absolute;inset:0;background:linear-gradient(to top,var(--bgA95,rgba(4,6,15,.95)) 4%,var(--bgA45,rgba(4,6,15,.45)) 45%,transparent);opacity:.5;transition:opacity .5s ease;pointer-events:none"></div>
+              <div style="position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:100px;font-size:11px;background:var(--bgA62,rgba(4,6,15,.62));border:1px solid var(--w12,rgba(255,255,255,.12));backdrop-filter:blur(8px);pointer-events:none">Restaurant</div>
+            </div>
+            <div style="padding:20px 22px 22px">
+              <div style="font-family:'Sora',sans-serif;font-size:17px;font-weight:500">TasteBud Online</div>
+              <div style="margin-top:5px;font-size:12px;letter-spacing:.06em;color:var(--acc1,#8fb4ff)">React · Supabase</div>
+              <div data-slideup style="max-height:0;opacity:0;overflow:hidden;transition:max-height .55s cubic-bezier(.16,1,.3,1),opacity .45s ease">
+                <div style="padding-top:12px;font-size:13.5px;line-height:1.65;color:var(--tx58,rgba(232,236,248,.58))">Restaurant site with online menu, reservations and order management.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-card data-cat="business" data-reveal data-delay="160" style="opacity:0;transform:translateY(30px) scale(.94);filter:blur(8px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1),filter .8s ease">
+          <div data-tilt="6" data-project="5" data-cursor-label="View Project" style="position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--pnl6,rgba(9,12,26,.6));transform-style:preserve-3d;transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease;cursor:pointer">
+            <div style="position:relative;width:100%;aspect-ratio:16/10;overflow:hidden">
+              <div data-zoom style="position:absolute;inset:0;transition:transform 1.1s cubic-bezier(.16,1,.3,1)"><image-slot id="jt-p6" shape="rect" fit="cover" placeholder="ProManage Suite screen"></image-slot></div>
+              <div data-scrim style="position:absolute;inset:0;background:linear-gradient(to top,var(--bgA95,rgba(4,6,15,.95)) 4%,var(--bgA45,rgba(4,6,15,.45)) 45%,transparent);opacity:.5;transition:opacity .5s ease;pointer-events:none"></div>
+              <div style="position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:100px;font-size:11px;background:var(--bgA62,rgba(4,6,15,.62));border:1px solid var(--w12,rgba(255,255,255,.12));backdrop-filter:blur(8px);pointer-events:none">Business</div>
+            </div>
+            <div style="padding:20px 22px 22px">
+              <div style="font-family:'Sora',sans-serif;font-size:17px;font-weight:500">ProManage Suite</div>
+              <div style="margin-top:5px;font-size:12px;letter-spacing:.06em;color:var(--acc1,#8fb4ff)">React · AWS</div>
+              <div data-slideup style="max-height:0;opacity:0;overflow:hidden;transition:max-height .55s cubic-bezier(.16,1,.3,1),opacity .45s ease">
+                <div style="padding-top:12px;font-size:13.5px;line-height:1.65;color:var(--tx58,rgba(232,236,248,.58))">Project management tool with kanban boards, time tracking and team collaboration.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="voices" data-screen-label="Testimonials" style="position:relative;z-index:1;padding:100px 0">
+    <div data-reveal style="text-align:center;padding:0 40px;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+      <div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc2,#c4b5fd)">Client Love</div>
+      <h2 style="margin:16px 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">What our clients say</h2>
+      <p style="margin:14px auto 0;max-width:560px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">Real feedback from businesses that trusted us to build their digital presence.</p>
+    </div>
+    <div data-marquee-wrap style="position:relative;margin-top:52px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+      <div data-marquee style="display:flex;gap:20px;width:max-content;animation:marquee 42s linear infinite;padding:10px 20px">
+        <div data-tcard data-tilt="5" style="width:380px;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s ease;transform-style:preserve-3d">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.6" style="width:24px;height:24px;opacity:.7"><path d="M9 7H5.5A2.5 2.5 0 0 0 3 9.5v3A2.5 2.5 0 0 0 5.5 15H7l-1 4 4-5V9a2 2 0 0 0-1-2zM20 7h-3.5A2.5 2.5 0 0 0 14 9.5v3A2.5 2.5 0 0 0 16.5 15H18l-1 4 4-5V9a2 2 0 0 0-1-2z"></path></svg>
+          <div style="margin-top:16px;font-size:14.5px;line-height:1.75;color:var(--tx72,rgba(232,236,248,.72))">"Jun Technology transformed our outdated website into a stunning, high-converting platform. Sales increased by 40% within the first month."</div>
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--w07,rgba(255,255,255,.07));display:flex;align-items:center;gap:12px">
+            <div style="position:relative;width:42px;height:42px;flex:none"><span style="position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(59,130,246,.5);animation:pulseRing 3s ease-out infinite"></span><image-slot id="jt-t1" shape="circle" fit="cover" placeholder="SM"></image-slot></div>
+            <div><div style="font-family:'Sora',sans-serif;font-size:14px">Sarah Mitchell</div><div style="font-size:12px;color:var(--tx45,rgba(232,236,248,.45))">Founder, Peak Retail</div></div>
+          </div>
+        </div>
+        <div data-tcard data-tilt="5" style="width:380px;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s ease;transform-style:preserve-3d">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7c5cff" stroke-width="1.6" style="width:24px;height:24px;opacity:.7"><path d="M9 7H5.5A2.5 2.5 0 0 0 3 9.5v3A2.5 2.5 0 0 0 5.5 15H7l-1 4 4-5V9a2 2 0 0 0-1-2zM20 7h-3.5A2.5 2.5 0 0 0 14 9.5v3A2.5 2.5 0 0 0 16.5 15H18l-1 4 4-5V9a2 2 0 0 0-1-2z"></path></svg>
+          <div style="margin-top:16px;font-size:14.5px;line-height:1.75;color:var(--tx72,rgba(232,236,248,.72))">"Their attention to detail and understanding of our brand was incredible. The new platform streamlined our patient bookings dramatically."</div>
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--w07,rgba(255,255,255,.07));display:flex;align-items:center;gap:12px">
+            <div style="position:relative;width:42px;height:42px;flex:none"><span style="position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(124,92,255,.5);animation:pulseRing 3s ease-out .6s infinite"></span><image-slot id="jt-t2" shape="circle" fit="cover" placeholder="RP"></image-slot></div>
+            <div><div style="font-family:'Sora',sans-serif;font-size:14px">Raj Patel</div><div style="font-size:12px;color:var(--tx45,rgba(232,236,248,.45))">Director, Medicare Clinic</div></div>
+          </div>
+        </div>
+        <div data-tcard data-tilt="5" style="width:380px;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s ease;transform-style:preserve-3d">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.6" style="width:24px;height:24px;opacity:.7"><path d="M9 7H5.5A2.5 2.5 0 0 0 3 9.5v3A2.5 2.5 0 0 0 5.5 15H7l-1 4 4-5V9a2 2 0 0 0-1-2zM20 7h-3.5A2.5 2.5 0 0 0 14 9.5v3A2.5 2.5 0 0 0 16.5 15H18l-1 4 4-5V9a2 2 0 0 0-1-2z"></path></svg>
+          <div style="margin-top:16px;font-size:14.5px;line-height:1.75;color:var(--tx72,rgba(232,236,248,.72))">"From the first consultation to launch, the process was seamless. Our LMS has received overwhelmingly positive feedback from students and faculty."</div>
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--w07,rgba(255,255,255,.07));display:flex;align-items:center;gap:12px">
+            <div style="position:relative;width:42px;height:42px;flex:none"><span style="position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(96,165,250,.5);animation:pulseRing 3s ease-out 1.2s infinite"></span><image-slot id="jt-t3" shape="circle" fit="cover" placeholder="EC"></image-slot></div>
+            <div><div style="font-family:'Sora',sans-serif;font-size:14px">Emma Chen</div><div style="font-size:12px;color:var(--tx45,rgba(232,236,248,.45))">Lead, EdVantage Academy</div></div>
+          </div>
+        </div>
+        <div data-tcard data-tilt="5" style="width:380px;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s ease;transform-style:preserve-3d">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.6" style="width:24px;height:24px;opacity:.7"><path d="M9 7H5.5A2.5 2.5 0 0 0 3 9.5v3A2.5 2.5 0 0 0 5.5 15H7l-1 4 4-5V9a2 2 0 0 0-1-2zM20 7h-3.5A2.5 2.5 0 0 0 14 9.5v3A2.5 2.5 0 0 0 16.5 15H18l-1 4 4-5V9a2 2 0 0 0-1-2z"></path></svg>
+          <div style="margin-top:16px;font-size:14.5px;line-height:1.75;color:var(--tx72,rgba(232,236,248,.72))">"Best investment we made for our business. The e-commerce site is blazing fast, beautiful, and our conversion rate has doubled."</div>
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--w07,rgba(255,255,255,.07));display:flex;align-items:center;gap:12px">
+            <div style="position:relative;width:42px;height:42px;flex:none"><span style="position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(59,130,246,.5);animation:pulseRing 3s ease-out 1.8s infinite"></span><image-slot id="jt-t4" shape="circle" fit="cover" placeholder="MJ"></image-slot></div>
+            <div><div style="font-family:'Sora',sans-serif;font-size:14px">Marcus Johnson</div><div style="font-size:12px;color:var(--tx45,rgba(232,236,248,.45))">Owner, Urban Commerce</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" data-screen-label="Contact" style="position:relative;z-index:1;padding:100px 40px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc1,#8fb4ff)">Get In Touch</div>
+        <h2 style="margin:16px 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">Let's build something amazing</h2>
+        <p style="margin:14px auto 0;max-width:540px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">Ready to start your project? Send us a message and we'll get back to you within 24 hours.</p>
+      </div>
+      <div style="margin-top:52px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;align-items:start">
+        <div data-reveal style="display:flex;flex-direction:column;gap:12px;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <div data-lift style="display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease" style-hover="border-color:rgba(143,180,255,.3)">
+            <div style="width:38px;height:38px;flex:none;border-radius:12px;background:rgba(59,130,246,.14);border:1px solid var(--w09,rgba(255,255,255,.09));display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc1,#8fb4ff)" stroke-width="1.6" style="width:17px;height:17px"><path d="M12 21s7-5.3 7-11a7 7 0 1 0-14 0c0 5.7 7 11 7 11z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></div>
+            <div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx42,rgba(232,236,248,.42))">Office Address</div><div style="margin-top:5px;font-size:14.5px">123 Tech Park, Silicon Avenue, CA 94025</div></div>
+          </div>
+          <div data-lift style="display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease" style-hover="border-color:rgba(143,180,255,.3)">
+            <div style="width:38px;height:38px;flex:none;border-radius:12px;background:rgba(124,92,255,.14);border:1px solid var(--w09,rgba(255,255,255,.09));display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc2,#c4b5fd)" stroke-width="1.6" style="width:17px;height:17px"><path d="M4 5.5C4 4.7 4.7 4 5.5 4h2c.7 0 1.3.5 1.5 1.2l.7 3a1.5 1.5 0 0 1-.6 1.6l-1.3.9a12 12 0 0 0 5.5 5.5l.9-1.3a1.5 1.5 0 0 1 1.6-.6l3 .7c.7.2 1.2.8 1.2 1.5v2c0 .8-.7 1.5-1.5 1.5A15.5 15.5 0 0 1 4 5.5z"></path></svg></div>
+            <div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx42,rgba(232,236,248,.42))">Phone Number</div><div style="margin-top:5px;font-size:14.5px">+1 (555) 123-4567</div></div>
+          </div>
+          <div data-lift style="display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease" style-hover="border-color:rgba(143,180,255,.3)">
+            <div style="width:38px;height:38px;flex:none;border-radius:12px;background:rgba(96,165,250,.14);border:1px solid var(--w09,rgba(255,255,255,.09));display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.6" style="width:17px;height:17px"><rect x="3" y="5" width="18" height="14" rx="2.4"></rect><path d="m3.5 7 8.5 6 8.5-6"></path></svg></div>
+            <div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx42,rgba(232,236,248,.42))">Email Address</div><div style="margin-top:5px;font-size:14.5px">hello@juntechnology.com</div></div>
+          </div>
+          <div data-lift style="display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease" style-hover="border-color:rgba(143,180,255,.3)">
+            <div style="width:38px;height:38px;flex:none;border-radius:12px;background:rgba(59,130,246,.14);border:1px solid var(--w09,rgba(255,255,255,.09));display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc1,#8fb4ff)" stroke-width="1.6" style="width:17px;height:17px"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg></div>
+            <div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx42,rgba(232,236,248,.42))">Business Hours</div><div style="margin-top:5px;font-size:14.5px">Mon – Fri, 9AM – 6PM PST</div></div>
+          </div>
+          <div data-map style="position:relative;margin-top:6px;height:230px;border-radius:22px;overflow:hidden;border:1px solid var(--w08,rgba(255,255,255,.08));background:var(--pnlC,#070a16);transition:border-color .5s ease" style-hover="border-color:rgba(59,130,246,.4)">
+            <svg viewBox="0 0 520 260" style="position:absolute;inset:0;width:100%;height:100%">
+              <rect width="520" height="260" fill="var(--pnlC,#070a16)"></rect>
+              <g stroke="var(--map1,#16203c)" stroke-width="1.4">
+                <path d="M-20 60H540M-20 132H540M-20 204H540M70 -20V280M180 -20V280M300 -20V280M420 -20V280"></path>
+              </g>
+              <g stroke="var(--map2,#1d2b4f)" stroke-width="4" stroke-linecap="round">
+                <path d="M-20 96H540M240 -20V280"></path>
+              </g>
+              <g fill="var(--map3,#0e152a)" stroke="var(--map2,#18243f)" stroke-width="1">
+                <rect x="86" y="14" width="78" height="34" rx="4"></rect>
+                <rect x="196" y="146" width="30" height="44" rx="4"></rect>
+                <rect x="320" y="14" width="86" height="34" rx="4"></rect>
+                <rect x="320" y="146" width="86" height="44" rx="4"></rect>
+                <rect x="86" y="146" width="94" height="44" rx="4"></rect>
+                <rect x="436" y="216" width="70" height="30" rx="4"></rect>
+              </g>
+              <path d="M-20 178C60 178 120 216 220 216S400 178 540 190" stroke="var(--map2,#152343)" stroke-width="10" fill="none" stroke-linecap="round"></path>
+              <text x="24" y="52" fill="var(--map4,#3d4a6b)" font-size="10" font-family="DM Sans" letter-spacing="2">SILICON AVE</text>
+              <text x="252" y="248" fill="var(--map4,#3d4a6b)" font-size="10" font-family="DM Sans" letter-spacing="2">TECH PARK</text>
+              <circle data-map-pulse cx="240" cy="96" r="10" fill="#3b82f6" opacity=".35"></circle>
+              <circle data-map-pulse2 cx="240" cy="96" r="20" fill="#3b82f6" opacity=".14"></circle>
+              <circle cx="240" cy="96" r="5" fill="#60a5fa"></circle>
+            </svg>
+            <div style="position:absolute;left:14px;bottom:14px;padding:9px 14px;border-radius:12px;background:var(--bgA78,rgba(4,6,15,.78));border:1px solid var(--w1,rgba(255,255,255,.1));backdrop-filter:blur(10px);font-size:12px">Jun Technology HQ · Menlo Park</div>
+          </div>
+        </div>
+
+        <div data-reveal data-delay="120" style="opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+          <form data-form style="position:relative;padding:30px;border-radius:26px;border:1px solid var(--w08,rgba(255,255,255,.08));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w014,rgba(255,255,255,.014)));backdrop-filter:blur(18px);box-shadow:0 50px 100px -50px rgba(0,0,0,.95);display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div data-field style="position:relative;grid-column:span 1">
+              <input data-input name="name" required style="width:100%;padding:22px 14px 10px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease">
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Your Name</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <div data-field style="position:relative;grid-column:span 1">
+              <input data-input name="email" type="email" required style="width:100%;padding:22px 14px 10px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease">
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Email Address</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <div data-field style="position:relative;grid-column:span 1">
+              <input data-input name="phone" style="width:100%;padding:22px 14px 10px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease">
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Mobile Number</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <div data-field style="position:relative;grid-column:span 1">
+              <input data-input name="subject" required style="width:100%;padding:22px 14px 10px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease">
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Subject</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <div data-field style="position:relative;grid-column:span 2">
+              <textarea data-input name="message" rows="5" required style="width:100%;padding:24px 14px 12px;border-radius:14px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w03,rgba(255,255,255,.03));color:var(--tx,#e8ecf8);font-size:14.5px;outline:none;resize:vertical;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease"></textarea>
+              <label data-label style="position:absolute;left:15px;top:16px;font-size:14px;color:var(--tx42,rgba(232,236,248,.42));pointer-events:none;transform-origin:left top;transition:transform .3s cubic-bezier(.16,1,.3,1),color .3s ease">Tell us about your project…</label>
+              <div data-err style="height:0;overflow:hidden;font-size:11.5px;color:#fb7185;transition:height .3s ease,padding .3s ease"></div>
+            </div>
+            <button data-submit data-ripple data-magnetic="5" data-cursor="expand" type="submit" style="position:relative;overflow:hidden;grid-column:span 2;padding:17px;border:none;border-radius:16px;font-family:'Sora',sans-serif;font-size:14.5px;font-weight:500;color:#fff;background:linear-gradient(120deg,#3b82f6,#6d5cff);cursor:pointer;box-shadow:0 20px 44px -20px rgba(70,110,255,.95);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease">
+              <span data-submit-label style="position:relative;z-index:2;display:inline-flex;align-items:center;gap:10px;transition:opacity .3s ease">Send Message</span>
+              <span data-spinner style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:3"><span style="width:18px;height:18px;border-radius:50%;border:2px solid var(--w35,rgba(255,255,255,.35));border-top-color:#fff;animation:spinSlow .8s linear infinite"></span></span>
+              <span data-check style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;gap:9px;z-index:3;font-family:'Sora',sans-serif;font-size:14.5px"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" style="width:18px;height:18px"><path d="M20 6 9 17l-5-5"></path></svg>Message sent</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer data-screen-label="Footer" style="position:relative;z-index:1;padding:70px 40px 30px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.6),rgba(124,92,255,.6),transparent)"></div>
+      <div data-reveal style="margin-top:46px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:38px;opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <div style="max-width:290px">
+          <div style="display:flex;align-items:center;gap:11px">
+            <span style="position:relative;width:40px;height:40px;flex:none;border-radius:12px;background:linear-gradient(160deg,rgba(255,255,255,.97),rgba(226,236,255,.9));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px -12px rgba(29,78,216,.7)"><img src="assets/jun-logo-mark.png" alt="Jun Technology" width="26" height="21" style="display:block;width:26px;height:auto"></span>
+            <span style="display:flex;flex-direction:column;line-height:1.15">
+              <span style="font-family:'Sora',sans-serif;font-weight:600;font-size:14px"><span style="color:var(--acc5,#4f93ff)">JUN</span>TECHNOLOGY</span>
+              <span style="font-size:8px;letter-spacing:.3em;color:var(--tx36,rgba(232,236,248,.36));text-transform:uppercase">Software Solutions</span>
+            </span>
+          </div>
+          <p style="margin:18px 0 0;font-size:13.5px;line-height:1.7;color:var(--tx5,rgba(232,236,248,.5))">Building modern digital experiences that help businesses grow. Your success is our mission.</p>
+          <div style="display:flex;gap:10px;margin-top:20px">
+            <a href="#contact" aria-label="LinkedIn" data-social data-cursor="expand" style="width:38px;height:38px;border-radius:12px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease" style-hover="background:rgba(59,130,246,.2);border-color:rgba(59,130,246,.5)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:16px;height:16px"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 10v6M8 7.5v.01M12 16v-3.2a1.8 1.8 0 0 1 3.6 0V16"></path></svg></a>
+            <a href="#contact" aria-label="X" data-social data-cursor="expand" style="width:38px;height:38px;border-radius:12px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease" style-hover="background:rgba(124,92,255,.2);border-color:rgba(124,92,255,.5)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:16px;height:16px"><path d="M5 5l14 14M19 5 5 19"></path></svg></a>
+            <a href="#contact" aria-label="GitHub" data-social data-cursor="expand" style="width:38px;height:38px;border-radius:12px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease" style-hover="background:rgba(96,165,250,.2);border-color:rgba(96,165,250,.5)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:16px;height:16px"><path d="M9 19c-4 1.2-4-2.2-5.5-2.8M15 21v-3.4c0-1 .1-1.4-.5-2 2.3-.3 4.5-1.2 4.5-5a3.9 3.9 0 0 0-1-2.7 3.6 3.6 0 0 0-.1-2.7s-1.2-.4-3.9 1.4a9.3 9.3 0 0 0-5 0C6.3 4.8 5.1 5.2 5.1 5.2A3.6 3.6 0 0 0 5 7.9a3.9 3.9 0 0 0-1 2.7c0 3.8 2.2 4.7 4.5 5-.6.6-.6 1.2-.5 2V21"></path></svg></a>
+            <a href="#contact" aria-label="Dribbble" data-social data-cursor="expand" style="width:38px;height:38px;border-radius:12px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease" style-hover="background:rgba(59,130,246,.2);border-color:rgba(59,130,246,.5)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc4,#c7d8fe)" stroke-width="1.6" style="width:16px;height:16px"><circle cx="12" cy="12" r="8.5"></circle><path d="M5 8c5 0 9 1.5 12 5M8.5 20c1.5-6 4-8.5 8-9.5M4.5 14c4-.5 8 1 10 4.5"></path></svg></a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Sora',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx9,rgba(232,236,248,.9))">Company</div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px">
+            <a href="#about" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">About Us</a>
+            <a href="#services" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">Services</a>
+            <a href="#work" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">Portfolio</a>
+            <a href="#contact" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">Careers</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Sora',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx9,rgba(232,236,248,.9))">Services</div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px">
+            <a href="#services" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">Website Development</a>
+            <a href="#services" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">UI/UX Design</a>
+            <a href="#services" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">Website Promotion</a>
+            <a href="#services" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">SEO Optimization</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Sora',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx9,rgba(232,236,248,.9))">Resources</div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px">
+            <a href="#voices" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">Blog</a>
+            <a href="#contact" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">FAQs</a>
+            <a href="#contact" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">Privacy Policy</a>
+            <a href="#contact" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">Terms &amp; Conditions</a>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:44px;padding-top:22px;border-top:1px solid var(--w07,rgba(255,255,255,.07));display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+        <div style="font-size:12.5px;color:var(--tx4,rgba(232,236,248,.4))">© 2026 Jun Technology Software Solutions. All rights reserved.</div>
+        <a href="#home" data-cursor="expand" data-magnetic="5" style="display:inline-flex;align-items:center;gap:9px;padding:9px 16px;border-radius:100px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));font-size:12.5px;color:var(--tx7,rgba(232,236,248,.7));transition:background .35s ease,border-color .35s ease" style-hover="background:rgba(59,130,246,.16);border-color:rgba(59,130,246,.45)">↑ Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div data-modal style="position:fixed;inset:0;z-index:180;display:flex;align-items:center;justify-content:center;padding:40px;background:rgba(3,4,10,.82);backdrop-filter:blur(22px);opacity:0;transition:opacity .5s ease">
+      <div data-modal-card style="position:relative;width:100%;max-width:920px;max-height:88vh;overflow:auto;border-radius:28px;border:1px solid var(--w1,rgba(255,255,255,.1));background:linear-gradient(165deg,var(--pnlA,rgba(13,18,38,.98)),var(--pnlB,rgba(6,8,18,.99)));box-shadow:0 60px 120px -50px rgba(0,0,0,1);transform:translateY(26px) scale(.97);transition:transform .6s cubic-bezier(.16,1,.3,1)">
+        <button data-modal-close data-cursor="expand" aria-label="Close" style="position:absolute;right:18px;top:18px;z-index:3;width:40px;height:40px;border-radius:13px;border:1px solid var(--w12,rgba(255,255,255,.12));background:var(--bgA7,rgba(4,6,15,.7));backdrop-filter:blur(10px);color:var(--tx,#e8ecf8);font-size:17px;cursor:pointer;transition:background .3s ease,transform .35s ease" style-hover="background:var(--w12,rgba(255,255,255,.12))">✕</button>
+        <div style="position:relative;width:100%;aspect-ratio:16/8;overflow:hidden;border-radius:27px 27px 0 0;background:var(--pnlC,#080b18)">
+          <image-slot id="jt-modal-hero" shape="rect" fit="cover" placeholder="Case study hero image"></image-slot>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,8,18,1),transparent 60%);pointer-events:none"></div>
+        </div>
+        <div style="padding:8px 34px 34px">
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <span style="padding:6px 13px;border-radius:100px;font-size:11.5px;background:rgba(59,130,246,.16);border:1px solid rgba(59,130,246,.35)">{{ mCat }}</span>
+            <span style="font-size:12px;letter-spacing:.06em;color:var(--acc1,#8fb4ff)">{{ mStack }}</span>
+          </div>
+          <h3 style="margin:16px 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(26px,3vw,38px);letter-spacing:-.03em">{{ mTitle }}</h3>
+          <p style="margin:14px 0 0;font-size:15px;line-height:1.75;color:var(--tx6,rgba(232,236,248,.6));max-width:660px">{{ mDesc }}</p>
+          <div style="margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px">
+            <div style="padding:16px 18px;border-radius:18px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--w035,rgba(255,255,255,.035))"><div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:600">{{ mM1 }}</div><div style="margin-top:4px;font-size:12px;color:var(--tx45,rgba(232,236,248,.45))">{{ mL1 }}</div></div>
+            <div style="padding:16px 18px;border-radius:18px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--w035,rgba(255,255,255,.035))"><div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:600">{{ mM2 }}</div><div style="margin-top:4px;font-size:12px;color:var(--tx45,rgba(232,236,248,.45))">{{ mL2 }}</div></div>
+            <div style="padding:16px 18px;border-radius:18px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--w035,rgba(255,255,255,.035))"><div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:600">{{ mM3 }}</div><div style="margin-top:4px;font-size:12px;color:var(--tx45,rgba(232,236,248,.45))">{{ mL3 }}</div></div>
+          </div>
+          <div style="margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px">
+            <div data-gal style="position:relative;aspect-ratio:4/3;border-radius:18px;overflow:hidden;border:1px solid var(--w07,rgba(255,255,255,.07));opacity:0;transform:translateY(18px);transition:opacity .7s ease .1s,transform .7s cubic-bezier(.16,1,.3,1) .1s"><image-slot id="jt-modal-g1" shape="rect" fit="cover" placeholder="Gallery 1"></image-slot></div>
+            <div data-gal style="position:relative;aspect-ratio:4/3;border-radius:18px;overflow:hidden;border:1px solid var(--w07,rgba(255,255,255,.07));opacity:0;transform:translateY(18px);transition:opacity .7s ease .22s,transform .7s cubic-bezier(.16,1,.3,1) .22s"><image-slot id="jt-modal-g2" shape="rect" fit="cover" placeholder="Gallery 2"></image-slot></div>
+            <div data-gal style="position:relative;aspect-ratio:4/3;border-radius:18px;overflow:hidden;border:1px solid var(--w07,rgba(255,255,255,.07));opacity:0;transform:translateY(18px);transition:opacity .7s ease .34s,transform .7s cubic-bezier(.16,1,.3,1) .34s"><image-slot id="jt-modal-g3" shape="rect" fit="cover" placeholder="Gallery 3"></image-slot></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark' | 'light'&quot;,&quot;section&quot;:&quot;Experience&quot;},&quot;accentPrimary&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#3b82f6&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#3b82f6&quot;,&quot;#2563eb&quot;,&quot;#6366f1&quot;,&quot;#06b6d4&quot;],&quot;section&quot;:&quot;Brand&quot;},&quot;accentSecondary&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#7c5cff&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#7c5cff&quot;,&quot;#a855f7&quot;,&quot;#3b82f6&quot;,&quot;#22d3ee&quot;],&quot;section&quot;:&quot;Brand&quot;},&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Experience&quot;},&quot;customCursor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Experience&quot;}}">
+class Component extends DCLogic {
+  state = { loading: true, modal: -1 };
+  PROJECTS = [
+    { t: 'CoreLogic CRM', cat: 'Business', stack: 'React · Node.js', d: 'A unified CRM for a 400-seat sales organisation: pipeline analytics, client records, quoting and role-based dashboards, replacing four disconnected internal tools.', m: [['+38%', 'Sales velocity'], ['4→1', 'Tools replaced'], ['11wk', 'To launch']] },
+    { t: 'ShopVault Store', cat: 'E-Commerce', stack: 'Next.js · Stripe', d: 'Headless commerce build with real-time inventory, one-page checkout and a merchandising CMS the client’s own team runs without developers.', m: [['2.1x', 'Conversion'], ['0.9s', 'LCP'], ['+64%', 'AOV lift']] },
+    { t: 'MediConnect', cat: 'Healthcare', stack: 'React · Firebase', d: 'Patient portal and clinician scheduling system with HIPAA-conscious data handling, automated reminders and multi-location capacity planning.', m: [['−72%', 'No-shows'], ['9', 'Clinics live'], ['24/7', 'Booking']] },
+    { t: 'LearnSphere LMS', cat: 'Education', stack: 'Vue.js · Django', d: 'Learning platform with live classes, adaptive quizzing and progress analytics for faculty — built to hold 5,000 concurrent students.', m: [['5k', 'Concurrent'], ['+41%', 'Completion'], ['4.8', 'App rating']] },
+    { t: 'TasteBud Online', cat: 'Restaurant', stack: 'React · Supabase', d: 'Reservation and ordering experience for a six-venue restaurant group, with live table availability and a kitchen-side order display.', m: [['+120%', 'Direct orders'], ['6', 'Venues'], ['18%', 'Fee saved']] },
+    { t: 'ProManage Suite', cat: 'Business', stack: 'React · AWS', d: 'Project management workspace with kanban boards, time tracking and team workload views, deployed as a white-label product for agencies.', m: [['3.4k', 'Daily users'], ['99.9%', 'Uptime'], ['−30%', 'Admin time']] }
+  ];
+  renderVals() {
+    const p = this.PROJECTS[this.state.modal] || this.PROJECTS[0];
+    return {
+      loading: this.state.loading, modalOpen: this.state.modal >= 0,
+      mTitle: p.t, mCat: p.cat, mStack: p.stack, mDesc: p.d,
+      mM1: p.m[0][0], mL1: p.m[0][1], mM2: p.m[1][0], mL2: p.m[1][1], mM3: p.m[2][0], mL3: p.m[2][1]
+    };
+  }
+  get root() { return document.querySelector('[data-root]'); }
+  q(s) { return Array.from(this.root ? this.root.querySelectorAll(s) : []); }
+  one(s) { return this.root ? this.root.querySelector(s) : null; }
+
+  componentDidMount() {
+    const r = this.root;
+    if (r) {
+      r.style.setProperty('--a', this.props.accentPrimary || '#3b82f6');
+      r.style.setProperty('--b', this.props.accentSecondary || '#7c5cff');
+    }
+    if (this.props.showLoader === false) { this.setState({ loading: false }); }
+    else {
+      let p = 0;
+      this.li = setInterval(() => {
+        p = Math.min(100, p + 9 + Math.random() * 17);
+        const bar = this.one('[data-loader-bar]');
+        if (bar) bar.style.width = p + '%';
+        if (p >= 100) { clearInterval(this.li); setTimeout(() => this.exitLoader(), 360); }
+      }, 125);
+    }
+    let saved = null;
+    try { saved = localStorage.getItem('jt-theme'); } catch (e) {}
+    this.applyTheme(saved || this.props.theme || 'dark');
+    const tt = this.one('[data-theme-toggle]');
+    if (tt) this.on(tt, 'click', () => {
+      this.applyTheme(this.theme === 'dark' ? 'light' : 'dark');
+      try { localStorage.setItem('jt-theme', this.theme); } catch (e) {}
+    });
+    this.setupCursor();
+    this.setupParticles();
+    this.setupScroll();
+    this.setupReveal();
+    this.setupInteractions();
+    this.setupFilters();
+    this.setupForm();
+    this.setupNavExtras();
+  }
+  componentWillUnmount() {
+    clearInterval(this.li); cancelAnimationFrame(this.raf);
+    (this.cleanups || []).forEach(f => f());
+  }
+  componentDidUpdate(pp, ps) {
+    if (this.state.modal >= 0 && ps.modal !== this.state.modal) {
+      requestAnimationFrame(() => {
+        const m = this.one('[data-modal]'), c = this.one('[data-modal-card]');
+        if (m) m.style.opacity = '1';
+        if (c) c.style.transform = 'translateY(0) scale(1)';
+        this.q('[data-gal]').forEach(g => { g.style.opacity = '1'; g.style.transform = 'translateY(0)'; });
+        const btn = this.one('[data-modal-close]');
+        if (btn) btn.onclick = () => this.closeModal();
+        if (m) m.onclick = (e) => { if (e.target === m) this.closeModal(); };
+      });
+    }
+  }
+  on(el, ev, fn, opts) { el.addEventListener(ev, fn, opts); (this.cleanups = this.cleanups || []).push(() => el.removeEventListener(ev, fn, opts)); }
+
+  exitLoader() {
+    const el = this.one('[data-loader]');
+    if (el) { el.style.opacity = '0'; el.style.transform = 'scale(1.06)'; }
+    setTimeout(() => this.setState({ loading: false }), 680);
+  }
+  closeModal() {
+    const m = this.one('[data-modal]'), c = this.one('[data-modal-card]');
+    if (m) m.style.opacity = '0';
+    if (c) c.style.transform = 'translateY(26px) scale(.97)';
+    setTimeout(() => this.setState({ modal: -1 }), 380);
+  }
+
+  applyTheme(mode) {
+    const r = this.root;
+    if (!r) return;
+    this.theme = mode === 'light' ? 'light' : 'dark';
+    r.setAttribute('data-theme', this.theme);
+    const fx = this.one('[data-fx]');
+    if (fx) fx.style.opacity = this.theme === 'light' ? '.42' : '1';
+    const d = this.one('[data-theme-ico="dark"]'), l = this.one('[data-theme-ico="light"]');
+    if (d && l) {
+      const on = this.theme === 'light';
+      d.style.opacity = on ? '0' : '1'; d.style.transform = on ? 'rotate(90deg) scale(.5)' : 'none';
+      l.style.opacity = on ? '1' : '0'; l.style.transform = on ? 'none' : 'rotate(-90deg) scale(.5)';
+    }
+    document.body.style.background = this.theme === 'light' ? '#f2f5fb' : '#04060f';
+  }
+
+  setupCursor() {
+    const dot = this.one('[data-cursor-dot]'), ring = this.one('[data-cursor-ring]'), txt = this.one('[data-cursor-text]'), spot = this.one('[data-spotlight]');
+    if (!dot) return;
+    const fine = window.matchMedia('(pointer:fine)').matches;
+    const st = { x: innerWidth / 2, y: innerHeight / 2, rx: innerWidth / 2, ry: innerHeight / 2, sx: innerWidth / 2, sy: innerHeight / 2 };
+    if (fine && this.props.customCursor !== false) {
+      document.documentElement.style.cursor = 'none';
+      this.on(document, 'mousemove', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; }, { once: true });
+    }
+    this.on(window, 'mousemove', e => { st.x = e.clientX; st.y = e.clientY; if (spot) spot.style.opacity = '1'; });
+    this.on(window, 'mousedown', e => {
+      const rp = document.createElement('div');
+      rp.style.cssText = 'position:fixed;left:' + e.clientX + 'px;top:' + e.clientY + 'px;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:1px solid rgba(150,180,255,.7);z-index:201;pointer-events:none;transition:transform .6s cubic-bezier(.16,1,.3,1),opacity .6s ease';
+      document.body.appendChild(rp);
+      requestAnimationFrame(() => { rp.style.transform = 'scale(4.5)'; rp.style.opacity = '0'; });
+      setTimeout(() => rp.remove(), 700);
+    });
+    const tick = () => {
+      st.rx += (st.x - st.rx) * .16; st.ry += (st.y - st.ry) * .16;
+      st.sx += (st.x - st.sx) * .045; st.sy += (st.y - st.sy) * .045;
+      dot.style.transform = 'translate3d(' + st.x + 'px,' + st.y + 'px,0)';
+      ring.style.transform = 'translate3d(' + st.rx + 'px,' + st.ry + 'px,0)';
+      if (spot) spot.style.transform = 'translate3d(' + st.sx + 'px,' + st.sy + 'px,0)';
+      this.raf = requestAnimationFrame(tick);
+    };
+    tick();
+    const grow = (size, label) => {
+      ring.style.width = size + 'px'; ring.style.height = size + 'px'; ring.style.margin = (-size / 2) + 'px 0 0 ' + (-size / 2) + 'px';
+      ring.style.background = label ? 'rgba(59,130,246,.9)' : 'rgba(150,180,255,.1)';
+      ring.style.borderColor = label ? 'rgba(59,130,246,.9)' : 'rgba(150,180,255,.55)';
+      if (txt) { txt.textContent = label || ''; txt.style.opacity = label ? '1' : '0'; }
+      dot.style.opacity = label ? '0' : '1';
+    };
+    const reset = () => grow(36, '');
+    this.q('[data-cursor="expand"], button, a, input, textarea').forEach(el => {
+      this.on(el, 'mouseenter', () => grow(60, ''));
+      this.on(el, 'mouseleave', reset);
+    });
+    this.q('[data-cursor-label]').forEach(el => {
+      this.on(el, 'mouseenter', () => grow(96, el.getAttribute('data-cursor-label')));
+      this.on(el, 'mouseleave', reset);
+    });
+    this.q('h1, h2, h3, p').forEach(el => {
+      this.on(el, 'mouseenter', () => { ring.style.width = '3px'; ring.style.height = '30px'; ring.style.margin = '-15px 0 0 -1.5px'; ring.style.borderRadius = '2px'; ring.style.background = 'rgba(150,180,255,.7)'; });
+      this.on(el, 'mouseleave', () => { ring.style.borderRadius = '50%'; reset(); });
+    });
+  }
+
+  setupParticles() {
+    const cv = this.one('[data-particles]');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    let w = 0, h = 0, dpr = Math.min(2, devicePixelRatio || 1), parts = [], mx = -999, my = -999;
+    const size = () => {
+      w = cv.clientWidth; h = cv.clientHeight;
+      cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.min(90, Math.round(w * h / 20000));
+      parts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.7 + .5, vx: (Math.random() - .5) * .16, vy: -(Math.random() * .22 + .05), a: Math.random() * .5 + .2, c: Math.random() > .55 ? '124,92,255' : '96,165,250' }));
+    };
+    size();
+    this.on(window, 'resize', size);
+    this.on(window, 'mousemove', e => { mx = e.clientX; my = e.clientY; });
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      parts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        const dx = p.x - mx, dy = p.y - my, d2 = dx * dx + dy * dy;
+        if (d2 < 16000) { const f = (1 - d2 / 16000) * .9; p.x += dx / Math.sqrt(d2 || 1) * f; p.y += dy / Math.sqrt(d2 || 1) * f; }
+        if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+        if (p.x < -10) p.x = w + 10; if (p.x > w + 10) p.x = -10;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+        ctx.fillStyle = 'rgba(' + p.c + ',' + p.a + ')'; ctx.fill();
+      });
+      this.praf = requestAnimationFrame(draw);
+    };
+    draw();
+    (this.cleanups = this.cleanups || []).push(() => cancelAnimationFrame(this.praf));
+  }
+
+  setupScroll() {
+    const bar = this.one('[data-progress]'), nav = this.one('[data-nav]');
+    const links = this.q('[data-navlink]'), pill = this.one('[data-nav-pill]');
+    const secs = ['home', 'about', 'services', 'work', 'voices', 'contact'].map(id => this.one('#' + id)).filter(Boolean);
+    const movePill = (a) => {
+      if (!pill || !a) return;
+      pill.style.width = a.offsetWidth + 'px';
+      pill.style.transform = 'translateX(' + a.offsetLeft + 'px)';
+      pill.style.opacity = '1';
+    };
+    const onScroll = () => {
+      const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+      if (bar) bar.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+      if (nav) nav.style.padding = y > 30 ? '10px 24px' : '20px 24px';
+      let active = secs[0];
+      secs.forEach(s => { if (s.getBoundingClientRect().top <= innerHeight * .4) active = s; });
+      links.forEach(l => {
+        const on = l.getAttribute('data-navlink') === (active && active.id);
+        l.style.color = on ? 'var(--tx,#fff)' : 'var(--tx66,rgba(232,236,248,.66))';
+        if (on) movePill(l);
+      });
+      this.q('[data-parallax]').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const prog = (rect.top + rect.height / 2 - innerHeight / 2) / innerHeight;
+        el.style.transform = 'translate3d(0,' + (prog * parseFloat(el.getAttribute('data-parallax'))) + 'px,0)';
+      });
+    };
+    this.on(window, 'scroll', onScroll, { passive: true });
+    onScroll();
+    this.q('[data-hero-parallax]').forEach(el => {
+      const amt = parseFloat(el.getAttribute('data-hero-parallax'));
+      this.on(window, 'mousemove', e => {
+        const nx = (e.clientX / innerWidth - .5), ny = (e.clientY / innerHeight - .5);
+        el.style.transform = 'translate3d(' + (nx * amt * 8) + 'px,' + (ny * amt * 8) + 'px,0)';
+      });
+    });
+    const stack = this.one('[data-orbit-stack]');
+    if (stack) this.on(window, 'mousemove', e => {
+      const nx = (e.clientX / innerWidth - .5), ny = (e.clientY / innerHeight - .5);
+      stack.style.transform = 'rotateY(' + (nx * 16) + 'deg) rotateX(' + (-ny * 12) + 'deg)';
+    });
+    this.q('a[href^="#"]').forEach(a => this.on(a, 'click', e => {
+      const t = this.one(a.getAttribute('href'));
+      if (!t) return;
+      e.preventDefault();
+      const start = scrollY, end = t.getBoundingClientRect().top + scrollY - (a.getAttribute('href') === '#home' ? 0 : 90), t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / 1100), e2 = 1 - Math.pow(1 - p, 4);
+        scrollTo(0, start + (end - start) * e2);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      const mm = this.one('[data-mobile-menu]');
+      if (mm) { mm.style.opacity = '0'; mm.style.pointerEvents = 'none'; }
+    }));
+  }
+
+  setupReveal() {
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target, d = parseInt(el.getAttribute('data-delay') || '0', 10);
+      setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'none'; el.style.filter = 'none'; }, d);
+      io.unobserve(el);
+    }), { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    this.q('[data-reveal]').forEach(el => io.observe(el));
+    const cio = new IntersectionObserver(es => es.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target, target = parseFloat(el.getAttribute('data-count')), suf = el.getAttribute('data-suffix') || '';
+      const t0 = performance.now(), dur = 1900;
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / dur), e2 = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * e2) + suf;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      const icon = el.parentElement && el.parentElement.querySelector('[data-stat-icon]');
+      if (icon) { icon.style.transform = 'rotate(360deg)'; setTimeout(() => { icon.style.transition = 'none'; icon.style.transform = 'none'; }, 800); }
+      cio.unobserve(el);
+    }), { threshold: .5 });
+    this.q('[data-count]').forEach(el => cio.observe(el));
+  }
+
+  setupInteractions() {
+    this.q('[data-magnetic]').forEach(el => {
+      const amt = parseFloat(el.getAttribute('data-magnetic')) || 8;
+      this.on(el, 'mousemove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) / r.width * amt * 2) + 'px,' + ((e.clientY - r.top - r.height / 2) / r.height * amt * 2) + 'px) scale(1.03)';
+      });
+      this.on(el, 'mouseleave', () => { el.style.transform = 'none'; });
+      this.on(el, 'mousedown', () => { el.style.transform += ' scale(.96)'; });
+    });
+    this.q('[data-ripple]').forEach(el => this.on(el, 'click', e => {
+      const r = el.getBoundingClientRect(), s = document.createElement('span');
+      s.style.cssText = 'position:absolute;left:' + (e.clientX - r.left) + 'px;top:' + (e.clientY - r.top) + 'px;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--w5,rgba(255,255,255,.5));pointer-events:none;transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .7s ease';
+      el.appendChild(s);
+      requestAnimationFrame(() => { s.style.transform = 'scale(16)'; s.style.opacity = '0'; });
+      setTimeout(() => s.remove(), 760);
+    }));
+    this.q('[data-tilt]').forEach(el => {
+      const amt = parseFloat(el.getAttribute('data-tilt')) || 6;
+      this.on(el, 'mousemove', e => {
+        const r = el.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - .5, ny = (e.clientY - r.top) / r.height - .5;
+        el.style.transform = 'perspective(900px) rotateY(' + (nx * amt) + 'deg) rotateX(' + (-ny * amt) + 'deg) translateY(-6px)';
+      });
+      this.on(el, 'mouseleave', () => { el.style.transform = 'none'; });
+    });
+    this.q('[data-service]').forEach(card => {
+      const shine = card.querySelector('[data-shine]'), icon = card.querySelector('[data-svc-icon]'), arrow = card.querySelector('[data-arrow]');
+      this.on(card, 'mouseenter', () => {
+        card.style.borderColor = 'rgba(96,165,250,.42)';
+        card.style.boxShadow = '0 40px 80px -40px rgba(59,130,246,.75)';
+        if (shine) shine.style.left = '130%';
+        if (icon) icon.style.transform = 'rotate(-9deg) scale(1.1)';
+        if (arrow) arrow.style.gap = '13px';
+      });
+      this.on(card, 'mouseleave', () => {
+        card.style.borderColor = 'var(--w07,rgba(255,255,255,.07))';
+        card.style.boxShadow = 'none';
+        if (shine) { shine.style.transition = 'none'; shine.style.left = '-60%'; requestAnimationFrame(() => { shine.style.transition = 'left .85s cubic-bezier(.16,1,.3,1)'; }); }
+        if (icon) icon.style.transform = 'none';
+        if (arrow) arrow.style.gap = '7px';
+      });
+    });
+    this.q('[data-project]').forEach(card => {
+      const zoom = card.querySelector('[data-zoom]'), scrim = card.querySelector('[data-scrim]'), up = card.querySelector('[data-slideup]');
+      this.on(card, 'mouseenter', () => {
+        card.style.borderColor = 'rgba(96,165,250,.45)';
+        card.style.boxShadow = '0 50px 90px -44px rgba(59,130,246,.8)';
+        if (zoom) zoom.style.transform = 'scale(1.08)';
+        if (scrim) scrim.style.opacity = '.9';
+        if (up) { up.style.maxHeight = '140px'; up.style.opacity = '1'; }
+      });
+      this.on(card, 'mouseleave', () => {
+        card.style.borderColor = 'var(--w07,rgba(255,255,255,.07))';
+        card.style.boxShadow = 'none';
+        if (zoom) zoom.style.transform = 'none';
+        if (scrim) scrim.style.opacity = '.5';
+        if (up) { up.style.maxHeight = '0'; up.style.opacity = '0'; }
+      });
+      this.on(card, 'click', () => this.setState({ modal: parseInt(card.getAttribute('data-project'), 10) }));
+    });
+    this.q('[data-tcard]').forEach(c => {
+      this.on(c, 'mouseenter', () => { c.style.boxShadow = '0 40px 80px -40px rgba(59,130,246,.7)'; });
+      this.on(c, 'mouseleave', () => { c.style.boxShadow = 'none'; });
+    });
+    const mq = this.one('[data-marquee]'), wrap = this.one('[data-marquee-wrap]');
+    if (mq && wrap) {
+      mq.innerHTML += mq.innerHTML;
+      this.on(wrap, 'mouseenter', () => { mq.style.animationPlayState = 'paused'; });
+      this.on(wrap, 'mouseleave', () => { mq.style.animationPlayState = 'running'; });
+    }
+    this.q('[data-lift]').forEach(el => {
+      this.on(el, 'mouseenter', () => { el.style.transform = 'translateY(-5px)'; });
+      this.on(el, 'mouseleave', () => { el.style.transform = 'none'; });
+    });
+    this.q('[data-social]').forEach(el => {
+      this.on(el, 'mouseenter', () => { el.style.transform = 'translateY(-4px) rotate(-8deg)'; });
+      this.on(el, 'mouseleave', () => { el.style.transform = 'none'; });
+    });
+    this.q('[data-flink]').forEach(el => {
+      this.on(el, 'mouseenter', () => { el.style.transform = 'translateX(5px)'; });
+      this.on(el, 'mouseleave', () => { el.style.transform = 'none'; });
+    });
+    const logo = this.one('[data-logo-mark]');
+    if (logo) {
+      this.on(logo, 'mouseenter', () => { logo.style.transform = 'rotate(-12deg) scale(1.1)'; logo.style.boxShadow = '0 12px 30px -10px rgba(59,130,246,1)'; });
+      this.on(logo, 'mouseleave', () => { logo.style.transform = 'none'; logo.style.boxShadow = 'none'; });
+    }
+    const map = this.one('[data-map]');
+    if (map) {
+      const p1 = map.querySelector('[data-map-pulse]'), p2 = map.querySelector('[data-map-pulse2]');
+      let t = 0;
+      const beat = () => {
+        t += .02;
+        const s = 1 + Math.sin(t) * .25;
+        if (p1) { p1.setAttribute('r', String(10 * s)); p1.setAttribute('opacity', String(.4 - Math.sin(t) * .12)); }
+        if (p2) { p2.setAttribute('r', String(22 * s)); p2.setAttribute('opacity', String(.16 - Math.sin(t) * .07)); }
+        this.mraf = requestAnimationFrame(beat);
+      };
+      beat();
+      (this.cleanups = this.cleanups || []).push(() => cancelAnimationFrame(this.mraf));
+    }
+  }
+
+  setupFilters() {
+    const pills = this.q('[data-filter]'), cards = this.q('[data-card]');
+    const apply = (cat, btn) => {
+      pills.forEach(p => {
+        const on = p === btn;
+        p.style.background = on ? 'linear-gradient(120deg,#3b82f6,#6d5cff)' : 'var(--w04,rgba(255,255,255,.04))';
+        p.style.color = on ? '#fff' : 'var(--tx62,rgba(232,236,248,.62))';
+        p.style.borderColor = on ? 'transparent' : 'var(--w09,rgba(255,255,255,.09))';
+        p.style.transform = on ? 'translateY(-2px)' : 'none';
+      });
+      cards.forEach((c, i) => {
+        const show = cat === 'all' || c.getAttribute('data-cat') === cat;
+        if (show) {
+          c.style.display = '';
+          setTimeout(() => { c.style.opacity = '1'; c.style.transform = 'none'; c.style.filter = 'none'; }, 40 + i * 55);
+        } else {
+          c.style.opacity = '0'; c.style.transform = 'translateY(14px) scale(.95)'; c.style.filter = 'blur(6px)';
+          setTimeout(() => { if (c.style.opacity === '0') c.style.display = 'none'; }, 420);
+        }
+      });
+    };
+    pills.forEach(p => this.on(p, 'click', () => apply(p.getAttribute('data-filter'), p)));
+    if (pills[0]) apply('all', pills[0]);
+  }
+
+  setupForm() {
+    const form = this.one('[data-form]');
+    if (!form) return;
+    form.noValidate = true;
+    const fields = this.q('[data-field]');
+    ['name', 'email', 'subject', 'message'].forEach(n => {
+      const i = form.querySelector('[name="' + n + '"]');
+      if (i) i.required = true;
+    });
+    const float = (inp, lab, on) => {
+      lab.style.transform = on ? 'translateY(-9px) scale(.74)' : 'none';
+      lab.style.color = on ? 'rgba(143,180,255,.9)' : 'var(--tx42,rgba(232,236,248,.42))';
+    };
+    const validate = (f, show) => {
+      const inp = f.querySelector('[data-input]'), err = f.querySelector('[data-err]');
+      const v = inp.value.trim();
+      let msg = '';
+      if (inp.required && !v) msg = 'This field is required';
+      else if (inp.type === 'email' && v && !/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v)) msg = 'Enter a valid email address';
+      if (show) {
+        err.textContent = msg;
+        err.style.height = msg ? '18px' : '0';
+        err.style.padding = msg ? '6px 0 0 2px' : '0';
+        inp.style.borderColor = msg ? 'rgba(251,113,133,.7)' : (v ? 'rgba(74,222,128,.55)' : 'var(--w1,rgba(255,255,255,.1))');
+      }
+      return !msg;
+    };
+    fields.forEach(f => {
+      const inp = f.querySelector('[data-input]'), lab = f.querySelector('[data-label]');
+      this.on(inp, 'focus', () => { float(inp, lab, true); inp.style.borderColor = 'rgba(96,165,250,.75)'; inp.style.background = 'rgba(59,130,246,.07)'; inp.style.boxShadow = '0 0 0 4px rgba(59,130,246,.12)'; });
+      this.on(inp, 'blur', () => { float(inp, lab, !!inp.value); inp.style.background = 'var(--w03,rgba(255,255,255,.03))'; inp.style.boxShadow = 'none'; validate(f, true); });
+      this.on(inp, 'input', () => { if (inp.value) validate(f, true); });
+    });
+    this.on(form, 'submit', e => {
+      e.preventDefault();
+      const ok = fields.map(f => validate(f, true)).every(Boolean);
+      if (!ok) { form.style.transform = 'translateX(-6px)'; setTimeout(() => { form.style.transition = 'transform .4s cubic-bezier(.16,1,.3,1)'; form.style.transform = 'none'; }, 90); return; }
+      const btn = this.one('[data-submit]'), lab = this.one('[data-submit-label]'), sp = this.one('[data-spinner]'), ck = this.one('[data-check]');
+      lab.style.opacity = '0'; sp.style.display = 'flex';
+      setTimeout(() => {
+        sp.style.display = 'none'; ck.style.display = 'flex';
+        btn.style.background = 'linear-gradient(120deg,#22c55e,#16a34a)';
+        setTimeout(() => {
+          fields.forEach(f => { const i = f.querySelector('[data-input]'), l = f.querySelector('[data-label]'); i.value = ''; i.style.borderColor = 'var(--w1,rgba(255,255,255,.1))'; float(i, l, false); });
+          ck.style.display = 'none'; lab.style.opacity = '1';
+          btn.style.background = 'linear-gradient(120deg,#3b82f6,#6d5cff)';
+        }, 2400);
+      }, 1400);
+    });
+  }
+
+  setupNavExtras() {
+    const burger = this.one('[data-burger]'), menu = this.one('[data-mobile-menu]');
+    if (!burger || !menu) return;
+    const lines = Array.from(burger.querySelectorAll('[data-burger-line]'));
+    let open = false;
+    const sync = () => { burger.style.display = innerWidth <= 900 ? 'flex' : 'none'; };
+    sync(); this.on(window, 'resize', sync);
+    this.on(burger, 'click', () => {
+      open = !open;
+      menu.style.opacity = open ? '1' : '0';
+      menu.style.pointerEvents = open ? 'auto' : 'none';
+      lines[0].style.transform = open ? 'translateY(3.5px) rotate(45deg)' : 'none';
+      lines[1].style.transform = open ? 'translateY(-3px) rotate(-45deg)' : 'none';
+    });
+  }
+}
+
+</script>
+</body>
+</html>

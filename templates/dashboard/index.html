@@ -1,0 +1,78 @@
+{% extends "dashboard/base.html" %}
+{% block crumb %}Overview{% endblock %}
+
+{% block actions %}
+<a class="btn btn-ghost btn-sm" href="/" target="_blank" rel="noopener">View website ↗</a>
+<a class="btn btn-sm" href="{% url 'dashboard:singleton' 'site' %}">Brand &amp; SEO</a>
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-4" style="margin-bottom:18px">
+  {% for label, count, key in counts %}
+  <a class="stat-tile" href="{% url 'dashboard:collection_list' key %}" style="display:block;color:inherit">
+    <div class="n">{{ count }}</div>
+    <div class="l">{{ label }}</div>
+  </a>
+  {% endfor %}
+</div>
+
+<div class="grid grid-2">
+  <div class="card" style="margin:0">
+    <h2>Recent enquiries</h2>
+    <div class="card-note">{{ new_messages }} unread of {{ total_messages }} total.</div>
+    {% if recent_messages %}
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>From</th><th>Subject</th><th>Status</th><th>Received</th></tr></thead>
+        <tbody>
+          {% for m in recent_messages %}
+          <tr>
+            <td><a href="{% url 'dashboard:message_detail' m.pk %}">{{ m.name }}</a></td>
+            <td>{{ m.subject|truncatechars:40 }}</td>
+            <td><span class="pill pill-{{ m.status }}">{{ m.get_status_display }}</span></td>
+            <td>{{ m.created_at|date:"j M, H:i" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <a class="btn btn-ghost btn-sm" style="margin-top:14px" href="{% url 'dashboard:messages' %}">All enquiries</a>
+    {% else %}
+    <div class="empty">No enquiries yet.</div>
+    {% endif %}
+  </div>
+
+  <div class="card" style="margin:0">
+    <h2>Images to upload</h2>
+    <div class="card-note">Anywhere the site is still showing a placeholder frame.</div>
+    {% if missing_images %}
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          {% for label, url in missing_images %}
+          <tr><td>{{ label }}</td><td class="actions"><a class="btn btn-ghost btn-sm" href="{{ url }}">Upload</a></td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty">Every image slot is filled.</div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card">
+  <h2>Quick edits</h2>
+  <div class="card-note">The sections people change most often.</div>
+  <div class="grid grid-4">
+    <a class="btn btn-ghost" href="{% url 'dashboard:singleton' 'hero' %}">Hero</a>
+    <a class="btn btn-ghost" href="{% url 'dashboard:collection_list' 'services' %}">Services</a>
+    <a class="btn btn-ghost" href="{% url 'dashboard:collection_list' 'projects' %}">Projects</a>
+    <a class="btn btn-ghost" href="{% url 'dashboard:collection_list' 'testimonials' %}">Testimonials</a>
+    <a class="btn btn-ghost" href="{% url 'dashboard:collection_list' 'contact-details' %}">Contact details</a>
+    <a class="btn btn-ghost" href="{% url 'dashboard:collection_list' 'stats' %}">Statistics</a>
+    <a class="btn btn-ghost" href="{% url 'dashboard:singleton' 'about' %}">About</a>
+    <a class="btn btn-ghost" href="{% url 'dashboard:singleton' 'footer' %}">Footer</a>
+  </div>
+</div>
+{% endblock %}

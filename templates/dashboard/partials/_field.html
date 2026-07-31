@@ -1,0 +1,20 @@
+{% if field.field.widget.input_type == "checkbox" %}
+<div class="field">
+  <div class="check-row">{{ field }}<label for="{{ field.id_for_label }}">{{ field.label }}</label></div>
+  {% if field.help_text %}<div class="help">{{ field.help_text|safe }}</div>{% endif %}
+  {% if field.errors %}<ul class="errors">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+</div>
+{% else %}
+<div class="field">
+  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+  {% if field.value and field.field.widget.input_type == "file" %}
+    <div class="current-file">
+      <img class="thumb" src="{{ field.value.url }}" alt="">
+      <span class="help" style="margin:0">Current image — upload a new file to replace it.</span>
+    </div>
+  {% endif %}
+  {{ field }}
+  {% if field.help_text %}<div class="help">{{ field.help_text|safe }}</div>{% endif %}
+  {% if field.errors %}<ul class="errors">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+</div>
+{% endif %}

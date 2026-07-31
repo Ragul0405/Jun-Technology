@@ -1,0 +1,65 @@
+{% extends "dashboard/base.html" %}
+{% block crumb %}Content{% endblock %}
+
+{% block actions %}
+<form class="searchbar" method="get">
+  <input class="fld" type="search" name="q" value="{{ search }}" placeholder="Search…">
+  <button class="btn btn-ghost btn-sm" type="submit">Search</button>
+</form>
+<a class="btn btn-sm" href="{% url 'dashboard:collection_create' key %}">Add {{ spec.singular }}</a>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="padding:0;overflow:hidden">
+  {% if rows %}
+  <div class="table-wrap" style="border:none">
+    <table>
+      <thead>
+        <tr>
+          {% if spec.image_field %}<th style="width:110px">Image</th>{% endif %}
+          {% for name, label in spec.columns %}<th>{{ label }}</th>{% endfor %}
+          <th style="width:90px">Order</th>
+          <th style="width:110px">Status</th>
+          <th style="width:190px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          {% if spec.image_field %}
+          <td>{% if row.image %}<img class="thumb" src="{{ row.image.url }}" alt="">{% else %}<div class="thumb-empty">No image</div>{% endif %}</td>
+          {% endif %}
+          {% for value in row.values %}<td>{% if forloop.first %}<a href="{{ row.edit_url }}">{{ value }}</a>{% else %}{{ value }}{% endif %}</td>{% endfor %}
+          <td>{{ row.obj.order }}</td>
+          <td>
+            <form method="post" action="{% url 'dashboard:collection_toggle' key row.obj.pk %}">{% csrf_token %}
+              <button type="submit" class="pill {% if row.obj.is_active %}pill-on{% else %}pill-off{% endif %}" style="background:none;cursor:pointer;font-family:inherit">{% if row.obj.is_active %}Visible{% else %}Hidden{% endif %}</button>
+            </form>
+          </td>
+          <td class="actions">
+            <a class="btn btn-ghost btn-sm" href="{{ row.edit_url }}">Edit</a>
+            <form method="post" action="{% url 'dashboard:collection_delete' key row.obj.pk %}" data-confirm="Delete this {{ spec.singular }}? This cannot be undone.">{% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty">
+    Nothing here yet.<br><br>
+    <a class="btn btn-sm" href="{% url 'dashboard:collection_create' key %}">Add the first {{ spec.singular }}</a>
+  </div>
+  {% endif %}
+</div>
+
+{% if page.paginator.num_pages > 1 %}
+<div class="pager">
+  {% if page.has_previous %}<a class="btn btn-ghost btn-sm" href="?page={{ page.previous_page_number }}{% if search %}&q={{ search }}{% endif %}">Previous</a>{% endif %}
+  <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+  {% if page.has_next %}<a class="btn btn-ghost btn-sm" href="?page={{ page.next_page_number }}{% if search %}&q={{ search }}{% endif %}">Next</a>{% endif %}
+</div>
+{% endif %}
+{% endblock %}

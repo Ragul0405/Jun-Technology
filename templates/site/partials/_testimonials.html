@@ -1,0 +1,22 @@
+{% load site_extras %}
+  <section id="voices" data-screen-label="Testimonials" style="position:relative;z-index:1;padding:100px 0">
+    <div data-reveal style="text-align:center;padding:0 40px;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+      {% if testimonials_section.eyebrow %}<div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc2,#c4b5fd)">{{ testimonials_section.eyebrow }}</div>{% endif %}
+      <h2 style="margin:{% if testimonials_section.eyebrow %}16px{% else %}0{% endif %} 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">{{ testimonials_section.heading }}</h2>
+      <p style="margin:14px auto 0;max-width:560px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">{{ testimonials_section.subheading }}</p>
+    </div>
+    <div data-marquee-wrap style="position:relative;margin-top:52px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+      <div data-marquee style="display:flex;gap:20px;width:max-content;animation:marquee {{ testimonials_section.scroll_seconds }}s linear infinite;padding:10px 20px">
+        {% for item in testimonials %}
+        <div data-tcard data-tilt="5" style="width:380px;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s ease;transform-style:preserve-3d">
+          {% icon "quote" stroke=item.accent_solid size="24px" extra="opacity:.7" %}
+          <div style="margin-top:16px;font-size:14.5px;line-height:1.75;color:var(--tx72,rgba(232,236,248,.72))">"{{ item.quote }}"</div>
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--w07,rgba(255,255,255,.07));display:flex;align-items:center;gap:12px">
+            <div style="position:relative;width:42px;height:42px;flex:none"><span style="position:absolute;inset:-4px;border-radius:50%;border:1px solid {{ item.accent_ring }};animation:pulseRing 3s ease-out {{ forloop.counter0|ring_delay }} infinite"></span>{% include "site/partials/_media.html" with image=item.avatar alt=item.author_name placeholder=item.initials circle=True %}</div>
+            <div><div style="font-family:'Sora',sans-serif;font-size:14px">{{ item.author_name }}</div><div style="font-size:12px;color:var(--tx45,rgba(232,236,248,.45))">{{ item.author_role }}</div></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>

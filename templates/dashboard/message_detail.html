@@ -1,0 +1,50 @@
+{% extends "dashboard/base.html" %}
+{% block crumb %}<a href="{% url 'dashboard:messages' %}">Enquiries</a>{% endblock %}
+
+{% block actions %}
+<a class="btn btn-ghost btn-sm" href="mailto:{{ message.email }}?subject=Re: {{ message.subject|urlencode }}">Reply by email</a>
+<a class="btn btn-ghost btn-sm" href="{% url 'dashboard:messages' %}">Back</a>
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-2">
+  <div class="card" style="margin:0">
+    <h2>Message</h2>
+    <div class="card-note">Received {{ message.created_at|date:"j F Y, H:i" }}</div>
+    <p style="white-space:pre-wrap;line-height:1.75;color:var(--tx7);margin:0">{{ message.message }}</p>
+  </div>
+
+  <div>
+    <div class="card">
+      <h2>Sender</h2>
+      <div class="card-note">&nbsp;</div>
+      <div class="field"><span class="field-label">Name</span>{{ message.name }}</div>
+      <div class="field"><span class="field-label">Email</span><a href="mailto:{{ message.email }}">{{ message.email }}</a></div>
+      <div class="field"><span class="field-label">Phone</span>{{ message.phone|default:"—" }}</div>
+      <div class="field" style="margin:0"><span class="field-label">Subject</span>{{ message.subject }}</div>
+    </div>
+
+    <div class="card">
+      <h2>Status</h2>
+      <div class="card-note">&nbsp;</div>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.status }}
+        <button type="submit" class="btn btn-sm" style="margin-top:12px">Update status</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Technical</h2>
+      <div class="card-note">&nbsp;</div>
+      <div class="field"><span class="field-label">IP address</span>{{ message.ip_address|default:"—" }}</div>
+      <div class="field" style="margin:0"><span class="field-label">User agent</span><span class="help" style="margin:0">{{ message.user_agent|default:"—" }}</span></div>
+    </div>
+
+    <form method="post" action="{% url 'dashboard:message_delete' message.pk %}" data-confirm="Delete this enquiry permanently?">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger btn-sm">Delete enquiry</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

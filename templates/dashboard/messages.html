@@ -1,0 +1,47 @@
+{% extends "dashboard/base.html" %}
+{% block crumb %}Enquiries{% endblock %}
+
+{% block actions %}
+<form class="searchbar" method="get">
+  <input class="fld" type="search" name="q" value="{{ search }}" placeholder="Search by name…">
+  <select class="fld fld-select" name="status" style="width:150px;padding:9px 34px 9px 13px;font-size:13px">
+    <option value="">All statuses</option>
+    {% for value, label in status_choices %}<option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+  </select>
+  <button class="btn btn-ghost btn-sm" type="submit">Filter</button>
+</form>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="padding:0;overflow:hidden">
+  {% if page.object_list %}
+  <div class="table-wrap" style="border:none">
+    <table>
+      <thead><tr><th>From</th><th>Subject</th><th>Phone</th><th>Status</th><th>Received</th><th></th></tr></thead>
+      <tbody>
+        {% for m in page.object_list %}
+        <tr>
+          <td><a href="{% url 'dashboard:message_detail' m.pk %}">{{ m.name }}</a><div class="help" style="margin:2px 0 0">{{ m.email }}</div></td>
+          <td>{{ m.subject|truncatechars:50 }}</td>
+          <td>{{ m.phone|default:"—" }}</td>
+          <td><span class="pill pill-{{ m.status }}">{{ m.get_status_display }}</span></td>
+          <td>{{ m.created_at|date:"j M Y, H:i" }}</td>
+          <td class="actions"><a class="btn btn-ghost btn-sm" href="{% url 'dashboard:message_detail' m.pk %}">Open</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty">No enquiries found.</div>
+  {% endif %}
+</div>
+
+{% if page.paginator.num_pages > 1 %}
+<div class="pager">
+  {% if page.has_previous %}<a class="btn btn-ghost btn-sm" href="?page={{ page.previous_page_number }}{% if search %}&q={{ search }}{% endif %}{% if status %}&status={{ status }}{% endif %}">Previous</a>{% endif %}
+  <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+  {% if page.has_next %}<a class="btn btn-ghost btn-sm" href="?page={{ page.next_page_number }}{% if search %}&q={{ search }}{% endif %}{% if status %}&status={{ status }}{% endif %}">Next</a>{% endif %}
+</div>
+{% endif %}
+{% endblock %}
