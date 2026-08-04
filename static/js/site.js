@@ -587,6 +587,8 @@
       if (url) {
         card.style.cursor = "pointer";
         on(card, "click", function () {
+          var slug = serviceSlugIn(url);
+          if (slug && jumpToEnquiry(slug)) return; // stay on the page
           if (url.charAt(0) === "#") {
             var target = document.querySelector(url);
             if (target) target.scrollIntoView({ behavior: "smooth" });
@@ -1166,40 +1168,58 @@
    * all — just to reach a form that is already below. Instead pick the
    * service, scroll down, and leave the address bar tidy.
    */
-  function setupServiceLinks() {
+  /**
+   * Take the visitor to the enquiry form with a service already chosen,
+   * without leaving the page.
+   *
+   * Returns false when the form is not on this page, so the caller can fall
+   * back to following the link.
+   */
+  function jumpToEnquiry(slug) {
     var form = one("[data-form]");
-    if (!form) return;
-    var picker = form.querySelector('[name="service"]');
     var contact = one("#contact");
-    if (!picker || !contact) return;
+    var name = (cfg.services || {})[slug];
+    if (!form || !contact || !name) return false;
 
+    var picker = form.querySelector('[name="service"]');
+    if (picker) {
+      for (var i = 0; i < picker.options.length; i++) {
+        if (picker.options[i].text === name) {
+          picker.selectedIndex = i;
+          picker.dispatchEvent(new Event("change", { bubbles: true }));
+          break;
+        }
+      }
+    }
+
+    var subject = form.querySelector('[name="subject"]');
+    if (subject && !subject.value) {
+      subject.value = name + " enquiry";
+      var label = subject.closest("[data-field]").querySelector("[data-label]");
+      if (label) {
+        label.style.transform = "translateY(-9px) scale(.74)";
+        label.style.color = "rgba(143,180,255,.9)";
+      }
+    }
+
+    contact.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (window.history && history.replaceState) {
+      history.replaceState(null, "", "#contact");
+    }
+    return true;
+  }
+
+  function serviceSlugIn(url) {
+    var match = /[?&]service=([\w-]+)/.exec(url || "");
+    return match ? match[1] : null;
+  }
+
+  function setupServiceLinks() {
     q('a[href*="?service="]').forEach(function (link) {
       on(link, "click", function (e) {
-        var match = /[?&]service=([\w-]+)/.exec(link.getAttribute("href") || "");
-        var name = match && (cfg.services || {})[match[1]];
-        if (!name) return; // unknown service — let the browser follow the link
-        e.preventDefault();
-
-        for (var i = 0; i < picker.options.length; i++) {
-          if (picker.options[i].text === name) {
-            picker.selectedIndex = i;
-            picker.dispatchEvent(new Event("change", { bubbles: true }));
-            break;
-          }
-        }
-        var subject = form.querySelector('[name="subject"]');
-        if (subject && !subject.value) {
-          subject.value = name + " enquiry";
-          var label = subject.closest("[data-field]").querySelector("[data-label]");
-          if (label) {
-            label.style.transform = "translateY(-9px) scale(.74)";
-            label.style.color = "rgba(143,180,255,.9)";
-          }
-        }
-        contact.scrollIntoView({ behavior: "smooth", block: "start" });
-        if (window.history && history.replaceState) {
-          history.replaceState(null, "", "#contact");
-        }
+        var slug = serviceSlugIn(link.getAttribute("href"));
+        // Unknown service, or no form here — let the browser follow the link.
+        if (slug && jumpToEnquiry(slug)) e.preventDefault();
       });
     });
   }

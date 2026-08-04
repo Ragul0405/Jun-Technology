@@ -16,7 +16,8 @@
     <div data-cursor-dot style="position:absolute;left:0;top:0;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:linear-gradient(120deg,var(--a,#3b82f6),var(--b,#7c5cff));opacity:0;transition:opacity .3s ease;box-shadow:0 0 14px rgba(90,130,255,.9)"></div>
   </div>
 
-  {% if site.show_loader %}{% include "site/partials/_loader.html" %}{% endif %}
+  {# A service link means the visitor wants the form, not a title sequence. #}
+  {% if site.show_loader and not request.GET.service %}{% include "site/partials/_loader.html" %}{% endif %}
 
   {% include "site/partials/_nav.html" %}
   {% include "site/partials/_hero.html" %}
@@ -39,7 +40,7 @@
   "accentPrimary": "{{ site.accent_primary|escapejs }}",
   "accentSecondary": "{{ site.accent_secondary|escapejs }}",
   "theme": "{{ site.default_theme|escapejs }}",
-  "showLoader": {% if site.show_loader %}true{% else %}false{% endif %},
+  "showLoader": {% if site.show_loader and not request.GET.service %}true{% else %}false{% endif %},
   "customCursor": {% if site.custom_cursor %}true{% else %}false{% endif %},
   "showParticles": {% if site.show_particles %}true{% else %}false{% endif %},
   "activeCategory": "{% if active_category %}{{ active_category.slug|escapejs }}{% else %}all{% endif %}",

@@ -628,6 +628,23 @@ class PublicSiteTests(TestCase):
         self.assertIn(models.Service.objects.first().title, body)
         self.assertIn(models.ProjectCategory.objects.first().name, body)
 
+    def test_service_link_arrival_skips_the_loader(self):
+        """A service link means the visitor wants the form, not a title card.
+
+        The loader is server-rendered, so removing it in JavaScript still lets
+        it paint first — it must not reach the page at all.
+        """
+        self.assertTrue(models.SiteSettings.load().show_loader)
+        normal = self.client.get(reverse("core:home")).content.decode()
+        self.assertIn("data-loader", normal)
+
+        service = models.Service.objects.first()
+        arriving = self.client.get(
+            reverse("core:home"), {"service": service.slug}
+        ).content.decode()
+        self.assertNotIn("data-loader", arriving)
+        self.assertIn('"showLoader": false', arriving)
+
     def test_terms_and_privacy_pages_render(self):
         from django.utils.html import escape
 
