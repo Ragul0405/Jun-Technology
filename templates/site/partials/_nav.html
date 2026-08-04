@@ -1,7 +1,7 @@
 {% load static site_extras %}
   <header data-nav style="position:fixed;left:0;right:0;top:0;z-index:110;display:flex;justify-content:center;padding:20px 24px;transition:padding .45s cubic-bezier(.16,1,.3,1)">
     <nav style="width:100%;max-width:1200px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:13px 18px;border-radius:22px;border:1px solid var(--w08,rgba(255,255,255,.08));background:linear-gradient(160deg,var(--w06,rgba(255,255,255,.06)),var(--w02,rgba(255,255,255,.02)));backdrop-filter:blur(18px);box-shadow:0 20px 50px -32px rgba(0,0,0,.95)">
-      <a href="#home" data-cursor="expand" style="display:flex;align-items:center;gap:11px;color:var(--tx,#fff)">
+      <a href="{% nav_href '#home' %}" data-cursor="expand" style="display:flex;align-items:center;gap:11px;color:var(--tx,#fff)">
         <span data-logo-mark style="position:relative;width:40px;height:40px;flex:none;border-radius:12px;background:linear-gradient(160deg,rgba(255,255,255,.97),rgba(226,236,255,.9));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px -12px rgba(29,78,216,.7);transition:transform .55s cubic-bezier(.16,1,.3,1),box-shadow .55s ease">
           <img src="{% if site.logo_mark %}{{ site.logo_mark.url }}{% else %}{% static 'img/jun-logo-mark.png' %}{% endif %}" alt="{{ site.brand_prefix }}{{ site.brand_suffix }}" width="26" height="21" style="display:block;width:26px;height:auto">
         </span>
@@ -12,7 +12,7 @@
       </a>
       <div data-nav-links data-hide-mobile style="position:relative;display:flex;align-items:center;gap:2px">
         <div data-nav-pill style="position:absolute;left:0;top:0;height:100%;width:0;border-radius:12px;background:var(--w07,rgba(255,255,255,.07));opacity:0;transition:transform .5s cubic-bezier(.16,1,.3,1),width .5s cubic-bezier(.16,1,.3,1),opacity .4s ease"></div>
-        {% for link in nav_links %}<a href="{{ link.target }}"{% if link.section_key %} data-navlink="{{ link.section_key }}"{% endif %} data-cursor="expand" style="position:relative;padding:9px 13px;font-size:13.5px;color:var(--tx66,rgba(232,236,248,.66));transition:color .3s ease">{{ link.label }}</a>
+        {% for link in nav_links %}<a href="{% nav_href link.target %}"{% if link.section_key %} data-navlink="{{ link.section_key }}"{% endif %} data-cursor="expand" style="position:relative;padding:9px 13px;font-size:13.5px;color:var(--tx66,rgba(232,236,248,.66));transition:color .3s ease">{{ link.label }}</a>
         {% endfor %}
       </div>
       <div style="display:flex;align-items:center;gap:10px">
@@ -24,7 +24,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.7" style="width:18px;height:18px"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"></path></svg>
           </span>
         </button>
-        <a href="{{ site.nav_cta_url }}" data-magnetic="5" data-ripple data-cursor="expand" data-hide-mobile style="position:relative;flex:none;white-space:nowrap;overflow:hidden;padding:11px 19px;border-radius:14px;font-family:'Sora',sans-serif;font-size:13px;font-weight:500;color:#fff;background:linear-gradient(120deg,#3b82f6,#6d5cff);box-shadow:0 14px 34px -16px rgba(70,110,255,.95);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease">{{ site.nav_cta_label }}</a>
+        <a href="{% nav_href site.nav_cta_url %}" data-magnetic="5" data-ripple data-cursor="expand" data-hide-mobile style="position:relative;flex:none;white-space:nowrap;overflow:hidden;padding:11px 19px;border-radius:14px;font-family:'Sora',sans-serif;font-size:13px;font-weight:500;color:#fff;background:linear-gradient(120deg,#3b82f6,#6d5cff);box-shadow:0 14px 34px -16px rgba(70,110,255,.95);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease">{{ site.nav_cta_label }}</a>
         <button data-burger aria-label="Menu" style="display:none;width:42px;height:42px;border-radius:13px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer">
           <span data-burger-line style="display:block;width:16px;height:1.5px;background:var(--tx,#e8ecf8);transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .3s ease"></span>
           <span data-burger-line style="display:block;width:16px;height:1.5px;background:var(--tx,#e8ecf8);transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .3s ease"></span>
@@ -34,6 +34,6 @@
   </header>
 
   <div data-mobile-menu style="position:fixed;inset:0;z-index:105;background:var(--bgA94,rgba(4,6,15,.94));backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;opacity:0;pointer-events:none;transition:opacity .5s ease">
-    {% for link in nav_links %}<a href="{{ link.target }}" data-navlink-m style="font-family:'Sora',sans-serif;font-size:28px;padding:10px;color:var(--tx,#fff)">{{ link.label }}</a>
+    {% for link in nav_links %}<a href="{% nav_href link.target %}" data-navlink-m style="font-family:'Sora',sans-serif;font-size:28px;padding:10px;color:var(--tx,#fff)">{{ link.label }}</a>
     {% endfor %}
   </div>

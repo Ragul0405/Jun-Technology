@@ -1,0 +1,77 @@
+{% extends "site/base.html" %}
+{% load static site_extras %}
+
+{% block title %}{% if active_category %}{{ active_category.name }} projects{% else %}All projects{% endif %} — {{ site.meta_title }}{% endblock %}
+{% block description %}{{ portfolio_section.subheading }}{% endblock %}
+
+{% block body %}
+<div data-root style="position:relative;min-height:100vh;background:var(--bg,#04060f);color:var(--tx,#e8ecf8);overflow:hidden">
+
+  {% include "site/partials/_fx.html" %}
+
+  <div data-progress style="position:fixed;left:0;top:0;height:2px;width:0%;z-index:120;background:linear-gradient(90deg,var(--a,#3b82f6),var(--b,#7c5cff));box-shadow:0 0 18px rgba(80,130,255,.9)"></div>
+
+  <div data-cursor-layer data-hide-mobile style="position:fixed;inset:0;z-index:200;pointer-events:none">
+    <canvas data-splash style="position:absolute;left:0;top:0;width:100%;height:100%"></canvas>
+    <div data-cursor-ring style="position:absolute;left:0;top:0;width:36px;height:36px;margin:-18px 0 0 -18px;border:1px solid rgba(150,180,255,.55);border-radius:50%;opacity:0;transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),margin .3s cubic-bezier(.16,1,.3,1),background .3s ease,border-color .3s ease,opacity .3s ease;display:flex;align-items:center;justify-content:center;overflow:hidden">
+      <span data-cursor-text style="font-family:'Sora',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#fff;opacity:0;white-space:nowrap;transition:opacity .2s ease"></span>
+    </div>
+    <div data-cursor-dot style="position:absolute;left:0;top:0;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:linear-gradient(120deg,var(--a,#3b82f6),var(--b,#7c5cff));opacity:0;transition:opacity .3s ease;box-shadow:0 0 14px rgba(90,130,255,.9)"></div>
+  </div>
+
+  {% include "site/partials/_nav.html" %}
+
+  <section id="work" data-screen-label="Projects" style="position:relative;z-index:1;padding:168px 40px 100px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        {% if portfolio_section.eyebrow %}<div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc1,#8fb4ff)">{{ portfolio_section.eyebrow }}</div>{% endif %}
+        <h1 style="margin:16px 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">{% if active_category %}{{ active_category.name }}{% else %}{{ portfolio_section.heading }}{% endif %}</h1>
+        <p style="margin:14px auto 0;max-width:560px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">
+          {% if active_category %}{{ projects|length }} project{{ projects|length|pluralize }} in {{ active_category.name }}.{% else %}{{ portfolio_section.subheading }}{% endif %}
+        </p>
+      </div>
+
+      {% url 'core:projects' as projects_url %}{% include "site/partials/_filters.html" with filter_all_url=projects_url filter_all_label=portfolio_section.all_filter_label filter_items=categories %}
+
+      {% if projects %}
+      {% comment %}auto-fill, not auto-fit: a category with two projects keeps
+      card-sized cards instead of stretching them across the row.{% endcomment %}
+      <div data-grid style="margin-top:36px;display:grid;grid-template-columns:repeat(auto-fill,minmax(318px,1fr));gap:22px">
+{% for project in projects %}{% include "site/partials/_project_card.html" with project=project index=forloop.counter0 delay=forloop.counter0|modulo:3|stagger:80 %}{% endfor %}
+      </div>
+      {% else %}
+      <div style="margin-top:46px;padding:60px 24px;text-align:center;border-radius:24px;border:1px dashed var(--w12,rgba(255,255,255,.12));color:var(--tx55,rgba(232,236,248,.55))">
+        Nothing here yet — try another category.
+      </div>
+      {% endif %}
+
+      {% if active_category %}
+      <div style="margin-top:40px;display:flex;justify-content:center">
+        <a href="{% url 'core:projects' %}" data-magnetic="8" data-cursor="expand" style="padding:14px 26px;border-radius:18px;font-family:'Sora',sans-serif;font-size:14px;font-weight:500;color:var(--tx,#e8ecf8);border:1px solid var(--w13,rgba(255,255,255,.13));background:var(--w035,rgba(255,255,255,.035));backdrop-filter:blur(10px);transition:transform .35s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease" style-hover="background:var(--w075,rgba(255,255,255,.075));border-color:var(--w24,rgba(255,255,255,.24))">← All projects</a>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  {% include "site/partials/_footer.html" %}
+  {% include "site/partials/_modal.html" %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ projects_data|json_script:"jt-projects" }}
+<script id="jt-config" type="application/json">{
+  "accentPrimary": "{{ site.accent_primary|escapejs }}",
+  "accentSecondary": "{{ site.accent_secondary|escapejs }}",
+  "theme": "{{ site.default_theme|escapejs }}",
+  "showLoader": false,
+  "customCursor": {% if site.custom_cursor %}true{% else %}false{% endif %},
+  "showParticles": {% if site.show_particles %}true{% else %}false{% endif %},
+  "activeCategory": "{% if active_category %}{{ active_category.slug|escapejs }}{% else %}all{% endif %}",
+  "contactUrl": "{% url 'core:contact_submit' %}",
+  "successLabel": "{{ contact.success_message|escapejs }}"
+}</script>
+<script src="{% static 'js/splash-cursor.js' %}" defer></script>
+<script src="{% static 'js/site.js' %}" defer></script>
+{% endblock %}

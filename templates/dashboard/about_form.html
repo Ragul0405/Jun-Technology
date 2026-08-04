@@ -1,0 +1,64 @@
+{% extends "dashboard/singleton_form.html" %}
+
+{% block section_extra %}
+<div class="card">
+  <h2>Photo frame</h2>
+  <div class="card-note">
+    The frame flips through these photos in the order shown, one every 5
+    seconds. Fill as many of the {{ limit }} slots as you like — 4:3 crops fit
+    best. Leave a slot empty to skip it.
+    {% if live > 1 %}
+      <strong>{{ live }} photos are live, so the frame is flipping.</strong>
+    {% elif live == 1 %}
+      <strong>Only 1 photo is live, so the frame just shows it.</strong>
+      Add a second to start the flip.
+    {% else %}
+      <strong>No photos yet</strong> — the frame falls back to the Fallback
+      image above.
+    {% endif %}
+  </div>
+
+  {{ photos.management_form }}
+  {% if photos.non_form_errors %}<div class="alert alert-error">{{ photos.non_form_errors }}</div>{% endif %}
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-top:16px">
+    {% for slot in photos %}
+    <div style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07)">
+      {{ slot.id }}
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <strong>Photo {{ forloop.counter }}</strong>
+        {% if forloop.first %}<span class="pill pill-on">Shown first</span>{% endif %}
+      </div>
+
+      <div style="aspect-ratio:4/3;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center">
+        {% if slot.instance.pk and slot.instance.image %}
+        <img src="{{ slot.instance.image.url }}" alt=""
+             style="width:100%;height:100%;object-fit:cover;border-radius:10px">
+        {% else %}
+        <div class="thumb-empty" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">Empty slot</div>
+        {% endif %}
+      </div>
+
+      <div class="field">
+        <label for="{{ slot.image.id_for_label }}">{% if slot.instance.pk %}Replace photo{% else %}Choose photo{% endif %}</label>
+        {{ slot.image }}
+        {% if slot.image.errors %}<div class="errors">{{ slot.image.errors }}</div>{% endif %}
+      </div>
+
+      <div class="field">
+        <label for="{{ slot.alt.id_for_label }}">{{ slot.alt.label }}</label>
+        {{ slot.alt }}
+        {% if slot.alt.errors %}<div class="errors">{{ slot.alt.errors }}</div>{% endif %}
+      </div>
+
+      {% if slot.instance.pk %}
+      <div class="check-row">{{ slot.is_active }}<label for="{{ slot.is_active.id_for_label }}">{{ slot.is_active.label }}</label></div>
+      <div class="check-row">{{ slot.DELETE }}<label for="{{ slot.DELETE.id_for_label }}">Remove this photo</label></div>
+      {% endif %}
+
+      {% if slot.non_field_errors %}<div class="errors">{{ slot.non_field_errors }}</div>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

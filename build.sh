@@ -13,7 +13,8 @@ python manage.py migrate --noinput
 # there, so images uploaded on the live dashboard are safe.
 python manage.py sync_media
 
-# Loads the original copy on a brand-new database. Safe to re-run: existing
-# rows are matched on their natural key, so nothing is duplicated and your
-# dashboard edits are preserved.
-python manage.py seed_content
+# Loads fixtures/content.json — the content exported from your local dashboard,
+# including which image belongs to which project. Falls back to the original
+# design's copy if no fixture has been committed. Enquiries are never touched
+# and the SMTP password already saved on this server is kept.
+python manage.py import_content --fallback-seed

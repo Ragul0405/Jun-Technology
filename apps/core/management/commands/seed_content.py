@@ -8,10 +8,35 @@ wipe the repeatable rows first.
 
 from django.conf import settings
 from django.core.files import File
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 from apps.core import models
+
+
+TERMS_BLOCKS = ['Using this website:',
+    'By using this website you agree to these terms. If you do not agree with them, please stop using the site.',
+    'Our work:',
+    'Every engagement is governed by the written proposal and statement of work signed by both parties. Where those documents and these terms differ, the signed documents win.',
+    'Intellectual property:',
+    'The design, text, graphics and code of this website belong to us unless stated otherwise. Work produced for a client transfers to that client on final payment, as set out in the relevant proposal.',
+    'Liability:',
+    'We take care to keep the information on this site accurate but make no warranty that it is complete or current. We are not liable for loss arising from reliance on it.',
+    'Changes:',
+    'We may update these terms. The date at the top of this page shows when they were last changed.',
+    'REPLACE THIS PAGE before launch. It is a starting point written by your developers, not legal advice — have your solicitor review it.']
+
+PRIVACY_BLOCKS = ['What we collect:',
+    'When you send an enquiry we collect the name, email address, phone number, subject and message you type into the form, along with your IP address and browser, which are recorded to help us identify spam.',
+    'Why we collect it:',
+    'Solely to reply to your enquiry and keep a record of the conversation. We do not sell it and we do not use it for advertising.',
+    'How long we keep it:',
+    'Enquiries stay in our dashboard until they are no longer needed. You can ask us to delete yours at any time.',
+    'Analytics:',
+    'If analytics are enabled, an anonymised record of the pages you visit is collected. It is never linked to your enquiry.',
+    'Your rights:',
+    'You can ask what we hold about you, ask for it to be corrected, or ask for it to be deleted. Contact us through the form on the home page.',
+    'REPLACE THIS PAGE before launch. It is a starting point written by your developers, not legal advice — have it reviewed against the law that applies to you.']
 
 
 class Command(BaseCommand):
@@ -32,13 +57,17 @@ class Command(BaseCommand):
                 models.HeroHighlight,
                 models.Stat,
                 models.AboutCard,
+                models.AboutImage,
                 models.Service,
                 models.ProjectMetric,
                 models.ProjectImage,
                 models.Project,
                 models.ProjectCategory,
+                models.BlogPost,
+                models.BlogCategory,
                 models.Testimonial,
                 models.ContactDetail,
+                models.FaqItem,
                 models.FooterLink,
                 models.FooterColumn,
                 models.SocialLink,
@@ -51,11 +80,15 @@ class Command(BaseCommand):
         self._nav()
         self._hero_highlights()
         self._stats()
+        self._about_images()
         self._about_cards()
         self._services()
         self._portfolio()
+        self._blog_categories()
         self._testimonials()
         self._contact_details()
+        self._pages()
+        self._faqs()
         self._footer()
         self._social()
 
@@ -84,6 +117,8 @@ class Command(BaseCommand):
             models.ServicesSection,
             models.PortfolioSection,
             models.TestimonialsSection,
+            models.BlogSection,
+            models.FaqSection,
             models.ContactSection,
             models.FooterSettings,
             models.EmailSettings,
@@ -110,12 +145,18 @@ class Command(BaseCommand):
             ("Services", "#services"),
             ("Work", "#work"),
             ("Testimonials", "#voices"),
+            ("Blog", "/blog/"),
             ("Contact", "#contact"),
         ]
         for index, (label, target) in enumerate(items):
+            anchor = target.startswith("#")
             self._upsert(
                 models.NavLink,
-                {"target": target, "section_key": target.lstrip("#"), "order": index},
+                {
+                    "target": target,
+                    "section_key": target[1:] if anchor else "",
+                    "order": index,
+                },
                 label=label,
             )
 
@@ -149,6 +190,27 @@ class Command(BaseCommand):
                 },
                 label=label,
             )
+
+    def _about_images(self):
+        """
+        Adopt the section's single photo into the flip collection.
+
+        The frame flips through AboutImage rows and only falls back to
+        AboutSection.image while none exist, so moving the existing photo
+        across puts it where an editor will go looking for it. Adding a second
+        photo there is all it takes to start the flip.
+        """
+        if models.AboutImage.objects.exists():
+            return
+        section = models.AboutSection.load()
+        if not section.image:
+            return
+        models.AboutImage.objects.create(
+            image=section.image.name,  # same file, no copy
+            alt=section.image_alt,
+            order=0,
+        )
+        self.stdout.write("About photo adopted into About images.")
 
     def _about_cards(self):
         items = [
@@ -229,6 +291,15 @@ class Command(BaseCommand):
                 "workflows.",
             ),
         ]
+        # The four the original design listed in its footer. The rest are
+        # available to tick in the dashboard, but a footer column of eight
+        # would not match the design.
+        footer_four = {
+            "Website Development",
+            "UI/UX Design",
+            "Website Promotion",
+            "SEO Optimization",
+        }
         for index, (icon, title, description) in enumerate(items):
             self._upsert(
                 models.Service,
@@ -236,6 +307,7 @@ class Command(BaseCommand):
                     "icon": icon,
                     "description": description,
                     "order": index,
+                    "show_in_footer": title in footer_four,
                     # Explicit so the card's "Learn more →" line can never be
                     # lost to a blank value.
                     "link_label": "Learn more",
@@ -244,6 +316,10 @@ class Command(BaseCommand):
             )
 
     def _portfolio(self):
+        # `is_featured` marks the projects the hero flip card cycles through.
+        # Seeding a few means a fresh install shows the card straight away
+        # instead of falling back to the build-health panel. At most
+        # models.MAX_HERO_FEATURED may carry the flag.
         categories = [
             "Business",
             "E-Commerce",
@@ -269,6 +345,7 @@ class Command(BaseCommand):
                     "replacing four disconnected internal tools."
                 ),
                 "metrics": [("+38%", "Sales velocity"), ("4→1", "Tools replaced"), ("11wk", "To launch")],
+                "is_featured": True,
             },
             {
                 "title": "ShopVault Store",
@@ -281,6 +358,7 @@ class Command(BaseCommand):
                     "without developers."
                 ),
                 "metrics": [("2.1x", "Conversion"), ("0.9s", "LCP"), ("+64%", "AOV lift")],
+                "is_featured": True,
             },
             {
                 "title": "MediConnect",
@@ -293,6 +371,7 @@ class Command(BaseCommand):
                     "multi-location capacity planning."
                 ),
                 "metrics": [("−72%", "No-shows"), ("9", "Clinics live"), ("24/7", "Booking")],
+                "is_featured": True,
             },
             {
                 "title": "LearnSphere LMS",
@@ -332,6 +411,13 @@ class Command(BaseCommand):
             },
         ]
 
+        seeded_featured = sum(1 for p in projects if p.get("is_featured"))
+        if seeded_featured > models.MAX_HERO_FEATURED:
+            raise CommandError(
+                f"Seed marks {seeded_featured} projects as featured but the hero "
+                f"card holds {models.MAX_HERO_FEATURED}."
+            )
+
         for index, data in enumerate(projects):
             metrics = data.pop("metrics")
             category = category_map[data.pop("category")]
@@ -347,6 +433,18 @@ class Command(BaseCommand):
                     project=project,
                     label=label,
                 )
+
+    def _blog_categories(self):
+        """
+        Starter categories so the blog's filters work from day one.
+
+        These are structure, not content — rename or delete them freely. No
+        articles are seeded; those are the marketing team's to write.
+        """
+        for index, name in enumerate(
+            ["Insights", "Engineering", "Design", "Company news"]
+        ):
+            self._upsert(models.BlogCategory, {"order": index}, name=name)
 
     def _testimonials(self):
         items = [
@@ -406,6 +504,86 @@ class Command(BaseCommand):
                 label=label,
             )
 
+    def _pages(self):
+        """Terms and privacy start as editable drafts, clearly marked as such."""
+        pages = [
+            (
+                "terms",
+                "Terms & Conditions",
+                "The terms you agree to when you use this website or engage us "
+                "for work.",
+                TERMS_BLOCKS,
+            ),
+            (
+                "privacy",
+                "Privacy Policy",
+                "What we collect when you use this website, why, and what you "
+                "can ask us to do about it.",
+                PRIVACY_BLOCKS,
+            ),
+        ]
+        for slug, title, intro, blocks in pages:
+            self._upsert(
+                models.ContentPage,
+                {"title": title, "intro": intro, "body": "\n\n".join(blocks)},
+                slug=slug,
+            )
+
+    def _faqs(self):
+        items = [
+            (
+                "How long does a website take?",
+                "A marketing site is usually three to six weeks from the "
+                "kick-off workshop to launch. The single biggest factor is how "
+                "quickly the copy and images arrive, which is why we agree an "
+                "owner for each page on day one.",
+            ),
+            (
+                "What does it cost?",
+                "We quote a fixed price against a fixed scope, so there are no "
+                "hourly surprises. Send us an enquiry describing what you need "
+                "and we will come back with a proposal and a number.",
+            ),
+            (
+                "Do you write the content?",
+                "We can. Most clients supply their own words and we edit them "
+                "for the web; if you would rather we wrote them, we quote for "
+                "that separately.",
+            ),
+            (
+                "Can we edit the site ourselves afterwards?",
+                "Yes \u2014 that is the point of the dashboard. Every word, number "
+                "and image on the site can be changed without a developer, and "
+                "we walk your team through it before launch.",
+            ),
+            (
+                "Do you offer support after launch?",
+                "Yes. We offer a monthly plan covering updates, backups, "
+                "security patches and a set number of content changes. It is "
+                "optional and you can cancel it at any time.",
+            ),
+            (
+                "Will the site work on mobile?",
+                "Every page is built and tested on phones first. We also test "
+                "on tablets and on the browsers your visitors actually use.",
+            ),
+            (
+                "Do you help with SEO?",
+                "The build is SEO-first: fast pages, clean markup, proper "
+                "headings, sitemaps and metadata you control. Ongoing keyword "
+                "and content work is a separate service.",
+            ),
+            (
+                "Who owns the site when it is finished?",
+                "You do. Code, design and content transfer to you on final "
+                "payment, and we hand over every account and credential.",
+            ),
+        ]
+        for index, (question, answer) in enumerate(items):
+            self._upsert(
+                models.FaqItem, {"answer": answer, "order": index}, question=question
+            )
+
     def _footer(self):
         columns = [
             (
@@ -417,27 +595,27 @@ class Command(BaseCommand):
                     ("Careers", "#contact"),
                 ],
             ),
-            (
-                "Services",
-                [
-                    ("Website Development", "#services"),
-                    ("UI/UX Design", "#services"),
-                    ("Website Promotion", "#services"),
-                    ("SEO Optimization", "#services"),
-                ],
-            ),
+            ("Services", []),
             (
                 "Resources",
                 [
-                    ("Blog", "#voices"),
-                    ("FAQs", "#contact"),
-                    ("Privacy Policy", "#contact"),
-                    ("Terms & Conditions", "#contact"),
+                    ("Blog", "/blog/"),
+                    ("FAQs", "/faq/"),
+                    ("Privacy Policy", "/privacy/"),
+                    ("Terms & Conditions", "/terms/"),
                 ],
             ),
         ]
         for index, (title, links) in enumerate(columns):
-            column = self._upsert(models.FooterColumn, {"order": index}, title=title)
+            # The services column fills itself from the services ticked
+            # "Feature in footer", so it carries no manual links.
+            source = "services" if title == "Services" else "links"
+            column = self._upsert(
+                models.FooterColumn, {"order": index, "source": source}, title=title
+            )
+            if source == "services":
+                column.links.all().delete()
+                continue
             for l_index, (label, url) in enumerate(links):
                 self._upsert(
                     models.FooterLink,

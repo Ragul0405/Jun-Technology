@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block content %}
+{% if spec.description %}<div class="alert alert-info">{{ spec.description }}</div>{% endif %}
 <div class="card" style="padding:0;overflow:hidden">
   {% if rows %}
   <div class="table-wrap" style="border:none">
@@ -18,7 +19,7 @@
         <tr>
           {% if spec.image_field %}<th style="width:110px">Image</th>{% endif %}
           {% for name, label in spec.columns %}<th>{{ label }}</th>{% endfor %}
-          <th style="width:90px">Order</th>
+          {% if not spec.unordered %}<th style="width:90px">Order</th>{% endif %}
           <th style="width:110px">Status</th>
           <th style="width:190px"></th>
         </tr>
@@ -30,7 +31,7 @@
           <td>{% if row.image %}<img class="thumb" src="{{ row.image.url }}" alt="">{% else %}<div class="thumb-empty">No image</div>{% endif %}</td>
           {% endif %}
           {% for value in row.values %}<td>{% if forloop.first %}<a href="{{ row.edit_url }}">{{ value }}</a>{% else %}{{ value }}{% endif %}</td>{% endfor %}
-          <td>{{ row.obj.order }}</td>
+          {% if not spec.unordered %}<td>{{ row.obj.order }}</td>{% endif %}
           <td>
             <form method="post" action="{% url 'dashboard:collection_toggle' key row.obj.pk %}">{% csrf_token %}
               <button type="submit" class="pill {% if row.obj.is_active %}pill-on{% else %}pill-off{% endif %}" style="background:none;cursor:pointer;font-family:inherit">{% if row.obj.is_active %}Visible{% else %}Hidden{% endif %}</button>

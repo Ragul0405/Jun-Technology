@@ -346,6 +346,10 @@ class Stat(AccentMixin, OrderedModel):
 # --------------------------------------------------------------------------- #
 # About
 # --------------------------------------------------------------------------- #
+#: How many photos the about frame may flip through.
+MAX_ABOUT_IMAGES = 5
+
+
 class AboutSection(SingletonModel):
     eyebrow = models.CharField(
         max_length=60,
@@ -379,6 +383,31 @@ class AboutSection(SingletonModel):
 
     def __str__(self):
         return "About section"
+
+
+class AboutImage(OrderedModel):
+    """
+    Photos for the about frame's flip animation.
+
+    When none exist the frame renders `AboutSection.image` exactly as it always
+    has, so the section degrades to the original single-photo design.
+    """
+
+    image = models.ImageField(
+        upload_to="about/",
+        help_text="4:3 works best — the frame flips through these in order.",
+    )
+    alt = models.CharField(
+        max_length=160,
+        blank=True,
+        help_text="Describes the photo for screen readers and search engines.",
+    )
+
+    class Meta(OrderedModel.Meta):
+        verbose_name = "About image"
+
+    def __str__(self):
+        return self.alt or f"About image #{self.pk}"
 
 
 class AboutCard(AccentMixin, OrderedModel):
@@ -421,6 +450,17 @@ class ServicesSection(SingletonModel):
 class Service(OrderedModel):
     icon = models.CharField(max_length=30, choices=SERVICE_ICON_CHOICES, default="code")
     title = models.CharField(max_length=80)
+    slug = models.SlugField(
+        max_length=90,
+        unique=True,
+        blank=True,
+        help_text="Used by the enquiry link. Built from the title if left blank.",
+    )
+    show_in_footer = models.BooleanField(
+        default=True,
+        verbose_name="Feature in footer",
+        help_text="List this service in the footer's services column.",
+    )
     description = models.TextField()
     link_label = models.CharField(
         max_length=40,
@@ -439,6 +479,29 @@ class Service(OrderedModel):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base = slugify(self.title)[:80] or "service"
+            slug, suffix = base, 2
+            taken = Service.objects.exclude(pk=self.pk)
+            while taken.filter(slug=slug).exists():
+                slug = f"{base}-{suffix}"
+                suffix += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    @property
+    def footer_badge(self):
+        """Readable state for the dashboard's Services table."""
+        return "Featured" if self.show_in_footer else "\u2014"
+
+    @property
+    def enquiry_url(self):
+        """Home page, contact form open, this service already chosen."""
+        from django.urls import reverse
+
+        return f"{reverse('core:home')}?service={self.slug}#contact"
 
 
 # --------------------------------------------------------------------------- #
@@ -485,6 +548,10 @@ class ProjectCategory(OrderedModel):
         super().save(*args, **kwargs)
 
 
+#: How many projects the hero flip card may cycle through.
+MAX_HERO_FEATURED = 5
+
+
 class Project(OrderedModel):
     title = models.CharField(max_length=100)
     category = models.ForeignKey(
@@ -512,6 +579,14 @@ class Project(OrderedModel):
         help_text="Case-study hero image — 16:8 works best. Falls back to the card image.",
     )
     external_url = models.URLField(blank=True, help_text="Optional live project link.")
+    is_featured = models.BooleanField(
+        default=False,
+        verbose_name="Feature in hero",
+        help_text=(
+            f"Show this project in the hero's flip card. At most "
+            f"{MAX_HERO_FEATURED} projects can be featured at once."
+        ),
+    )
 
     class Meta(OrderedModel.Meta):
         verbose_name = "Project"
@@ -522,6 +597,24 @@ class Project(OrderedModel):
     @property
     def hero_image(self):
         return self.modal_image or self.image
+
+    @property
+    def hero_metrics(self):
+        """The two numbers the hero flip card has room for."""
+        return list(self.metrics.filter(is_active=True)[:2])
+
+    @property
+    def hero_badge(self):
+        """Readable state for the dashboard's Projects table."""
+        return "Featured" if self.is_featured else "—"
+
+    @classmethod
+    def featured(cls):
+        """The projects the hero flip card cycles through, capped at the limit."""
+        return (
+            cls.objects.filter(is_active=True, is_featured=True)
+            .select_related("category")[:MAX_HERO_FEATURED]
+        )
 
 
 class ProjectMetric(OrderedModel):
@@ -550,6 +643,143 @@ class ProjectImage(OrderedModel):
 
     def __str__(self):
         return self.caption or f"Image #{self.pk}"
+
+
+# --------------------------------------------------------------------------- #
+# Blog
+# --------------------------------------------------------------------------- #
+class BlogSection(SingletonModel):
+    """The copy at the top of the blog page."""
+
+    eyebrow = models.CharField(
+        max_length=60,
+        blank=True,
+        default="Our Blog",
+        help_text="Small label above the heading. Leave blank to hide it.",
+    )
+    heading = models.CharField(max_length=120, default="Ideas, notes and releases")
+    subheading = models.TextField(
+        default=(
+            "What we are building, what we are learning, and what we think is "
+            "worth your time."
+        )
+    )
+    empty_message = models.CharField(
+        max_length=160,
+        default="The first post is on its way — check back shortly.",
+        help_text="Shown on the blog page while no posts are published.",
+    )
+
+    class Meta:
+        verbose_name = "Blog page"
+        verbose_name_plural = "Blog page"
+
+    def __str__(self):
+        return "Blog page"
+
+
+class BlogCategory(OrderedModel):
+    name = models.CharField(max_length=60, unique=True)
+    slug = models.SlugField(max_length=60, unique=True, blank=True)
+
+    class Meta(OrderedModel.Meta):
+        verbose_name = "Blog category"
+        verbose_name_plural = "Blog categories"
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    @property
+    def post_count(self):
+        return self.posts.filter(is_active=True).count()
+
+
+class BlogPost(models.Model):
+    """
+    One article.
+
+    Ordered by publication date rather than a hand-set number: a marketing team
+    publishing daily should never have to renumber anything.
+    """
+
+    title = models.CharField(max_length=160)
+    category = models.ForeignKey(
+        BlogCategory,
+        on_delete=models.SET_NULL,
+        related_name="posts",
+        null=True,
+        blank=True,
+        help_text=(
+            "Optional — used by the filters on the blog page. Deleting a "
+            "category leaves its posts uncategorised rather than removing them."
+        ),
+    )
+    slug = models.SlugField(
+        max_length=180,
+        unique=True,
+        blank=True,
+        help_text="Its web address. Left blank, it is built from the title.",
+    )
+    author = models.CharField(max_length=80, blank=True, default="Jun Technology")
+    published_at = models.DateField(
+        default=timezone.localdate,
+        help_text="The date shown on the post, and what the list is ordered by.",
+    )
+    cover = models.ImageField(
+        upload_to="blog/",
+        blank=True,
+        help_text="Header image — 16:9 works best.",
+    )
+    excerpt = models.TextField(
+        max_length=300,
+        help_text="One or two sentences, shown on the blog list and in search results.",
+    )
+    body = models.TextField(
+        help_text="The article. Leave a blank line between paragraphs.",
+    )
+    is_active = models.BooleanField(
+        default=True, help_text="Uncheck to keep this a draft."
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("-published_at", "-id")
+        verbose_name = "Blog post"
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base = slugify(self.title)[:170] or "post"
+            slug, suffix = base, 2
+            taken = BlogPost.objects.exclude(pk=self.pk)
+            while taken.filter(slug=slug).exists():
+                slug = f"{base}-{suffix}"
+                suffix += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("core:blog_post", args=[self.slug])
+
+    @property
+    def paragraphs(self):
+        """The body split into paragraphs, so templates never render raw HTML."""
+        return [p.strip() for p in (self.body or "").split("\n\n") if p.strip()]
+
+    @property
+    def reading_minutes(self):
+        words = len((self.body or "").split())
+        return max(1, round(words / 200))
 
 
 # --------------------------------------------------------------------------- #
@@ -806,6 +1036,83 @@ class ContactMessage(models.Model):
 
 
 # --------------------------------------------------------------------------- #
+# Standalone pages
+# --------------------------------------------------------------------------- #
+class ContentPage(models.Model):
+    """
+    A plain prose page — terms, privacy policy, anything similar.
+
+    Served at its own fixed URL rather than a catch-all, so the routes stay
+    explicit and a typo cannot silently create a live page.
+    """
+
+    slug = models.SlugField(
+        max_length=60,
+        unique=True,
+        help_text="Fixed by the page's URL — “terms” and “privacy”.",
+    )
+    title = models.CharField(max_length=120)
+    intro = models.TextField(
+        blank=True, help_text="One or two sentences under the heading. Optional."
+    )
+    body = models.TextField(
+        help_text="Leave a blank line between paragraphs. A line ending in a "
+        "colon is shown as a sub-heading."
+    )
+    is_active = models.BooleanField(
+        default=True, help_text="Uncheck to take the page offline (it returns 404)."
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ("slug",)
+        verbose_name = "Page"
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def blocks(self):
+        """Paragraphs, with `Heading:` lines marked so the template can style them."""
+        out = []
+        for chunk in (self.body or "").split("\n\n"):
+            text = chunk.strip()
+            if not text:
+                continue
+            out.append(
+                {"text": text, "is_heading": text.endswith(":") and len(text) < 90}
+            )
+        return out
+
+
+class FaqSection(SingletonModel):
+    eyebrow = models.CharField(max_length=60, blank=True, default="FAQs")
+    heading = models.CharField(max_length=120, default="Questions we get asked")
+    subheading = models.TextField(
+        default="If yours is not here, the contact form is at the bottom of the page."
+    )
+
+    class Meta:
+        verbose_name = "FAQ page"
+        verbose_name_plural = "FAQ page"
+
+    def __str__(self):
+        return "FAQ page"
+
+
+class FaqItem(OrderedModel):
+    question = models.CharField(max_length=200)
+    answer = models.TextField()
+
+    class Meta(OrderedModel.Meta):
+        verbose_name = "FAQ"
+        verbose_name_plural = "FAQs"
+
+    def __str__(self):
+        return self.question
+
+
+# --------------------------------------------------------------------------- #
 # Footer
 # --------------------------------------------------------------------------- #
 class FooterSettings(SingletonModel):
@@ -830,7 +1137,22 @@ class FooterSettings(SingletonModel):
 
 
 class FooterColumn(OrderedModel):
+    SOURCE_CHOICES = [
+        ("links", "The links below"),
+        ("services", "Featured services"),
+    ]
+
     title = models.CharField(max_length=60)
+    source = models.CharField(
+        max_length=10,
+        choices=SOURCE_CHOICES,
+        default="links",
+        help_text=(
+            "“Featured services” fills this column automatically with the "
+            "services ticked “Feature in footer”, each opening the enquiry "
+            "form for that service."
+        ),
+    )
 
     class Meta(OrderedModel.Meta):
         verbose_name = "Footer column"

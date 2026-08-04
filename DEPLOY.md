@@ -58,27 +58,53 @@ Images uploaded on the live site afterwards are **not** in git. Before your
 next deploy, either download them into `media/` and commit, or accept that
 `sync_media` will leave the live ones untouched (it skips existing files).
 
-### 3a. Shipping your current content
+### 3a. Shipping your content
 
-The database (`db.sqlite3`) is gitignored, so your dashboard edits — which
-image belongs to which project, the map address, the SMTP settings, the copy
-you changed — do **not** deploy. Pick one:
+The database itself is gitignored, so content travels as a fixture instead:
+**`fixtures/content.json`**, which *is* committed. It holds every dashboard
+edit — the copy, the map address, the mail settings, and which image belongs
+to which project — so the deployed site comes up looking exactly like your
+local one.
 
-- **Re-enter it live** *(safest)*. Deploy, run `seed_content`, then sign in and
-  re-upload the images and redo your edits. Nothing sensitive is committed.
-- **Ship the database.** Delete the `*.sqlite3` and `db.sqlite3` lines from
-  `.gitignore` and commit the file. Fast and everything appears at once, but
-  the committed database contains your admin password hash and, if you saved
-  them there, your SMTP password. Only do this in a **private** repository, and
-  change both passwords afterwards.
-- **Use Postgres** and load the data with
-  `python manage.py dumpdata core > content.json` locally, then
-  `loaddata content.json` on the server. Keeps credentials out of git.
+**Locally**, whenever you change content and want it on the server:
+
+```bash
+python manage.py export_content     # rewrites fixtures/content.json
+git add fixtures/content.json media/
+git commit -m "Update site content"
+```
+
+**On the server**, after `migrate`:
+
+```bash
+python manage.py import_content
+```
+
+`build.sh` already runs it (with `--fallback-seed`, so a deploy without a
+fixture still comes up with the original design's copy).
+
+What the fixture deliberately does **not** contain:
+
+| Not exported | Why | What to do |
+| --- | --- | --- |
+| Enquiries (`ContactMessage`) | Visitor personal data | Nothing — they stay on the server that received them, and `import_content` never deletes them |
+| The SMTP password | Secrets must not enter git | Enter it once in the live dashboard; re-running `import_content` keeps it |
+| Admin users | Password hashes must not enter git | `python manage.py createsuperuser` on the server |
+
+> **SMTP is switched on in your current export.** The host, username and
+> "send enquiries to" address travel, but the password does not. After the
+> first deploy open **Dashboard → Email / SMTP**, enter the password, save, and
+> press **Send test email**. Until you do, notification emails fail to send —
+> the enquiries themselves are still saved and visible in the dashboard.
+
+`import_content` overwrites records with matching primary keys, so it is safe
+to re-run. Do **not** run `seed_content` first on a fresh database; go straight
+to `import_content`.
 
 ## 4. Build and run
 
 ```bash
-./build.sh                                    # install, collectstatic, migrate, seed
+./build.sh    # install → collectstatic → migrate → sync_media → import_content
 gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
 ```
 
@@ -92,17 +118,18 @@ python manage.py createsuperuser
 
 Then sign in at `https://yourdomain.com/dashboard/` and:
 
-1. **Brand & SEO** — check the logo, set `meta_title`, `meta_description` and
-   `canonical_url` to the live domain.
-2. **Contact & map** — set the map address.
-3. **Email / SMTP** — set where enquiries go, then press *Send test email*.
-4. Upload the remaining images (the dashboard home lists what is missing).
+1. **Email / SMTP** — enter the password (it does not ship), save, press
+   *Send test email*.
+2. **Brand & SEO** — set `canonical_url` to the live domain.
+3. Upload any remaining images — the dashboard home lists what is missing.
+4. Submit the contact form on the live site once and confirm it appears in
+   **Enquiries** and lands in your inbox.
 
 ## 6. Verify
 
 ```bash
 python manage.py check --deploy      # must report no issues
-python manage.py test                # 39 tests
+python manage.py test                # 46 tests
 python scripts/compare_design.py     # must print "missing: 0"
 ```
 
@@ -144,5 +171,9 @@ HTTPS.
 - `reference/original-design.html` is the untouched original design, kept only
   so `scripts/compare_design.py` can prove the Django output still matches it.
   It is never served. Delete it and the script if you do not want it shipped.
-- `db.sqlite3` currently contains your seeded content and the `admin` user.
-  It is gitignored — decide deliberately whether to carry it across.
+- `db.sqlite3` is gitignored on purpose — it holds password hashes. Content
+  travels in `fixtures/content.json` instead (§3a); admin users are created on
+  the server with `createsuperuser`.
+- Re-export the fixture (`python manage.py export_content`) any time you change
+  content locally and want it on the server. If you only ever edit through the
+  live dashboard, you never need it again.

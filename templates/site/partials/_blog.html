@@ -1,0 +1,21 @@
+{% load site_extras %}{% if blog_posts %}
+  <section id="blog" data-screen-label="Blog" style="position:relative;z-index:1;padding:100px 40px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        {% if blog_section.eyebrow %}<div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc1,#8fb4ff)">{{ blog_section.eyebrow }}</div>{% endif %}
+        <h2 style="margin:{% if blog_section.eyebrow %}16px{% else %}0{% endif %} 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">{{ blog_section.heading }}</h2>
+        <p style="margin:14px auto 0;max-width:560px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">{{ blog_section.subheading }}</p>
+      </div>
+
+      <div data-blog-grid style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fill,minmax(318px,1fr));gap:22px">
+{% for post in blog_posts %}{% include "site/partials/_blog_card.html" with post=post delay=forloop.counter0|modulo:3|stagger:80 %}{% endfor %}
+      </div>
+
+      {% if more_blog_posts %}
+      <div data-reveal data-delay="120" style="margin-top:40px;display:flex;justify-content:center;opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <a href="{% url 'core:blog' %}" data-magnetic="8" data-ripple data-cursor="expand" style="position:relative;overflow:hidden;padding:16px 30px;border-radius:18px;font-family:'Sora',sans-serif;font-size:14.5px;font-weight:500;color:#fff;background:linear-gradient(120deg,#3b82f6,#6d5cff);box-shadow:0 20px 44px -18px rgba(70,110,255,.95);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease">See all {{ blog_total }} posts</a>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}

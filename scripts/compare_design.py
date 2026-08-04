@@ -6,6 +6,11 @@ against the original static design file. Any style present in the original but
 missing from the render is reported — that is what a design regression would
 look like.
 
+The hero and about cards each have two mutually exclusive states: the flip deck
+when content is featured, and the original single-panel design when it is not.
+Both are rendered and their styles pooled, so neither branch can rot unnoticed
+just because the current database happens to use the other one.
+
 Usage:  python scripts/compare_design.py [path/to/original.html]
 """
 
@@ -38,6 +43,15 @@ IGNORE_SUBSTRINGS = (
     "transition:opacity .7s ease .",  # pop-up gallery cells: delay built per index in site.js
 )
 
+# Parts of the prototype the client has since asked us to replace. Listed
+# explicitly, with the reason, so a deliberate change reads differently from a
+# regression — anything not named here that stops rendering is still a failure.
+SUPERSEDED = {
+    "display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:34px":
+        "portfolio filter row — replaced by the scrolling category ticker, "
+        "whose pills link to the project listing page",
+}
+
 
 def norm(style):
     return re.sub(r"\s+", " ", style).strip().rstrip(";")
@@ -45,6 +59,24 @@ def norm(style):
 
 def collect(html):
     return {norm(m) for m in STYLE_RE.findall(html) if not PLACEHOLDER_RE.search(m)}
+
+
+def render_both_states():
+    """The page as it stands, plus the same page with every flip deck emptied."""
+    from django.db import transaction
+
+    from apps.core.models import AboutImage, Project
+
+    client = Client()
+    pages = [client.get("/").content.decode()]
+
+    with transaction.atomic():
+        Project.objects.update(is_featured=False)
+        AboutImage.objects.update(is_active=False)
+        pages.append(client.get("/").content.decode())
+        transaction.set_rollback(True)  # never touch the real content
+
+    return pages
 
 
 def js_source():
@@ -64,16 +96,23 @@ def main():
         return 1
 
     original = collect(original_path.read_text(encoding="utf-8"))
-    rendered = collect(Client().get("/").content.decode())
+    rendered = set()
+    for page in render_both_states():
+        rendered |= collect(page)
     js = js_source()
 
-    missing = sorted(
+    gone = [
         s for s in original - rendered
         if not any(token in s for token in IGNORE_SUBSTRINGS) and not in_js(s, js)
-    )
+    ]
+    superseded = sorted(s for s in gone if s in SUPERSEDED)
+    missing = sorted(s for s in gone if s not in SUPERSEDED)
 
     print(f"original styles : {len(original)}")
     print(f"rendered styles : {len(rendered)}")
+    print(f"superseded      : {len(superseded)}")
+    for style in superseded:
+        print("  ~", SUPERSEDED[style])
     print(f"missing         : {len(missing)}")
     for style in missing:
         print("  -", style[:150])

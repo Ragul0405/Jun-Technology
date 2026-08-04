@@ -160,6 +160,24 @@
       sy: innerHeight / 2
     };
 
+    // Splash cursor — a WebGL fluid simulation that the pointer stirs.
+    // Skipped on touch pointers, when the dashboard turns the custom cursor
+    // off, and on any driver the simulation cannot run on.
+    var splashCanvas = one("[data-splash]");
+    if (splashCanvas) {
+      var wanted = fine && cfg.customCursor !== false && window.SplashCursor;
+      var splash = wanted
+        ? window.SplashCursor.start(splashCanvas, {
+            palette: [
+              window.SplashCursor.hexToRgb(cfg.accentPrimary, { r: 0.23, g: 0.51, b: 0.96 }),
+              window.SplashCursor.hexToRgb(cfg.accentSecondary, { r: 0.49, g: 0.36, b: 1 })
+            ]
+          })
+        : null;
+      if (splash) cleanups.push(splash.destroy);
+      else splashCanvas.style.display = "none";
+    }
+
     if (fine && cfg.customCursor !== false) {
       document.documentElement.style.cursor = "none";
       on(
@@ -582,20 +600,16 @@
         card.style.boxShadow = "0 50px 90px -44px rgba(59,130,246,.8)";
         if (zoom) zoom.style.transform = "scale(1.08)";
         if (scrim) scrim.style.opacity = ".9";
-        if (up) {
-          up.style.maxHeight = "140px";
-          up.style.opacity = "1";
-        }
+        // The description already occupies its space — only fade it in,
+        // so the card cannot change size.
+        if (up) up.style.opacity = "1";
       });
       on(card, "mouseleave", function () {
         card.style.borderColor = "var(--w07,rgba(255,255,255,.07))";
         card.style.boxShadow = "none";
         if (zoom) zoom.style.transform = "none";
         if (scrim) scrim.style.opacity = ".5";
-        if (up) {
-          up.style.maxHeight = "0";
-          up.style.opacity = "0";
-        }
+        if (up) up.style.opacity = "0";
       });
       on(card, "click", function () {
         openModal(parseInt(card.getAttribute("data-project"), 10));
@@ -692,46 +706,31 @@
   // Portfolio filters
   // ------------------------------------------------------------------ //
   function setupFilters() {
+    // Filtering is done by the server now — each pill is a link to the project
+    // listing page. All this does is light up the one matching this page, and
+    // hold the ticker still while the pointer is over it.
     var pills = q("[data-filter]");
-    var cards = q("[data-card]");
-    if (!pills.length) return;
+    var active = cfg.activeCategory || "all";
 
-    function apply(cat, btn) {
-      pills.forEach(function (p) {
-        var isOn = p === btn;
-        p.style.background = isOn
-          ? "linear-gradient(120deg,#3b82f6,#6d5cff)"
-          : "var(--w04,rgba(255,255,255,.04))";
-        p.style.color = isOn ? "#fff" : "var(--tx62,rgba(232,236,248,.62))";
-        p.style.borderColor = isOn ? "transparent" : "var(--w09,rgba(255,255,255,.09))";
-        p.style.transform = isOn ? "translateY(-2px)" : "none";
-      });
-      cards.forEach(function (c, i) {
-        var show = cat === "all" || c.getAttribute("data-cat") === cat;
-        if (show) {
-          c.style.display = "";
-          setTimeout(function () {
-            c.style.opacity = "1";
-            c.style.transform = "none";
-            c.style.filter = "none";
-          }, 40 + i * 55);
-        } else {
-          c.style.opacity = "0";
-          c.style.transform = "translateY(14px) scale(.95)";
-          c.style.filter = "blur(6px)";
-          setTimeout(function () {
-            if (c.style.opacity === "0") c.style.display = "none";
-          }, 420);
-        }
-      });
-    }
-
-    pills.forEach(function (p) {
-      on(p, "click", function () {
-        apply(p.getAttribute("data-filter"), p);
-      });
+    pills.forEach(function (pill) {
+      var isOn = pill.getAttribute("data-filter") === active;
+      pill.style.background = isOn
+        ? "linear-gradient(120deg,#3b82f6,#6d5cff)"
+        : "var(--w04,rgba(255,255,255,.04))";
+      pill.style.color = isOn ? "#fff" : "var(--tx62,rgba(232,236,248,.62))";
+      pill.style.borderColor = isOn ? "transparent" : "var(--w09,rgba(255,255,255,.09))";
+      pill.style.transform = isOn ? "translateY(-2px)" : "none";
     });
-    apply("all", pills[0]);
+
+    var track = one("[data-cat-track]");
+    var zone = one("[data-cat-marquee]");
+    if (!track || !zone) return;
+    on(zone, "mouseenter", function () {
+      track.style.animationPlayState = "paused";
+    });
+    on(zone, "mouseleave", function () {
+      track.style.animationPlayState = "running";
+    });
   }
 
   // ------------------------------------------------------------------ //
@@ -846,12 +845,38 @@
     form.noValidate = true;
     var fields = q("[data-field]");
 
+    /**
+     * Arriving from a service link — `/?service=<slug>#contact` — fills the
+     * subject in so the visitor only has to say what they need. The slug is
+     * looked up against the services on the page, so nothing from the URL is
+     * ever written into the form verbatim.
+     */
+    function prefillFromService() {
+      var match = /[?&]service=([\w-]+)/.exec(window.location.search);
+      if (!match) return;
+      var name = (cfg.services || {})[match[1]];
+      if (!name) return;
+      var subject = form.querySelector('[name="subject"]');
+      if (!subject || subject.value) return;
+      subject.value = name + " enquiry";
+      var field = subject.closest("[data-field]");
+      var label = field && field.querySelector("[data-label]");
+      if (label) {
+        label.style.transform = "translateY(-9px) scale(.74)";
+        label.style.color = "rgba(143,180,255,.9)";
+      }
+      var message = form.querySelector('[name="message"]');
+      if (message && !message.value) message.focus();
+    }
+
     function float(label, isOn) {
       label.style.transform = isOn ? "translateY(-9px) scale(.74)" : "none";
       label.style.color = isOn
         ? "rgba(143,180,255,.9)"
         : "var(--tx42,rgba(232,236,248,.42))";
     }
+
+    prefillFromService();
 
     function setError(field, msg) {
       var input = field.querySelector("[data-input]");
@@ -1012,6 +1037,103 @@
   }
 
   // ------------------------------------------------------------------ //
+  // Flip decks — the hero's featured projects and the about photo frame
+  // ------------------------------------------------------------------ //
+  function setupFlipDecks() {
+    q("[data-flip]").forEach(function (deck) {
+      var faces = Array.prototype.slice.call(
+        deck.querySelectorAll("[data-flip-face]")
+      );
+      if (faces.length < 2) return;
+
+      // The zone owns the dots and the hover pause — it is the frame around
+      // the card, not the rotating deck itself.
+      var zone =
+        (deck.closest && deck.closest("[data-flip-zone]")) || deck.parentNode;
+      var dotWrap = zone.querySelector("[data-flip-dots]");
+      var dots = dotWrap
+        ? Array.prototype.slice.call(dotWrap.querySelectorAll("[data-flip-dot]"))
+        : [];
+      var rest = dots.map(function (dot) {
+        return dot.style.background;
+      });
+
+      var wait = parseInt(deck.getAttribute("data-flip-interval"), 10) || 4500;
+      // Half the CSS transition — the moment the card is edge-on and the
+      // outgoing face can be swapped for the incoming one unseen.
+      var half =
+        (parseFloat(getComputedStyle(deck).transitionDuration) * 1000 || 850) / 2;
+      var index = 0;
+      var rot = 0;
+      var timer = null;
+      var swap = null;
+      var paused = false;
+
+      faces.forEach(function (face, i) {
+        face.style.transform = "rotateY(0deg)";
+        face.style.visibility = i === 0 ? "visible" : "hidden";
+      });
+
+      function paint() {
+        dots.forEach(function (dot, i) {
+          var live = i === index;
+          dot.style.width = live ? "20px" : "7px";
+          dot.style.borderRadius = live ? "4px" : "50%";
+          dot.style.background = live
+            ? "linear-gradient(90deg,var(--a,#3b82f6),var(--b,#7c5cff))"
+            : rest[i];
+        });
+      }
+
+      function flipTo(next) {
+        if (next === index || swap) return;
+        rot += 180;
+        deck.style.transform = "rotateY(" + rot + "deg)";
+        var previous = index;
+        index = next;
+        paint();
+        swap = setTimeout(function () {
+          swap = null;
+          faces[previous].style.visibility = "hidden";
+          faces[next].style.transform = "rotateY(" + -rot + "deg)";
+          faces[next].style.visibility = "visible";
+        }, half);
+      }
+
+      function schedule() {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          if (!paused && !document.hidden) flipTo((index + 1) % faces.length);
+          schedule();
+        }, wait);
+      }
+
+      if (deck.getAttribute("data-flip-pause-hover") !== "0") {
+        on(zone, "mouseenter", function () {
+          paused = true;
+        });
+        on(zone, "mouseleave", function () {
+          paused = false;
+        });
+      }
+
+      dots.forEach(function (dot, i) {
+        on(dot, "click", function () {
+          flipTo(i);
+          schedule();
+        });
+      });
+
+      paint();
+      schedule();
+      cleanups.push(function () {
+        clearTimeout(timer);
+        clearTimeout(swap);
+      });
+    });
+  }
+
+  // ------------------------------------------------------------------ //
   // Boot
   // ------------------------------------------------------------------ //
   function init() {
@@ -1025,6 +1147,7 @@
     setupScroll();
     setupReveal();
     setupInteractions();
+    setupFlipDecks();
     setupFilters();
     setupModal();
     setupForm();

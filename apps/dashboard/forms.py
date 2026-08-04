@@ -7,7 +7,7 @@ classes, so every screen looks the same without hand-writing HTML per field.
 from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, modelformset_factory
 
 from apps.core import models
 
@@ -79,12 +79,62 @@ SiteSettingsForm = styled(
     models.SiteSettings,
     widgets={"accent_primary": COLOR, "accent_secondary": COLOR},
 )
-HeroSectionForm = styled(models.HeroSection)
+class HeroSectionForm(styled(models.HeroSection)):
+    """
+    The hero, including which projects its flip card cycles through.
+
+    `is_featured` lives on Project, but choosing the line-up belongs here next
+    to the panel it replaces — so the field is declared on this form and
+    written back to the projects on save.
+    """
+
+    featured_projects = forms.ModelMultipleChoiceField(
+        queryset=models.Project.objects.none(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        label="Projects in the flip card",
+        help_text=(
+            f"Tick up to {models.MAX_HERO_FEATURED}. The card flips through "
+            "them in this order, every 4.2 seconds. Tick none and the "
+            "build-health panel below is shown instead."
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        field = self.fields["featured_projects"]
+        field.queryset = models.Project.objects.order_by("order", "id")
+        field.label_from_instance = lambda p: (
+            f"{p.title} — {p.stack}" + ("" if p.is_active else "  (hidden)")
+        )
+        if not self.is_bound:
+            field.initial = models.Project.objects.filter(is_featured=True)
+
+    def clean_featured_projects(self):
+        picked = self.cleaned_data.get("featured_projects")
+        if picked and len(picked) > models.MAX_HERO_FEATURED:
+            raise forms.ValidationError(
+                f"The card holds {models.MAX_HERO_FEATURED} projects — "
+                f"you picked {len(picked)}. Untick a few."
+            )
+        return picked
+
+    def save(self, commit=True):
+        hero = super().save(commit=commit)
+        if commit:
+            chosen = [p.pk for p in self.cleaned_data.get("featured_projects") or []]
+            models.Project.objects.filter(is_featured=True).exclude(
+                pk__in=chosen
+            ).update(is_featured=False)
+            models.Project.objects.filter(pk__in=chosen).update(is_featured=True)
+        return hero
 AboutSectionForm = styled(models.AboutSection)
 ServicesSectionForm = styled(models.ServicesSection)
 PortfolioSectionForm = styled(models.PortfolioSection)
 TestimonialsSectionForm = styled(models.TestimonialsSection)
 ContactSectionForm = styled(models.ContactSection)
+BlogSectionForm = styled(models.BlogSection)
+FaqSectionForm = styled(models.FaqSection)
 FooterSettingsForm = styled(models.FooterSettings)
 
 
@@ -150,9 +200,130 @@ StatForm = styled(models.Stat)
 AboutCardForm = styled(models.AboutCard)
 ServiceForm = styled(models.Service)
 ProjectCategoryForm = styled(models.ProjectCategory)
-ProjectForm = styled(models.Project)
+BlogCategoryForm = styled(models.BlogCategory)
+FaqItemForm = styled(models.FaqItem)
+ContentPageForm = styled(
+    models.ContentPage,
+    widgets={"body": forms.Textarea(attrs={"class": "fld", "rows": 20})},
+)
 TestimonialForm = styled(models.Testimonial)
+class BlogPostForm(styled(models.BlogPost)):
+    """An article. The slug is optional — it is built from the title."""
+
+    class Meta(styled(models.BlogPost).Meta):
+        widgets = {
+            "published_at": forms.DateInput(
+                attrs={"type": "date", "class": "fld"}, format="%Y-%m-%d"
+            ),
+            "body": forms.Textarea(attrs={"class": "fld", "rows": 18}),
+            "excerpt": forms.Textarea(attrs={"class": "fld", "rows": 3}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["published_at"].input_formats = ["%Y-%m-%d"]
+        self.fields["slug"].required = False
+
+
 ContactDetailForm = styled(models.ContactDetail)
+
+
+def _limit_error(limit, noun, existing):
+    """A cap message that names what is already using the slots."""
+    listing = ", ".join(str(item) for item in existing)
+    return (
+        f"Only {limit} {noun} are allowed. Remove one first — "
+        f"currently using the slots: {listing}."
+    )
+
+
+class ProjectForm(styled(models.Project)):
+    """
+    A project.
+
+    `is_featured` is deliberately absent: the hero's line-up is chosen on the
+    Hero screen, so there is only ever one place to set it.
+    """
+
+    class Meta(styled(models.Project).Meta):
+        exclude = ("is_featured",)
+
+
+class AboutImageForm(styled(models.AboutImage)):
+    """An about photo, with the flip-frame limit enforced at save time."""
+
+    def clean(self):
+        cleaned = super().clean()
+        others = models.AboutImage.objects.all()
+        if self.instance.pk:
+            others = others.exclude(pk=self.instance.pk)
+        if others.count() >= models.MAX_ABOUT_IMAGES:
+            raise forms.ValidationError(
+                _limit_error(models.MAX_ABOUT_IMAGES, "about images", others)
+            )
+        return cleaned
+
+
+class AboutImageSlotForm(AboutImageForm):
+    """
+    One slot on the About images screen.
+
+    Order is not asked for — the slots are numbered on the page and the view
+    renumbers rows to match, so an editor never types an order value.
+    """
+
+    class Meta(AboutImageForm.Meta):
+        fields = ("image", "alt", "is_active")
+        # A plain file input: the slot already shows the photo and offers
+        # "Remove this photo", so the stock widget's "Currently / Change /
+        # Clear" line is just noise. Submitting nothing keeps the photo.
+        widgets = {"image": forms.FileInput(attrs={"accept": "image/*"})}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["alt"].label = "Description"
+        self.fields["is_active"].label = "Show this photo"
+        self.fields["image"].required = not self.instance.pk
+
+    def has_changed(self):
+        """
+        An empty slot is not an attempt to add a photo.
+
+        Without this, saving the screen with any slot left blank fails with
+        "image is required": a blank slot renders no `is_active` checkbox, so
+        the unchecked default reads as a change.
+        """
+        if not self.instance.pk and not self.files.get(self.add_prefix("image")):
+            return False
+        return super().has_changed()
+
+    def clean_is_active(self):
+        """
+        A photo you have just uploaded is visible.
+
+        The "Show this photo" toggle only appears once a slot holds a photo, so
+        a new upload posts no value — which would otherwise save it hidden and
+        leave the editor wondering why the site did not change.
+        """
+        if not self.instance.pk:
+            return True
+        return self.cleaned_data.get("is_active", False)
+
+
+def about_image_formset(*args, **kwargs):
+    """Exactly MAX_ABOUT_IMAGES slots: the saved photos, then empty ones."""
+    used = models.AboutImage.objects.count()
+    formset_cls = modelformset_factory(
+        models.AboutImage,
+        form=AboutImageSlotForm,
+        extra=max(0, models.MAX_ABOUT_IMAGES - used),
+        max_num=models.MAX_ABOUT_IMAGES,
+        validate_max=True,
+        can_delete=True,
+    )
+    return formset_cls(*args, **kwargs)
+
+
 FooterColumnForm = styled(models.FooterColumn)
 FooterLinkForm = styled(models.FooterLink)
 SocialLinkForm = styled(models.SocialLink)

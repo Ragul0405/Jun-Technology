@@ -7,7 +7,9 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from apps.core import models
+from apps.core.tests import an_image
 
+from .forms import AboutImageForm, ProjectForm
 from .registry import COLLECTIONS, SINGLETONS
 
 TEST_MEDIA_ROOT = tempfile.mkdtemp(prefix="juntech-dashboard-media-")
@@ -237,6 +239,191 @@ class DashboardTests(TestCase):
         contact = models.ContactSection.load()
         self.assertIn("maps.google.com", contact.map_iframe_url)
         self.assertIn("<iframe", self.client.get("/").content.decode())
+
+    # -- hero flip card ---------------------------------------------------- #
+    HERO_FIELDS = {
+        "show_badge": "on",
+        "badge_text": "Trusted by 150+ businesses worldwide",
+        "title_line_1": "We Build Modern",
+        "title_line_2": "Websites That Grow",
+        "title_line_3": "Your Business",
+        "subtitle": "Expert solutions.",
+        "primary_cta_label": "Get Started",
+        "primary_cta_url": "#contact",
+        "secondary_cta_label": "View Our Work",
+        "secondary_cta_url": "#work",
+        "panel_label": "Build Health",
+        "panel_value": "99.8",
+        "panel_value_suffix": "%",
+        "panel_caption": "Uptime",
+        "panel_metric_1_value": "1.2s",
+        "panel_metric_1_label": "Median LCP",
+        "panel_metric_2_value": "A+",
+        "panel_metric_2_label": "Core Web Vitals",
+        "badge_title": "Award Winning",
+        "badge_subtitle": "Digital Agency 2024",
+    }
+
+    def _hero_payload(self, projects):
+        payload = dict(self.HERO_FIELDS)
+        payload["featured_projects"] = [str(p.pk) for p in projects]
+        return payload
+
+    def test_hero_screen_picks_the_featured_projects(self):
+        picks = list(models.Project.objects.all()[:2])
+        response = self.client.post(
+            reverse("dashboard:singleton", args=["hero"]), self._hero_payload(picks)
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            [p.title for p in models.Project.featured()], [p.title for p in picks]
+        )
+
+        # Unticking one drops it from the card without touching the project.
+        self.client.post(
+            reverse("dashboard:singleton", args=["hero"]),
+            self._hero_payload(picks[:1]),
+        )
+        self.assertEqual([p.title for p in models.Project.featured()], [picks[0].title])
+        self.assertTrue(models.Project.objects.get(pk=picks[1].pk).is_active)
+
+    def test_hero_screen_shows_the_picker_with_every_project(self):
+        response = self.client.get(reverse("dashboard:singleton", args=["hero"]))
+        self.assertEqual(response.status_code, 200)
+        field = response.context["form"]["featured_projects"]
+        self.assertEqual(field.field.queryset.count(), models.Project.objects.count())
+        self.assertIn("Featured projects", response.content.decode())
+
+    def test_hero_screen_refuses_more_than_the_cap(self):
+        too_many = list(models.Project.objects.all()[: models.MAX_HERO_FEATURED + 1])
+        self.assertGreater(len(too_many), models.MAX_HERO_FEATURED)
+        response = self.client.post(
+            reverse("dashboard:singleton", args=["hero"]), self._hero_payload(too_many)
+        )
+        self.assertEqual(response.status_code, 200)  # redisplayed with the error
+        self.assertIn(f"card holds {models.MAX_HERO_FEATURED}", response.content.decode())
+        self.assertLessEqual(
+            models.Project.objects.filter(is_featured=True).count(),
+            models.MAX_HERO_FEATURED,
+        )
+
+    def test_editing_a_project_never_changes_the_hero_line_up(self):
+        project = models.Project.objects.first()
+        project.is_featured = True
+        project.save(update_fields=["is_featured"])
+        response = self.client.post(
+            reverse("dashboard:project_edit", args=[project.pk]),
+            {
+                "title": project.title,
+                "category": project.category_id,
+                "stack": project.stack,
+                "short_description": project.short_description,
+                "description": project.description,
+                "external_url": project.external_url,
+                "order": project.order,
+                "is_active": "on",
+                "metrics-TOTAL_FORMS": "0",
+                "metrics-INITIAL_FORMS": "0",
+                "gallery-TOTAL_FORMS": "0",
+                "gallery-INITIAL_FORMS": "0",
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(models.Project.objects.get(pk=project.pk).is_featured)
+
+    # -- about photo slots ------------------------------------------------- #
+    ABOUT_FIELDS = {
+        "eyebrow": "About Us",
+        "heading": "Crafting digital excellence since 2019",
+        "body": "Jun Technology is a premium web development agency.",
+        "image_alt": "Our studio",
+        "badge_title": "Since 2019",
+        "badge_subtitle": "Silicon Valley, CA",
+    }
+
+    def _about_payload(self, filled=None, existing=()):
+        payload = dict(self.ABOUT_FIELDS)
+        payload.update(
+            {
+                "form-TOTAL_FORMS": str(models.MAX_ABOUT_IMAGES),
+                "form-INITIAL_FORMS": str(len(existing)),
+                "form-MIN_NUM_FORMS": "0",
+                "form-MAX_NUM_FORMS": str(models.MAX_ABOUT_IMAGES),
+            }
+        )
+        for index in range(models.MAX_ABOUT_IMAGES):
+            payload["form-%d-alt" % index] = ""
+            if index < len(existing):
+                payload["form-%d-id" % index] = str(existing[index].pk)
+                payload["form-%d-is_active" % index] = "on"
+        for index, name in (filled or {}).items():
+            payload["form-%d-alt" % index] = name
+        return payload
+
+    def test_about_screen_carries_the_photo_slots(self):
+        response = self.client.get(reverse("dashboard:singleton", args=["about"]))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.context["photos"].total_form_count(), models.MAX_ABOUT_IMAGES
+        )
+        body = response.content.decode()
+        self.assertIn("Photo 1", body)
+        self.assertIn("Photo %d" % models.MAX_ABOUT_IMAGES, body)
+        self.assertNotIn("Photo %d" % (models.MAX_ABOUT_IMAGES + 1), body)
+        self.assertIn("Photo frame", body)
+
+    def test_about_screen_saves_copy_and_photos_together(self):
+        payload = self._about_payload({0: "Studio wide", 1: "The team"})
+        payload["heading"] = "A brand new heading"
+        payload["form-0-image"] = an_image("one.gif")
+        payload["form-1-image"] = an_image("two.gif")
+
+        response = self.client.post(
+            reverse("dashboard:singleton", args=["about"]), payload
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(models.AboutSection.load().heading, "A brand new heading")
+
+        photos = list(models.AboutImage.objects.order_by("order"))
+        self.assertEqual([p.alt for p in photos], ["Studio wide", "The team"])
+        self.assertEqual([p.order for p in photos], [0, 1])
+
+        about = self.client.get(reverse("core:home")).content.decode()
+        about = about[about.index('id="about"') : about.index('id="services"')]
+        self.assertEqual(about.count("data-flip-face"), 2)
+
+    def test_about_screen_removes_a_photo(self):
+        for index in range(2):
+            models.AboutImage.objects.create(
+                image=an_image("s%d.gif" % index), alt="Photo %d" % index, order=index
+            )
+        existing = list(models.AboutImage.objects.order_by("order"))
+        payload = self._about_payload({0: "Photo 0", 1: "Photo 1"}, existing)
+        payload["form-1-DELETE"] = "on"
+
+        self.assertEqual(
+            self.client.post(
+                reverse("dashboard:singleton", args=["about"]), payload
+            ).status_code,
+            302,
+        )
+        self.assertEqual(models.AboutImage.objects.count(), 1)
+        self.assertEqual(models.AboutImage.objects.get().alt, "Photo 0")
+
+    def test_about_photos_are_capped(self):
+        for index in range(models.MAX_ABOUT_IMAGES):
+            models.AboutImage.objects.create(
+                image=an_image("studio-%d.gif" % index), alt="Studio %d" % index
+            )
+        response = self.client.get(reverse("dashboard:singleton", args=["about"]))
+        self.assertEqual(len(response.context["photos"].extra_forms), 0)
+
+        form = AboutImageForm(
+            data={"alt": "One too many", "order": 9, "is_active": "on"},
+            files={"image": an_image("one-too-many.gif")},
+        )
+        self.assertFalse(form.is_valid())
+        self.assertIn("Only %d" % models.MAX_ABOUT_IMAGES, str(form.errors))
 
     def test_category_in_use_cannot_be_deleted(self):
         category = models.ProjectCategory.objects.filter(projects__isnull=False).first()

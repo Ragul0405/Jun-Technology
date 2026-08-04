@@ -1,11 +1,15 @@
-{% if field.field.widget.input_type == "checkbox" %}
+{% comment %}
+A multi-checkbox list also reports input_type "checkbox", but it needs its
+label above the list, not beside it — hence the allow_multiple_selected test.
+{% endcomment %}
+{% if field.field.widget.input_type == "checkbox" and not field.field.widget.allow_multiple_selected %}
 <div class="field">
   <div class="check-row">{{ field }}<label for="{{ field.id_for_label }}">{{ field.label }}</label></div>
   {% if field.help_text %}<div class="help">{{ field.help_text|safe }}</div>{% endif %}
   {% if field.errors %}<ul class="errors">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
 </div>
 {% else %}
-<div class="field">
+<div class="field"{% if field.field.widget.allow_multiple_selected %} style="grid-column:1/-1"{% endif %}>
   <label for="{{ field.id_for_label }}">{{ field.label }}</label>
   {% if field.value and field.field.widget.input_type == "file" %}
     <div class="current-file">

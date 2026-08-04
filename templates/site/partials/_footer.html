@@ -13,7 +13,7 @@
           </div>
           <p style="margin:18px 0 0;font-size:13.5px;line-height:1.7;color:var(--tx5,rgba(232,236,248,.5))">{{ footer.description }}</p>
           <div style="display:flex;gap:10px;margin-top:20px">
-            {% for link in social_links %}<a href="{{ link.url }}" aria-label="{{ link.label }}" data-social data-cursor="expand"{% if link.url|slice:":4" == "http" %} target="_blank" rel="noopener"{% endif %} style="width:38px;height:38px;border-radius:12px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease" style-hover="background:{{ link.accent_social_bg }};border-color:{{ link.accent_social_border }}">{% icon link.icon stroke="var(--acc4,#c7d8fe)" size="16px" %}</a>
+            {% for link in social_links %}<a href="{% nav_href link.url %}" aria-label="{{ link.label }}" data-social data-cursor="expand"{% if link.url|slice:":4" == "http" %} target="_blank" rel="noopener"{% endif %} style="width:38px;height:38px;border-radius:12px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));display:flex;align-items:center;justify-content:center;transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease" style-hover="background:{{ link.accent_social_bg }};border-color:{{ link.accent_social_border }}">{% icon link.icon stroke="var(--acc4,#c7d8fe)" size="16px" %}</a>
             {% endfor %}
           </div>
         </div>
@@ -21,15 +21,16 @@
         <div>
           <div style="font-family:'Sora',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx9,rgba(232,236,248,.9))">{{ column.title }}</div>
           <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px">
-            {% for link in column.links.all %}{% if link.is_active %}<a href="{{ link.url }}" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">{{ link.label }}</a>
-            {% endif %}{% endfor %}
+            {% if column.source == "services" %}{% for service in footer_services %}<a href="{{ service.enquiry_url }}" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">{{ service.title }}</a>
+            {% endfor %}{% else %}{% for link in column.links.all %}{% if link.is_active %}<a href="{% nav_href link.url %}" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">{{ link.label }}</a>
+            {% endif %}{% endfor %}{% endif %}
           </div>
         </div>
         {% endfor %}
       </div>
       <div style="margin-top:44px;padding-top:22px;border-top:1px solid var(--w07,rgba(255,255,255,.07));display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
         <div style="font-size:12.5px;color:var(--tx4,rgba(232,236,248,.4))">{{ footer.copyright_text }}</div>
-        <a href="#home" data-cursor="expand" data-magnetic="5" style="display:inline-flex;align-items:center;gap:9px;padding:9px 16px;border-radius:100px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));font-size:12.5px;color:var(--tx7,rgba(232,236,248,.7));transition:background .35s ease,border-color .35s ease" style-hover="background:rgba(59,130,246,.16);border-color:rgba(59,130,246,.45)">{{ footer.back_to_top_label }}</a>
+        <a href="{% nav_href '#home' %}" data-cursor="expand" data-magnetic="5" style="display:inline-flex;align-items:center;gap:9px;padding:9px 16px;border-radius:100px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));font-size:12.5px;color:var(--tx7,rgba(232,236,248,.7));transition:background .35s ease,border-color .35s ease" style-hover="background:rgba(59,130,246,.16);border-color:rgba(59,130,246,.45)">{{ footer.back_to_top_label }}</a>
       </div>
     </div>
   </footer>

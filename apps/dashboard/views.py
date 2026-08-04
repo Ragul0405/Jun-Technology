@@ -17,6 +17,7 @@ from .forms import (
     ProjectForm,
     ProjectImageFormSet,
     ProjectMetricFormSet,
+    about_image_formset,
 )
 from .registry import COLLECTIONS, NAVIGATION, SINGLETONS
 
@@ -112,16 +113,27 @@ def singleton(request, key):
         raise Http404
     instance = spec["model"].load()
     form_class = spec["form"]
+    # The about frame's photo slots are part of the About screen, not a
+    # separate page — they save with the same button.
+    photos = None
 
     if request.method == "POST":
         form = form_class(request.POST, request.FILES, instance=instance)
-        if form.is_valid():
+        if key == "about":
+            photos = about_image_formset(
+                request.POST, request.FILES, queryset=_about_photos()
+            )
+        if form.is_valid() and (photos is None or photos.is_valid()):
             form.save()
+            if photos is not None:
+                _save_about_photos(photos)
             flash.success(request, f"{spec['label']} saved.")
             return redirect("dashboard:singleton", key=key)
         flash.error(request, "Please fix the highlighted fields.")
     else:
         form = form_class(instance=instance)
+        if key == "about":
+            photos = about_image_formset(queryset=_about_photos())
 
     context = _base_context(request, active=f"singleton:{key}", title=spec["label"])
     context.update(
@@ -131,9 +143,30 @@ def singleton(request, key):
             "key": key,
             "instance": instance,
             "field_groups": _grouped_fields(form, spec.get("groups")),
+            "photos": photos,
+            "limit": models.MAX_ABOUT_IMAGES,
+            "live": models.AboutImage.objects.filter(is_active=True).count(),
         }
     )
     return render(request, spec.get("template", "dashboard/singleton_form.html"), context)
+
+
+def _about_photos():
+    return models.AboutImage.objects.order_by("order", "id")
+
+
+def _save_about_photos(formset):
+    """Save the slots, then make slot position the flip order."""
+    saved = formset.save(commit=False)
+    for gone in formset.deleted_objects:
+        gone.image.delete(save=False)
+        gone.delete()
+    for photo in saved:
+        photo.save()
+    for index, photo in enumerate(_about_photos()):
+        if photo.order != index:
+            photo.order = index
+            photo.save(update_fields=["order"])
 
 
 @staff_required
@@ -246,7 +279,10 @@ def collection_create(request, key):
             return redirect("dashboard:collection_list", key=key)
         flash.error(request, "Please fix the highlighted fields.")
     else:
-        form = form_class(initial={"order": _next_order(spec["model"])})
+        initial = {}
+        if not spec.get("unordered"):
+            initial["order"] = _next_order(spec["model"])
+        form = form_class(initial=initial)
 
     context = _base_context(
         request, active=f"collection:{key}", title=f"New {spec['singular']}"
@@ -256,6 +292,7 @@ def collection_create(request, key):
 
 
 def _next_order(model_cls):
+    """The next free order number, for collections that are hand-ordered."""
     last = model_cls.objects.order_by("-order").first()
     return (last.order + 1) if last else 0
 

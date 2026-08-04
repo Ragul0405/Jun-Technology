@@ -1,9 +1,24 @@
 from django import template
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from ..icons import ICONS
 
 register = template.Library()
+
+
+@register.simple_tag(takes_context=True)
+def nav_href(context, target):
+    """
+    A navigation target that still works away from the home page.
+
+    Section links are bare anchors like `#about`, which point at nothing on the
+    project listing page — so off the home page they are rewritten to
+    `/#about`.
+    """
+    if target.startswith("#") and not context.get("is_home", False):
+        return reverse("core:home") + target
+    return target
 
 
 @register.simple_tag

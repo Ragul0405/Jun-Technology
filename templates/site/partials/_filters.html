@@ -1,0 +1,24 @@
+{% comment %}
+Category filters, used by both the portfolio and the blog. "All" is pinned on
+the left so it is always reachable; the categories run past it on a ticker. The
+scrolling track holds the list twice so the -50% marquee keyframe loops
+seamlessly, and the duplicate is hidden from screen readers.
+
+Params:
+  filter_all_url    where the unfiltered list lives
+  filter_all_label  what the pinned pill says
+  filter_items      the categories (each needs .name and .slug)
+{% endcomment %}
+      <div data-cat-marquee style="margin-top:34px;display:flex;align-items:center;gap:10px">
+        <a href="{{ filter_all_url }}" data-filter="all" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">{{ filter_all_label|default:"All" }}</a>
+        <div style="flex:1;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)">
+          <div data-cat-track style="display:flex;width:max-content;gap:10px;animation:marquee {{ marquee_seconds|default:34 }}s linear infinite">
+            {% for pass in "12" %}
+            <div{% if not forloop.first %} aria-hidden="true"{% endif %} style="display:flex;gap:10px;flex:none;padding-right:10px">
+              {% for item in filter_items %}<a href="{{ filter_all_url }}?category={{ item.slug }}" data-filter="{{ item.slug }}" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">{{ item.name }}</a>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>

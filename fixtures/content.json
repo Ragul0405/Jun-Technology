@@ -1,0 +1,1252 @@
+[
+{
+  "model": "core.sitesettings",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-07-31T08:55:10.529Z",
+    "brand_prefix": "JUN",
+    "brand_suffix": "TECHNOLOGY",
+    "brand_tagline": "Software Solutions",
+    "logo_mark": "branding/jun-logo-mark.png",
+    "favicon": "",
+    "nav_cta_label": "Get Quote",
+    "nav_cta_url": "#contact",
+    "default_theme": "dark",
+    "accent_primary": "#3b82f6",
+    "accent_secondary": "#7c5cff",
+    "show_loader": true,
+    "custom_cursor": true,
+    "show_particles": true,
+    "meta_title": "Jun Technology — Software Solutions",
+    "meta_description": "Expert solutions in web development, UI/UX design, SEO and custom applications — engineered to scale with your business.",
+    "meta_keywords": "",
+    "og_image": "",
+    "canonical_url": "",
+    "google_analytics_id": ""
+  }
+},
+{
+  "model": "core.navlink",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.650Z",
+    "updated_at": "2026-07-31T08:41:42.650Z",
+    "label": "Home",
+    "target": "#home",
+    "section_key": "home"
+  }
+},
+{
+  "model": "core.navlink",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.650Z",
+    "updated_at": "2026-07-31T08:41:42.650Z",
+    "label": "About",
+    "target": "#about",
+    "section_key": "about"
+  }
+},
+{
+  "model": "core.navlink",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.650Z",
+    "updated_at": "2026-07-31T08:41:42.650Z",
+    "label": "Services",
+    "target": "#services",
+    "section_key": "services"
+  }
+},
+{
+  "model": "core.navlink",
+  "pk": 4,
+  "fields": {
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.650Z",
+    "updated_at": "2026-07-31T08:41:42.650Z",
+    "label": "Work",
+    "target": "#work",
+    "section_key": "work"
+  }
+},
+{
+  "model": "core.navlink",
+  "pk": 5,
+  "fields": {
+    "order": 4,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.654Z",
+    "updated_at": "2026-07-31T08:41:42.654Z",
+    "label": "Testimonials",
+    "target": "#voices",
+    "section_key": "voices"
+  }
+},
+{
+  "model": "core.navlink",
+  "pk": 6,
+  "fields": {
+    "order": 5,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.654Z",
+    "updated_at": "2026-07-31T08:41:42.654Z",
+    "label": "Contact",
+    "target": "#contact",
+    "section_key": "contact"
+  }
+},
+{
+  "model": "core.herosection",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-07-31T08:41:42.637Z",
+    "badge_text": "Trusted by 150+ businesses worldwide",
+    "show_badge": true,
+    "title_line_1": "We Build Modern",
+    "title_line_2": "Websites That Grow",
+    "title_line_3": "Your Business",
+    "subtitle": "Expert solutions in web development, UI/UX design, SEO and custom applications — engineered to scale with your business.",
+    "primary_cta_label": "Get Started",
+    "primary_cta_url": "#contact",
+    "secondary_cta_label": "View Our Work",
+    "secondary_cta_url": "#work",
+    "panel_label": "Build Health",
+    "panel_value": "99.8",
+    "panel_value_suffix": "%",
+    "panel_caption": "Average uptime across shipped platforms",
+    "panel_metric_1_value": "1.2s",
+    "panel_metric_1_label": "Median LCP",
+    "panel_metric_2_value": "A+",
+    "panel_metric_2_label": "Core Web Vitals",
+    "badge_title": "Award Winning",
+    "badge_subtitle": "Digital Agency 2024"
+  }
+},
+{
+  "model": "core.herohighlight",
+  "pk": 1,
+  "fields": {
+    "accent": "blue",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.656Z",
+    "updated_at": "2026-07-31T08:41:42.656Z",
+    "label": "100+ Projects Delivered"
+  }
+},
+{
+  "model": "core.herohighlight",
+  "pk": 2,
+  "fields": {
+    "accent": "purple",
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.656Z",
+    "updated_at": "2026-07-31T08:41:42.656Z",
+    "label": "98% Client Satisfaction"
+  }
+},
+{
+  "model": "core.herohighlight",
+  "pk": 3,
+  "fields": {
+    "accent": "sky",
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.656Z",
+    "updated_at": "2026-07-31T08:41:42.656Z",
+    "label": "Built SEO-first"
+  }
+},
+{
+  "model": "core.stat",
+  "pk": 1,
+  "fields": {
+    "accent": "blue",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T08:41:42.659Z",
+    "icon": "bars",
+    "value": 100,
+    "suffix": "+",
+    "label": "Projects Delivered"
+  }
+},
+{
+  "model": "core.stat",
+  "pk": 2,
+  "fields": {
+    "accent": "purple",
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T08:41:42.659Z",
+    "icon": "check",
+    "value": 98,
+    "suffix": "%",
+    "label": "Client Satisfaction"
+  }
+},
+{
+  "model": "core.stat",
+  "pk": 3,
+  "fields": {
+    "accent": "sky",
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T08:41:42.659Z",
+    "icon": "clock",
+    "value": 5,
+    "suffix": "+",
+    "label": "Years Experience"
+  }
+},
+{
+  "model": "core.stat",
+  "pk": 4,
+  "fields": {
+    "accent": "blue",
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T08:41:42.659Z",
+    "icon": "user",
+    "value": 50,
+    "suffix": "+",
+    "label": "Happy Clients"
+  }
+},
+{
+  "model": "core.aboutsection",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-07-31T09:06:58.201Z",
+    "eyebrow": "About Us",
+    "heading": "Crafting digital excellence since 2019",
+    "body": "Jun Technology is a premium web development and digital solutions agency. We craft high-performance, visually striking websites and applications that help businesses stand out, scale up and win in the digital world.",
+    "image": "about/Page_not_found_-_Oasis_Events.jpg",
+    "image_alt": "Our studio",
+    "badge_title": "Since 2019",
+    "badge_subtitle": "Silicon Valley, CA"
+  }
+},
+{
+  "model": "core.aboutcard",
+  "pk": 1,
+  "fields": {
+    "accent": "blue",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T08:41:42.659Z",
+    "title": "Our Mission",
+    "body": "Empower businesses with cutting-edge digital solutions that drive measurable growth and lasting online presence."
+  }
+},
+{
+  "model": "core.aboutcard",
+  "pk": 2,
+  "fields": {
+    "accent": "purple",
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T08:41:42.659Z",
+    "title": "Our Vision",
+    "body": "To be the most trusted technology partner for ambitious businesses across the globe, at every stage of scale."
+  }
+},
+{
+  "model": "core.aboutcard",
+  "pk": 3,
+  "fields": {
+    "accent": "sky",
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T08:41:42.659Z",
+    "title": "Why Choose Us",
+    "body": "Strategic thinking, beautiful design and technical precision — websites that don't just look great, they perform."
+  }
+},
+{
+  "model": "core.servicessection",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-07-31T08:41:42.637Z",
+    "eyebrow": "",
+    "heading": "Our core services",
+    "subheading": "From concept to launch, we deliver end-to-end digital solutions designed to grow your business."
+  }
+},
+{
+  "model": "core.service",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T10:02:58.980Z",
+    "icon": "code",
+    "title": "Website Development",
+    "description": "Modern, fast and scalable websites built with the latest technologies and best practices.",
+    "link_label": "Learn more",
+    "link_url": ""
+  }
+},
+{
+  "model": "core.service",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T10:02:58.991Z",
+    "icon": "browser",
+    "title": "UI/UX Design",
+    "description": "Beautiful, intuitive interfaces crafted to convert visitors into loyal customers.",
+    "link_label": "Learn more",
+    "link_url": ""
+  }
+},
+{
+  "model": "core.service",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T10:02:58.992Z",
+    "icon": "redesign",
+    "title": "Website Redesign",
+    "description": "Revamp your existing site with a fresh, modern look that reflects your brand today.",
+    "link_label": "Learn more",
+    "link_url": ""
+  }
+},
+{
+  "model": "core.service",
+  "pk": 4,
+  "fields": {
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T10:02:58.993Z",
+    "icon": "cart",
+    "title": "E-Commerce Development",
+    "description": "Powerful online stores built to drive sales, streamline operations and delight buyers.",
+    "link_label": "Learn more",
+    "link_url": ""
+  }
+},
+{
+  "model": "core.service",
+  "pk": 5,
+  "fields": {
+    "order": 4,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.659Z",
+    "updated_at": "2026-07-31T10:02:58.994Z",
+    "icon": "search",
+    "title": "SEO Optimization",
+    "description": "Data-driven SEO strategies that lift rankings and bring qualified organic traffic.",
+    "link_label": "Learn more",
+    "link_url": ""
+  }
+},
+{
+  "model": "core.service",
+  "pk": 6,
+  "fields": {
+    "order": 5,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.670Z",
+    "updated_at": "2026-07-31T10:02:58.995Z",
+    "icon": "megaphone",
+    "title": "Website Promotion",
+    "description": "Digital marketing campaigns that increase visibility and grow your customer base.",
+    "link_label": "Learn more",
+    "link_url": ""
+  }
+},
+{
+  "model": "core.service",
+  "pk": 7,
+  "fields": {
+    "order": 6,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.672Z",
+    "updated_at": "2026-07-31T10:02:58.995Z",
+    "icon": "gear",
+    "title": "Maintenance & Support",
+    "description": "24/7 monitoring, updates and support to keep your website secure and performing.",
+    "link_label": "Learn more",
+    "link_url": ""
+  }
+},
+{
+  "model": "core.service",
+  "pk": 8,
+  "fields": {
+    "order": 7,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.672Z",
+    "updated_at": "2026-07-31T10:02:58.997Z",
+    "icon": "shield",
+    "title": "Custom Web Applications",
+    "description": "Bespoke web apps and portals tailored to your unique business workflows.",
+    "link_label": "Learn more",
+    "link_url": ""
+  }
+},
+{
+  "model": "core.portfoliosection",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-07-31T08:41:42.637Z",
+    "eyebrow": "Our Portfolio",
+    "heading": "Work we're proud of",
+    "subheading": "A selection of projects that showcase our expertise, creativity and dedication to quality.",
+    "all_filter_label": "All"
+  }
+},
+{
+  "model": "core.projectcategory",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.672Z",
+    "updated_at": "2026-07-31T08:41:42.672Z",
+    "name": "Business",
+    "slug": "business"
+  }
+},
+{
+  "model": "core.projectcategory",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.672Z",
+    "updated_at": "2026-07-31T08:41:42.672Z",
+    "name": "E-Commerce",
+    "slug": "e-commerce"
+  }
+},
+{
+  "model": "core.projectcategory",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.672Z",
+    "updated_at": "2026-07-31T08:41:42.672Z",
+    "name": "Healthcare",
+    "slug": "healthcare"
+  }
+},
+{
+  "model": "core.projectcategory",
+  "pk": 4,
+  "fields": {
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.672Z",
+    "updated_at": "2026-07-31T08:41:42.672Z",
+    "name": "Education",
+    "slug": "education"
+  }
+},
+{
+  "model": "core.projectcategory",
+  "pk": 5,
+  "fields": {
+    "order": 4,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.678Z",
+    "updated_at": "2026-07-31T08:41:42.678Z",
+    "name": "Restaurant",
+    "slug": "restaurant"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.678Z",
+    "updated_at": "2026-07-31T09:17:57.512Z",
+    "title": "CoreLogic CRM",
+    "category": 1,
+    "stack": "React · Node.js",
+    "short_description": "Enterprise CRM with analytics dashboard and client management.",
+    "description": "A unified CRM for a 400-seat sales organisation: pipeline analytics, client records, quoting and role-based dashboards, replacing four disconnected internal tools.",
+    "image": "projects/High_Resolution_4k_Dual_Monitor_Wallpaper_7680x2160.jpg",
+    "modal_image": "",
+    "external_url": ""
+  }
+},
+{
+  "model": "core.project",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.678Z",
+    "updated_at": "2026-07-31T08:41:42.678Z",
+    "title": "ShopVault Store",
+    "category": 2,
+    "stack": "Next.js · Stripe",
+    "short_description": "Full-featured commerce platform with real-time inventory and payments.",
+    "description": "Headless commerce build with real-time inventory, one-page checkout and a merchandising CMS the client's own team runs without developers.",
+    "image": "",
+    "modal_image": "",
+    "external_url": ""
+  }
+},
+{
+  "model": "core.project",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.688Z",
+    "updated_at": "2026-07-31T08:41:42.688Z",
+    "title": "MediConnect",
+    "category": 3,
+    "stack": "React · Firebase",
+    "short_description": "Appointment scheduling and patient management portal for clinics.",
+    "description": "Patient portal and clinician scheduling system with HIPAA-conscious data handling, automated reminders and multi-location capacity planning.",
+    "image": "",
+    "modal_image": "",
+    "external_url": ""
+  }
+},
+{
+  "model": "core.project",
+  "pk": 4,
+  "fields": {
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.688Z",
+    "updated_at": "2026-07-31T08:41:42.688Z",
+    "title": "LearnSphere LMS",
+    "category": 4,
+    "stack": "Vue.js · Django",
+    "short_description": "Learning management system with live classes, quizzes and progress tracking.",
+    "description": "Learning platform with live classes, adaptive quizzing and progress analytics for faculty — built to hold 5,000 concurrent students.",
+    "image": "",
+    "modal_image": "",
+    "external_url": ""
+  }
+},
+{
+  "model": "core.project",
+  "pk": 5,
+  "fields": {
+    "order": 4,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.695Z",
+    "updated_at": "2026-07-31T08:41:42.695Z",
+    "title": "TasteBud Online",
+    "category": 5,
+    "stack": "React · Supabase",
+    "short_description": "Restaurant site with online menu, reservations and order management.",
+    "description": "Reservation and ordering experience for a six-venue restaurant group, with live table availability and a kitchen-side order display.",
+    "image": "",
+    "modal_image": "",
+    "external_url": ""
+  }
+},
+{
+  "model": "core.project",
+  "pk": 6,
+  "fields": {
+    "order": 5,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.695Z",
+    "updated_at": "2026-07-31T08:41:42.695Z",
+    "title": "ProManage Suite",
+    "category": 1,
+    "stack": "React · AWS",
+    "short_description": "Project management tool with kanban boards, time tracking and team collaboration.",
+    "description": "Project management workspace with kanban boards, time tracking and team workload views, deployed as a white-label product for agencies.",
+    "image": "",
+    "modal_image": "",
+    "external_url": ""
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.678Z",
+    "updated_at": "2026-07-31T08:41:42.678Z",
+    "project": 1,
+    "value": "+38%",
+    "label": "Sales velocity"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 4,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.678Z",
+    "updated_at": "2026-07-31T08:41:42.678Z",
+    "project": 2,
+    "value": "2.1x",
+    "label": "Conversion"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 7,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.688Z",
+    "updated_at": "2026-07-31T08:41:42.688Z",
+    "project": 3,
+    "value": "−72%",
+    "label": "No-shows"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 10,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.688Z",
+    "updated_at": "2026-07-31T08:41:42.688Z",
+    "project": 4,
+    "value": "5k",
+    "label": "Concurrent"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 13,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.695Z",
+    "updated_at": "2026-07-31T08:41:42.695Z",
+    "project": 5,
+    "value": "+120%",
+    "label": "Direct orders"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 16,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.695Z",
+    "updated_at": "2026-07-31T08:41:42.695Z",
+    "project": 6,
+    "value": "3.4k",
+    "label": "Daily users"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.678Z",
+    "updated_at": "2026-07-31T08:41:42.678Z",
+    "project": 1,
+    "value": "4→1",
+    "label": "Tools replaced"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 5,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.686Z",
+    "updated_at": "2026-07-31T08:41:42.686Z",
+    "project": 2,
+    "value": "0.9s",
+    "label": "LCP"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 8,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.688Z",
+    "updated_at": "2026-07-31T08:41:42.688Z",
+    "project": 3,
+    "value": "9",
+    "label": "Clinics live"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 11,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.688Z",
+    "updated_at": "2026-07-31T08:41:42.688Z",
+    "project": 4,
+    "value": "+41%",
+    "label": "Completion"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 14,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.695Z",
+    "updated_at": "2026-07-31T08:41:42.695Z",
+    "project": 5,
+    "value": "6",
+    "label": "Venues"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 17,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.695Z",
+    "updated_at": "2026-07-31T08:41:42.695Z",
+    "project": 6,
+    "value": "99.9%",
+    "label": "Uptime"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.678Z",
+    "updated_at": "2026-07-31T08:41:42.678Z",
+    "project": 1,
+    "value": "11wk",
+    "label": "To launch"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 6,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.687Z",
+    "updated_at": "2026-07-31T08:41:42.687Z",
+    "project": 2,
+    "value": "+64%",
+    "label": "AOV lift"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 9,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.688Z",
+    "updated_at": "2026-07-31T08:41:42.688Z",
+    "project": 3,
+    "value": "24/7",
+    "label": "Booking"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 12,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.695Z",
+    "updated_at": "2026-07-31T08:41:42.695Z",
+    "project": 4,
+    "value": "4.8",
+    "label": "App rating"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 15,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.695Z",
+    "updated_at": "2026-07-31T08:41:42.695Z",
+    "project": 5,
+    "value": "18%",
+    "label": "Fee saved"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 18,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.695Z",
+    "updated_at": "2026-07-31T08:41:42.695Z",
+    "project": 6,
+    "value": "−30%",
+    "label": "Admin time"
+  }
+},
+{
+  "model": "core.testimonialssection",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-07-31T08:41:42.637Z",
+    "eyebrow": "Client Love",
+    "heading": "What our clients say",
+    "subheading": "Real feedback from businesses that trusted us to build their digital presence.",
+    "scroll_seconds": 42
+  }
+},
+{
+  "model": "core.testimonial",
+  "pk": 1,
+  "fields": {
+    "accent": "blue",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.703Z",
+    "updated_at": "2026-07-31T08:41:42.703Z",
+    "quote": "Jun Technology transformed our outdated website into a stunning, high-converting platform. Sales increased by 40% within the first month.",
+    "author_name": "Sarah Mitchell",
+    "author_role": "Founder, Peak Retail",
+    "avatar": ""
+  }
+},
+{
+  "model": "core.testimonial",
+  "pk": 2,
+  "fields": {
+    "accent": "purple",
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.703Z",
+    "updated_at": "2026-07-31T08:41:42.703Z",
+    "quote": "Their attention to detail and understanding of our brand was incredible. The new platform streamlined our patient bookings dramatically.",
+    "author_name": "Raj Patel",
+    "author_role": "Director, Medicare Clinic",
+    "avatar": ""
+  }
+},
+{
+  "model": "core.testimonial",
+  "pk": 3,
+  "fields": {
+    "accent": "sky",
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.703Z",
+    "updated_at": "2026-07-31T08:41:42.703Z",
+    "quote": "From the first consultation to launch, the process was seamless. Our LMS has received overwhelmingly positive feedback from students and faculty.",
+    "author_name": "Emma Chen",
+    "author_role": "Lead, EdVantage Academy",
+    "avatar": ""
+  }
+},
+{
+  "model": "core.testimonial",
+  "pk": 4,
+  "fields": {
+    "accent": "blue",
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.703Z",
+    "updated_at": "2026-07-31T08:41:42.703Z",
+    "quote": "Best investment we made for our business. The e-commerce site is blazing fast, beautiful, and our conversion rate has doubled.",
+    "author_name": "Marcus Johnson",
+    "author_role": "Owner, Urban Commerce",
+    "avatar": ""
+  }
+},
+{
+  "model": "core.contactsection",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-07-31T09:56:30.780Z",
+    "eyebrow": "Get In Touch",
+    "heading": "Let's build something amazing",
+    "subheading": "Ready to start your project? Send us a message and we'll get back to you within 24 hours.",
+    "show_map": true,
+    "map_label": "Jun Technology HQ · Menlo Park",
+    "map_street_label": "SILICON AVE",
+    "map_area_label": "TECH PARK",
+    "map_address": "",
+    "map_zoom": 15,
+    "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d242.98694715646096!2d80.21754653681776!3d12.98525686990238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525da2fbfcb875%3A0x9a0511c4ce0d27a6!2sThe%20Old%20Mirchi%20Biryani!5e0!3m2!1sen!2sin!4v1785491660574!5m2!1sen!2sin\"",
+    "submit_label": "Send Message",
+    "success_message": "Message sent"
+  }
+},
+{
+  "model": "core.contactdetail",
+  "pk": 1,
+  "fields": {
+    "accent": "blue",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.703Z",
+    "updated_at": "2026-07-31T08:41:42.703Z",
+    "icon": "pin",
+    "label": "Office Address",
+    "value": "123 Tech Park, Silicon Avenue, CA 94025",
+    "link": ""
+  }
+},
+{
+  "model": "core.contactdetail",
+  "pk": 2,
+  "fields": {
+    "accent": "purple",
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.703Z",
+    "updated_at": "2026-07-31T08:41:42.703Z",
+    "icon": "phone",
+    "label": "Phone Number",
+    "value": "+1 (555) 123-4567",
+    "link": "tel:+15551234567"
+  }
+},
+{
+  "model": "core.contactdetail",
+  "pk": 3,
+  "fields": {
+    "accent": "sky",
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.703Z",
+    "updated_at": "2026-07-31T08:41:42.703Z",
+    "icon": "mail",
+    "label": "Email Address",
+    "value": "hello@juntechnology.com",
+    "link": "mailto:hello@juntechnology.com"
+  }
+},
+{
+  "model": "core.contactdetail",
+  "pk": 4,
+  "fields": {
+    "accent": "blue",
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.710Z",
+    "updated_at": "2026-07-31T08:41:42.710Z",
+    "icon": "hours",
+    "label": "Business Hours",
+    "value": "Mon – Fri, 9AM – 6PM PST",
+    "link": ""
+  }
+},
+{
+  "model": "core.emailsettings",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-07-31T09:52:44.057Z",
+    "is_enabled": true,
+    "host": "smtp.gmail.com",
+    "port": 587,
+    "username": "sankarrahul7373@gmail.com",
+    "password": "",
+    "use_tls": true,
+    "use_ssl": false,
+    "timeout": 10,
+    "from_email": "sankarrahul7373@gmail.com",
+    "notify_email": "sankarrahul7373@gmail.com",
+    "subject_prefix": "New enquiry:",
+    "reply_to_sender": true,
+    "last_test_at": "2026-07-31T09:50:07.187Z",
+    "last_test_ok": true,
+    "last_test_error": ""
+  }
+},
+{
+  "model": "core.footersettings",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-07-31T08:41:42.648Z",
+    "description": "Building modern digital experiences that help businesses grow. Your success is our mission.",
+    "copyright_text": "© 2026 Jun Technology Software Solutions. All rights reserved.",
+    "back_to_top_label": "↑ Back to top"
+  }
+},
+{
+  "model": "core.footercolumn",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.713Z",
+    "updated_at": "2026-07-31T08:41:42.713Z",
+    "title": "Company"
+  }
+},
+{
+  "model": "core.footercolumn",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.724Z",
+    "updated_at": "2026-07-31T08:41:42.724Z",
+    "title": "Services"
+  }
+},
+{
+  "model": "core.footercolumn",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.731Z",
+    "updated_at": "2026-07-31T08:41:42.731Z",
+    "title": "Resources"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.718Z",
+    "updated_at": "2026-07-31T08:41:42.718Z",
+    "column": 1,
+    "label": "About Us",
+    "url": "#about"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 5,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.724Z",
+    "updated_at": "2026-07-31T08:41:42.724Z",
+    "column": 2,
+    "label": "Website Development",
+    "url": "#services"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 9,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.733Z",
+    "updated_at": "2026-07-31T08:41:42.733Z",
+    "column": 3,
+    "label": "Blog",
+    "url": "#voices"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.722Z",
+    "updated_at": "2026-07-31T08:41:42.722Z",
+    "column": 1,
+    "label": "Services",
+    "url": "#services"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 6,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.729Z",
+    "updated_at": "2026-07-31T08:41:42.729Z",
+    "column": 2,
+    "label": "UI/UX Design",
+    "url": "#services"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 10,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.733Z",
+    "updated_at": "2026-07-31T08:41:42.733Z",
+    "column": 3,
+    "label": "FAQs",
+    "url": "#contact"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.724Z",
+    "updated_at": "2026-07-31T08:41:42.724Z",
+    "column": 1,
+    "label": "Portfolio",
+    "url": "#work"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 7,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.729Z",
+    "updated_at": "2026-07-31T08:41:42.729Z",
+    "column": 2,
+    "label": "Website Promotion",
+    "url": "#services"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 11,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.735Z",
+    "updated_at": "2026-07-31T08:41:42.735Z",
+    "column": 3,
+    "label": "Privacy Policy",
+    "url": "#contact"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 4,
+  "fields": {
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.724Z",
+    "updated_at": "2026-07-31T08:41:42.724Z",
+    "column": 1,
+    "label": "Careers",
+    "url": "#contact"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 8,
+  "fields": {
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.731Z",
+    "updated_at": "2026-07-31T08:41:42.731Z",
+    "column": 2,
+    "label": "SEO Optimization",
+    "url": "#services"
+  }
+},
+{
+  "model": "core.footerlink",
+  "pk": 12,
+  "fields": {
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.737Z",
+    "updated_at": "2026-07-31T08:41:42.737Z",
+    "column": 3,
+    "label": "Terms & Conditions",
+    "url": "#contact"
+  }
+},
+{
+  "model": "core.sociallink",
+  "pk": 1,
+  "fields": {
+    "accent": "blue",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.737Z",
+    "updated_at": "2026-07-31T08:41:42.737Z",
+    "icon": "linkedin",
+    "label": "LinkedIn",
+    "url": "#contact"
+  }
+},
+{
+  "model": "core.sociallink",
+  "pk": 2,
+  "fields": {
+    "accent": "purple",
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.740Z",
+    "updated_at": "2026-07-31T08:41:42.740Z",
+    "icon": "x",
+    "label": "X",
+    "url": "#contact"
+  }
+},
+{
+  "model": "core.sociallink",
+  "pk": 3,
+  "fields": {
+    "accent": "sky",
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.741Z",
+    "updated_at": "2026-07-31T08:41:42.741Z",
+    "icon": "github",
+    "label": "GitHub",
+    "url": "#contact"
+  }
+},
+{
+  "model": "core.sociallink",
+  "pk": 4,
+  "fields": {
+    "accent": "blue",
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-07-31T08:41:42.741Z",
+    "updated_at": "2026-07-31T08:41:42.741Z",
+    "icon": "dribbble",
+    "label": "Dribbble",
+    "url": "#contact"
+  }
+}
+]

@@ -1,0 +1,14 @@
+{% load static %}{{ projects_data|default:""|json_script:"jt-projects" }}
+<script id="jt-config" type="application/json">{
+  "accentPrimary": "{{ site.accent_primary|escapejs }}",
+  "accentSecondary": "{{ site.accent_secondary|escapejs }}",
+  "theme": "{{ site.default_theme|escapejs }}",
+  "showLoader": false,
+  "customCursor": {% if site.custom_cursor %}true{% else %}false{% endif %},
+  "showParticles": {% if site.show_particles %}true{% else %}false{% endif %},
+  "activeCategory": "{% if active_category %}{{ active_category.slug|escapejs }}{% else %}all{% endif %}",
+  "contactUrl": "{% url 'core:contact_submit' %}",
+  "successLabel": "{{ contact.success_message|escapejs }}"
+}</script>
+<script src="{% static 'js/splash-cursor.js' %}" defer></script>
+<script src="{% static 'js/site.js' %}" defer></script>

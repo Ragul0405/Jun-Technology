@@ -27,10 +27,18 @@ class FooterLinkInline(admin.TabularInline):
 
 @admin.register(models.Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "stack", "order", "is_active")
-    list_filter = ("category", "is_active")
+    list_display = ("title", "category", "stack", "order", "is_active", "is_featured")
+    list_filter = ("category", "is_active", "is_featured")
     search_fields = ("title", "stack", "short_description")
     inlines = [MetricInline, GalleryInline]
+
+
+@admin.register(models.BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ("title", "category", "published_at", "author", "is_active")
+    list_filter = ("category", "is_active", "published_at")
+    search_fields = ("title", "excerpt", "body")
+    prepopulated_fields = {"slug": ("title",)}
 
 
 @admin.register(models.FooterColumn)
@@ -55,6 +63,12 @@ for model in (
     models.HeroHighlight,
     models.Stat,
     models.AboutSection,
+    models.AboutImage,
+    models.BlogSection,
+    models.BlogCategory,
+    models.ContentPage,
+    models.FaqSection,
+    models.FaqItem,
     models.AboutCard,
     models.ServicesSection,
     models.Service,
