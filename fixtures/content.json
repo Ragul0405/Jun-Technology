@@ -92,12 +92,25 @@
 },
 {
   "model": "core.navlink",
-  "pk": 6,
+  "pk": 7,
   "fields": {
     "order": 5,
     "is_active": true,
+    "created_at": "2026-08-04T13:09:32.621Z",
+    "updated_at": "2026-08-04T13:09:32.621Z",
+    "label": "Blog",
+    "target": "/blog/",
+    "section_key": ""
+  }
+},
+{
+  "model": "core.navlink",
+  "pk": 6,
+  "fields": {
+    "order": 6,
+    "is_active": true,
     "created_at": "2026-07-31T08:41:42.654Z",
-    "updated_at": "2026-07-31T08:41:42.654Z",
+    "updated_at": "2026-08-04T13:09:32.621Z",
     "label": "Contact",
     "target": "#contact",
     "section_key": "contact"
@@ -107,7 +120,7 @@
   "model": "core.herosection",
   "pk": 1,
   "fields": {
-    "updated_at": "2026-07-31T08:41:42.637Z",
+    "updated_at": "2026-08-04T11:39:46.579Z",
     "badge_text": "Trusted by 150+ businesses worldwide",
     "show_badge": true,
     "title_line_1": "We Build Modern",
@@ -230,14 +243,38 @@
   "model": "core.aboutsection",
   "pk": 1,
   "fields": {
-    "updated_at": "2026-07-31T09:06:58.201Z",
+    "updated_at": "2026-08-04T11:27:25.652Z",
     "eyebrow": "About Us",
     "heading": "Crafting digital excellence since 2019",
     "body": "Jun Technology is a premium web development and digital solutions agency. We craft high-performance, visually striking websites and applications that help businesses stand out, scale up and win in the digital world.",
-    "image": "about/Page_not_found_-_Oasis_Events.jpg",
+    "image": "about/Page_not_found_-_Oasis_Events_A8HOF7j.jpg",
     "image_alt": "Our studio",
     "badge_title": "Since 2019",
     "badge_subtitle": "Silicon Valley, CA"
+  }
+},
+{
+  "model": "core.aboutimage",
+  "pk": 4,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T11:09:28.480Z",
+    "updated_at": "2026-08-04T11:09:28.480Z",
+    "image": "about/Page_not_found_-_Oasis_Events.jpg",
+    "alt": "Our studio"
+  }
+},
+{
+  "model": "core.aboutimage",
+  "pk": 5,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T11:20:14.278Z",
+    "updated_at": "2026-08-04T11:20:14.278Z",
+    "image": "about/images.jpg",
+    "alt": "The Jun Technology team"
   }
 },
 {
@@ -299,6 +336,8 @@
     "updated_at": "2026-07-31T10:02:58.980Z",
     "icon": "code",
     "title": "Website Development",
+    "slug": "website-development",
+    "show_in_footer": true,
     "description": "Modern, fast and scalable websites built with the latest technologies and best practices.",
     "link_label": "Learn more",
     "link_url": ""
@@ -314,6 +353,8 @@
     "updated_at": "2026-07-31T10:02:58.991Z",
     "icon": "browser",
     "title": "UI/UX Design",
+    "slug": "uiux-design",
+    "show_in_footer": true,
     "description": "Beautiful, intuitive interfaces crafted to convert visitors into loyal customers.",
     "link_label": "Learn more",
     "link_url": ""
@@ -326,9 +367,11 @@
     "order": 2,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.659Z",
-    "updated_at": "2026-07-31T10:02:58.992Z",
+    "updated_at": "2026-08-04T17:17:58.587Z",
     "icon": "redesign",
     "title": "Website Redesign",
+    "slug": "website-redesign",
+    "show_in_footer": false,
     "description": "Revamp your existing site with a fresh, modern look that reflects your brand today.",
     "link_label": "Learn more",
     "link_url": ""
@@ -341,9 +384,11 @@
     "order": 3,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.659Z",
-    "updated_at": "2026-07-31T10:02:58.993Z",
+    "updated_at": "2026-08-04T17:17:58.589Z",
     "icon": "cart",
     "title": "E-Commerce Development",
+    "slug": "e-commerce-development",
+    "show_in_footer": false,
     "description": "Powerful online stores built to drive sales, streamline operations and delight buyers.",
     "link_label": "Learn more",
     "link_url": ""
@@ -359,6 +404,8 @@
     "updated_at": "2026-07-31T10:02:58.994Z",
     "icon": "search",
     "title": "SEO Optimization",
+    "slug": "seo-optimization",
+    "show_in_footer": true,
     "description": "Data-driven SEO strategies that lift rankings and bring qualified organic traffic.",
     "link_label": "Learn more",
     "link_url": ""
@@ -374,6 +421,8 @@
     "updated_at": "2026-07-31T10:02:58.995Z",
     "icon": "megaphone",
     "title": "Website Promotion",
+    "slug": "website-promotion",
+    "show_in_footer": true,
     "description": "Digital marketing campaigns that increase visibility and grow your customer base.",
     "link_label": "Learn more",
     "link_url": ""
@@ -386,9 +435,11 @@
     "order": 6,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.672Z",
-    "updated_at": "2026-07-31T10:02:58.995Z",
+    "updated_at": "2026-08-04T17:17:58.590Z",
     "icon": "gear",
     "title": "Maintenance & Support",
+    "slug": "maintenance-support",
+    "show_in_footer": false,
     "description": "24/7 monitoring, updates and support to keep your website secure and performing.",
     "link_label": "Learn more",
     "link_url": ""
@@ -401,9 +452,11 @@
     "order": 7,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.672Z",
-    "updated_at": "2026-07-31T10:02:58.997Z",
+    "updated_at": "2026-08-04T17:17:58.591Z",
     "icon": "shield",
     "title": "Custom Web Applications",
+    "slug": "custom-web-applications",
+    "show_in_footer": false,
     "description": "Bespoke web apps and portals tailored to your unique business workflows.",
     "link_label": "Learn more",
     "link_url": ""
@@ -487,7 +540,7 @@
     "order": 0,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.678Z",
-    "updated_at": "2026-07-31T09:17:57.512Z",
+    "updated_at": "2026-08-04T11:01:30.825Z",
     "title": "CoreLogic CRM",
     "category": 1,
     "stack": "React · Node.js",
@@ -495,7 +548,8 @@
     "description": "A unified CRM for a 400-seat sales organisation: pipeline analytics, client records, quoting and role-based dashboards, replacing four disconnected internal tools.",
     "image": "projects/High_Resolution_4k_Dual_Monitor_Wallpaper_7680x2160.jpg",
     "modal_image": "",
-    "external_url": ""
+    "external_url": "",
+    "is_featured": true
   }
 },
 {
@@ -505,7 +559,7 @@
     "order": 1,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.678Z",
-    "updated_at": "2026-07-31T08:41:42.678Z",
+    "updated_at": "2026-08-04T11:01:30.825Z",
     "title": "ShopVault Store",
     "category": 2,
     "stack": "Next.js · Stripe",
@@ -513,7 +567,8 @@
     "description": "Headless commerce build with real-time inventory, one-page checkout and a merchandising CMS the client's own team runs without developers.",
     "image": "",
     "modal_image": "",
-    "external_url": ""
+    "external_url": "",
+    "is_featured": true
   }
 },
 {
@@ -523,7 +578,7 @@
     "order": 2,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.688Z",
-    "updated_at": "2026-07-31T08:41:42.688Z",
+    "updated_at": "2026-08-04T11:01:30.834Z",
     "title": "MediConnect",
     "category": 3,
     "stack": "React · Firebase",
@@ -531,7 +586,8 @@
     "description": "Patient portal and clinician scheduling system with HIPAA-conscious data handling, automated reminders and multi-location capacity planning.",
     "image": "",
     "modal_image": "",
-    "external_url": ""
+    "external_url": "",
+    "is_featured": true
   }
 },
 {
@@ -549,7 +605,8 @@
     "description": "Learning platform with live classes, adaptive quizzing and progress analytics for faculty — built to hold 5,000 concurrent students.",
     "image": "",
     "modal_image": "",
-    "external_url": ""
+    "external_url": "",
+    "is_featured": true
   }
 },
 {
@@ -567,7 +624,8 @@
     "description": "Reservation and ordering experience for a six-venue restaurant group, with live table availability and a kitchen-side order display.",
     "image": "",
     "modal_image": "",
-    "external_url": ""
+    "external_url": "",
+    "is_featured": true
   }
 },
 {
@@ -585,7 +643,464 @@
     "description": "Project management workspace with kanban boards, time tracking and team workload views, deployed as a white-label product for agencies.",
     "image": "",
     "modal_image": "",
-    "external_url": ""
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 7,
+  "fields": {
+    "order": 6,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.408Z",
+    "updated_at": "2026-08-04T13:46:48.408Z",
+    "title": "Northwind Freight Portal",
+    "category": 1,
+    "stack": "React · Node.js",
+    "short_description": "Shipment tracking and rate quoting for a 200-truck freight operator.",
+    "description": "Shipment tracking and rate quoting for a 200-truck freight operator.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 8,
+  "fields": {
+    "order": 7,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.422Z",
+    "updated_at": "2026-08-04T13:46:48.422Z",
+    "title": "Kettle & Co Storefront",
+    "category": 2,
+    "stack": "Next.js · Stripe",
+    "short_description": "Speciality coffee shop with subscriptions and a roast calendar.",
+    "description": "Speciality coffee shop with subscriptions and a roast calendar.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 9,
+  "fields": {
+    "order": 8,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.425Z",
+    "updated_at": "2026-08-04T13:46:48.425Z",
+    "title": "Brightpath Clinics",
+    "category": 3,
+    "stack": "React · Firebase",
+    "short_description": "Multi-site clinic booking with automated reminders and triage forms.",
+    "description": "Multi-site clinic booking with automated reminders and triage forms.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 10,
+  "fields": {
+    "order": 9,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.427Z",
+    "updated_at": "2026-08-04T13:46:48.427Z",
+    "title": "Atlas Study Hub",
+    "category": 4,
+    "stack": "Vue.js · Django",
+    "short_description": "Course delivery with live cohorts, assignments and progress reporting.",
+    "description": "Course delivery with live cohorts, assignments and progress reporting.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 11,
+  "fields": {
+    "order": 10,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.427Z",
+    "updated_at": "2026-08-04T13:46:48.427Z",
+    "title": "Saffron House",
+    "category": 5,
+    "stack": "React · Supabase",
+    "short_description": "Table booking and pre-ordering for a five-venue restaurant group.",
+    "description": "Table booking and pre-ordering for a five-venue restaurant group.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 12,
+  "fields": {
+    "order": 11,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.427Z",
+    "updated_at": "2026-08-04T13:46:48.427Z",
+    "title": "Meridian Wealth",
+    "category": 1,
+    "stack": "Next.js · PostgreSQL",
+    "short_description": "Client portal with document vaults, e-signing and portfolio summaries.",
+    "description": "Client portal with document vaults, e-signing and portfolio summaries.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 13,
+  "fields": {
+    "order": 12,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.433Z",
+    "updated_at": "2026-08-04T13:46:48.433Z",
+    "title": "Loomcraft Textiles",
+    "category": 2,
+    "stack": "Shopify · Hydrogen",
+    "short_description": "Made-to-order fabric shop with a live swatch configurator.",
+    "description": "Made-to-order fabric shop with a live swatch configurator.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 14,
+  "fields": {
+    "order": 13,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.436Z",
+    "updated_at": "2026-08-04T13:46:48.436Z",
+    "title": "Vitals Remote",
+    "category": 3,
+    "stack": "React Native · Django",
+    "short_description": "At-home monitoring app feeding a clinician dashboard.",
+    "description": "At-home monitoring app feeding a clinician dashboard.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 15,
+  "fields": {
+    "order": 14,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.438Z",
+    "updated_at": "2026-08-04T13:46:48.438Z",
+    "title": "Cadence Music School",
+    "category": 4,
+    "stack": "Vue.js · Node.js",
+    "short_description": "Lesson scheduling, practice logs and parent reporting in one place.",
+    "description": "Lesson scheduling, practice logs and parent reporting in one place.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 16,
+  "fields": {
+    "order": 15,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.442Z",
+    "updated_at": "2026-08-04T13:46:48.442Z",
+    "title": "Harbour & Vine",
+    "category": 5,
+    "stack": "Astro · Sanity",
+    "short_description": "Waterfront restaurant site with seasonal menus and private hire.",
+    "description": "Waterfront restaurant site with seasonal menus and private hire.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 17,
+  "fields": {
+    "order": 16,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.444Z",
+    "updated_at": "2026-08-04T13:46:48.444Z",
+    "title": "Ironclad Insurance",
+    "category": 1,
+    "stack": "React · .NET",
+    "short_description": "Quote-and-bind journey replacing a 40-page paper application.",
+    "description": "Quote-and-bind journey replacing a 40-page paper application.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 18,
+  "fields": {
+    "order": 17,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.445Z",
+    "updated_at": "2026-08-04T13:46:48.445Z",
+    "title": "Peak Outfitters",
+    "category": 2,
+    "stack": "Next.js · Medusa",
+    "short_description": "Outdoor gear retailer with in-store stock lookup and click-and-collect.",
+    "description": "Outdoor gear retailer with in-store stock lookup and click-and-collect.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 19,
+  "fields": {
+    "order": 18,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.447Z",
+    "updated_at": "2026-08-04T13:46:48.447Z",
+    "title": "Willow Dental",
+    "category": 3,
+    "stack": "Astro · Django",
+    "short_description": "Practice site with online registration and treatment plan viewing.",
+    "description": "Practice site with online registration and treatment plan viewing.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 20,
+  "fields": {
+    "order": 19,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.450Z",
+    "updated_at": "2026-08-04T13:46:48.450Z",
+    "title": "Lumen Academy",
+    "category": 4,
+    "stack": "React · FastAPI",
+    "short_description": "Corporate training platform with skills mapping and certification.",
+    "description": "Corporate training platform with skills mapping and certification.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 21,
+  "fields": {
+    "order": 20,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.453Z",
+    "updated_at": "2026-08-04T13:46:48.453Z",
+    "title": "The Copper Pot",
+    "category": 5,
+    "stack": "Next.js · Stripe",
+    "short_description": "Neighbourhood bistro with online ordering and a loyalty scheme.",
+    "description": "Neighbourhood bistro with online ordering and a loyalty scheme.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 22,
+  "fields": {
+    "order": 21,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.456Z",
+    "updated_at": "2026-08-04T13:46:48.456Z",
+    "title": "Fairline Property",
+    "category": 1,
+    "stack": "Vue.js · Django",
+    "short_description": "Lettings portal with viewings, referencing and tenancy paperwork.",
+    "description": "Lettings portal with viewings, referencing and tenancy paperwork.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 23,
+  "fields": {
+    "order": 22,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.460Z",
+    "updated_at": "2026-08-04T13:46:48.460Z",
+    "title": "Bloom Botanicals",
+    "category": 2,
+    "stack": "Shopify · Remix",
+    "short_description": "Plant retailer with care guides and a delivery-window picker.",
+    "description": "Plant retailer with care guides and a delivery-window picker.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 24,
+  "fields": {
+    "order": 23,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.463Z",
+    "updated_at": "2026-08-04T13:46:48.463Z",
+    "title": "Caldera Physio",
+    "category": 3,
+    "stack": "React · Node.js",
+    "short_description": "Rehab programme builder with video exercises and adherence tracking.",
+    "description": "Rehab programme builder with video exercises and adherence tracking.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 25,
+  "fields": {
+    "order": 24,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.465Z",
+    "updated_at": "2026-08-04T13:46:48.465Z",
+    "title": "Orbit Coding Club",
+    "category": 4,
+    "stack": "Svelte · Django",
+    "short_description": "After-school coding platform with projects, badges and parent updates.",
+    "description": "After-school coding platform with projects, badges and parent updates.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 26,
+  "fields": {
+    "order": 25,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.468Z",
+    "updated_at": "2026-08-04T13:46:48.468Z",
+    "title": "Nona's Kitchen",
+    "category": 5,
+    "stack": "Astro · Supabase",
+    "short_description": "Family trattoria with events, catering enquiries and a gift-card shop.",
+    "description": "Family trattoria with events, catering enquiries and a gift-card shop.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 27,
+  "fields": {
+    "order": 26,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.469Z",
+    "updated_at": "2026-08-04T13:46:48.469Z",
+    "title": "Sterling Legal",
+    "category": 1,
+    "stack": "Next.js · PostgreSQL",
+    "short_description": "Matter intake and secure client messaging for a commercial practice.",
+    "description": "Matter intake and secure client messaging for a commercial practice.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 28,
+  "fields": {
+    "order": 27,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.472Z",
+    "updated_at": "2026-08-04T13:46:48.472Z",
+    "title": "Tidepool Surf",
+    "category": 2,
+    "stack": "Next.js · Stripe",
+    "short_description": "Surf shop with board finder, hire bookings and lesson scheduling.",
+    "description": "Surf shop with board finder, hire bookings and lesson scheduling.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 29,
+  "fields": {
+    "order": 28,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.473Z",
+    "updated_at": "2026-08-04T13:46:48.473Z",
+    "title": "Grove Veterinary",
+    "category": 3,
+    "stack": "React · Firebase",
+    "short_description": "Pet records, repeat prescriptions and appointment booking.",
+    "description": "Pet records, repeat prescriptions and appointment booking.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
+  }
+},
+{
+  "model": "core.project",
+  "pk": 30,
+  "fields": {
+    "order": 29,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.477Z",
+    "updated_at": "2026-08-04T13:46:48.477Z",
+    "title": "Beacon Language",
+    "category": 4,
+    "stack": "Vue.js · Node.js",
+    "short_description": "Language school with placement tests, live classes and progress reports.",
+    "description": "Language school with placement tests, live classes and progress reports.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "image": "",
+    "modal_image": "",
+    "external_url": "",
+    "is_featured": false
   }
 },
 {
@@ -668,6 +1183,318 @@
 },
 {
   "model": "core.projectmetric",
+  "pk": 19,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.417Z",
+    "updated_at": "2026-08-04T13:46:48.417Z",
+    "project": 7,
+    "value": "−41%",
+    "label": "Quote time"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 22,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.422Z",
+    "updated_at": "2026-08-04T13:46:48.422Z",
+    "project": 8,
+    "value": "3.1x",
+    "label": "Repeat orders"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 25,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.425Z",
+    "updated_at": "2026-08-04T13:46:48.425Z",
+    "project": 9,
+    "value": "−63%",
+    "label": "No-shows"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 28,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.427Z",
+    "updated_at": "2026-08-04T13:46:48.427Z",
+    "project": 10,
+    "value": "7k",
+    "label": "Learners"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 31,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.427Z",
+    "updated_at": "2026-08-04T13:46:48.427Z",
+    "project": 11,
+    "value": "+96%",
+    "label": "Direct bookings"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 34,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.433Z",
+    "updated_at": "2026-08-04T13:46:48.433Z",
+    "project": 12,
+    "value": "2.4k",
+    "label": "Clients"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 37,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.433Z",
+    "updated_at": "2026-08-04T13:46:48.433Z",
+    "project": 13,
+    "value": "+2.8x",
+    "label": "Conversion"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 40,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.436Z",
+    "updated_at": "2026-08-04T13:46:48.436Z",
+    "project": 14,
+    "value": "30k",
+    "label": "Readings/day"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 43,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.438Z",
+    "updated_at": "2026-08-04T13:46:48.438Z",
+    "project": 15,
+    "value": "1.8k",
+    "label": "Students"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 46,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.442Z",
+    "updated_at": "2026-08-04T13:46:48.442Z",
+    "project": 16,
+    "value": "+120%",
+    "label": "Enquiries"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 49,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.444Z",
+    "updated_at": "2026-08-04T13:46:48.444Z",
+    "project": 17,
+    "value": "9min",
+    "label": "To quote"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 52,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.446Z",
+    "updated_at": "2026-08-04T13:46:48.446Z",
+    "project": 18,
+    "value": "+67%",
+    "label": "Collect orders"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 55,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.447Z",
+    "updated_at": "2026-08-04T13:46:48.447Z",
+    "project": 19,
+    "value": "+81%",
+    "label": "Online regs"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 58,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.450Z",
+    "updated_at": "2026-08-04T13:46:48.450Z",
+    "project": 20,
+    "value": "120",
+    "label": "Employers"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 61,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.454Z",
+    "updated_at": "2026-08-04T13:46:48.454Z",
+    "project": 21,
+    "value": "+58%",
+    "label": "Repeat visits"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 64,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.457Z",
+    "updated_at": "2026-08-04T13:46:48.457Z",
+    "project": 22,
+    "value": "4.2k",
+    "label": "Listings"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 67,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.460Z",
+    "updated_at": "2026-08-04T13:46:48.460Z",
+    "project": 23,
+    "value": "+2.1x",
+    "label": "Conversion"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 70,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.463Z",
+    "updated_at": "2026-08-04T13:46:48.463Z",
+    "project": 24,
+    "value": "+73%",
+    "label": "Adherence"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 73,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.466Z",
+    "updated_at": "2026-08-04T13:46:48.466Z",
+    "project": 25,
+    "value": "3.6k",
+    "label": "Members"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 76,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.468Z",
+    "updated_at": "2026-08-04T13:46:48.468Z",
+    "project": 26,
+    "value": "+88%",
+    "label": "Catering leads"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 79,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.470Z",
+    "updated_at": "2026-08-04T13:46:48.470Z",
+    "project": 27,
+    "value": "−45%",
+    "label": "Intake time"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 82,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.472Z",
+    "updated_at": "2026-08-04T13:46:48.472Z",
+    "project": 28,
+    "value": "+134%",
+    "label": "Hire bookings"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 85,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.473Z",
+    "updated_at": "2026-08-04T13:46:48.473Z",
+    "project": 29,
+    "value": "+69%",
+    "label": "Online bookings"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 88,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.477Z",
+    "updated_at": "2026-08-04T13:46:48.477Z",
+    "project": 30,
+    "value": "2.9k",
+    "label": "Learners"
+  }
+},
+{
+  "model": "core.projectmetric",
   "pk": 2,
   "fields": {
     "order": 1,
@@ -746,6 +1573,318 @@
 },
 {
   "model": "core.projectmetric",
+  "pk": 20,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.417Z",
+    "updated_at": "2026-08-04T13:46:48.417Z",
+    "project": 7,
+    "value": "18k",
+    "label": "Shipments/mo"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 23,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.422Z",
+    "updated_at": "2026-08-04T13:46:48.422Z",
+    "project": 8,
+    "value": "0.8s",
+    "label": "LCP"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 26,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.425Z",
+    "updated_at": "2026-08-04T13:46:48.425Z",
+    "project": 9,
+    "value": "14",
+    "label": "Sites live"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 29,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.427Z",
+    "updated_at": "2026-08-04T13:46:48.427Z",
+    "project": 10,
+    "value": "+38%",
+    "label": "Completion"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 32,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.427Z",
+    "updated_at": "2026-08-04T13:46:48.427Z",
+    "project": 11,
+    "value": "5",
+    "label": "Venues"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 35,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.433Z",
+    "updated_at": "2026-08-04T13:46:48.433Z",
+    "project": 12,
+    "value": "−70%",
+    "label": "Paperwork"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 38,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.433Z",
+    "updated_at": "2026-08-04T13:46:48.433Z",
+    "project": 13,
+    "value": "11k",
+    "label": "SKUs"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 41,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.436Z",
+    "updated_at": "2026-08-04T13:46:48.436Z",
+    "project": 14,
+    "value": "−48%",
+    "label": "Readmissions"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 44,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.438Z",
+    "updated_at": "2026-08-04T13:46:48.438Z",
+    "project": 15,
+    "value": "+44%",
+    "label": "Retention"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 47,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.442Z",
+    "updated_at": "2026-08-04T13:46:48.442Z",
+    "project": 16,
+    "value": "0.6s",
+    "label": "LCP"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 50,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.444Z",
+    "updated_at": "2026-08-04T13:46:48.444Z",
+    "project": 17,
+    "value": "−55%",
+    "label": "Drop-off"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 53,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.446Z",
+    "updated_at": "2026-08-04T13:46:48.446Z",
+    "project": 18,
+    "value": "24",
+    "label": "Stores"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 56,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.448Z",
+    "updated_at": "2026-08-04T13:46:48.448Z",
+    "project": 19,
+    "value": "6",
+    "label": "Practices"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 59,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.451Z",
+    "updated_at": "2026-08-04T13:46:48.451Z",
+    "project": 20,
+    "value": "31k",
+    "label": "Certificates"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 62,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.454Z",
+    "updated_at": "2026-08-04T13:46:48.454Z",
+    "project": 21,
+    "value": "2",
+    "label": "Venues"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 65,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.457Z",
+    "updated_at": "2026-08-04T13:46:48.457Z",
+    "project": 22,
+    "value": "−62%",
+    "label": "Admin hours"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 68,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.461Z",
+    "updated_at": "2026-08-04T13:46:48.461Z",
+    "project": 23,
+    "value": "−34%",
+    "label": "Returns"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 71,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.463Z",
+    "updated_at": "2026-08-04T13:46:48.463Z",
+    "project": 24,
+    "value": "8",
+    "label": "Clinics"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 74,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.466Z",
+    "updated_at": "2026-08-04T13:46:48.466Z",
+    "project": 25,
+    "value": "+51%",
+    "label": "Weekly active"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 77,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.468Z",
+    "updated_at": "2026-08-04T13:46:48.468Z",
+    "project": 26,
+    "value": "1",
+    "label": "Venue"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 80,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.471Z",
+    "updated_at": "2026-08-04T13:46:48.471Z",
+    "project": 27,
+    "value": "1.2k",
+    "label": "Matters"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 83,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.472Z",
+    "updated_at": "2026-08-04T13:46:48.472Z",
+    "project": 28,
+    "value": "5",
+    "label": "Beaches"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 86,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.474Z",
+    "updated_at": "2026-08-04T13:46:48.474Z",
+    "project": 29,
+    "value": "12k",
+    "label": "Pets"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 89,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.477Z",
+    "updated_at": "2026-08-04T13:46:48.477Z",
+    "project": 30,
+    "value": "+36%",
+    "label": "Renewals"
+  }
+},
+{
+  "model": "core.projectmetric",
   "pk": 3,
   "fields": {
     "order": 2,
@@ -820,6 +1959,785 @@
     "project": 6,
     "value": "−30%",
     "label": "Admin time"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 21,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.417Z",
+    "updated_at": "2026-08-04T13:46:48.417Z",
+    "project": 7,
+    "value": "6wk",
+    "label": "To launch"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 24,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.422Z",
+    "updated_at": "2026-08-04T13:46:48.422Z",
+    "project": 8,
+    "value": "+52%",
+    "label": "AOV"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 27,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.425Z",
+    "updated_at": "2026-08-04T13:46:48.425Z",
+    "project": 9,
+    "value": "4.9",
+    "label": "Patient rating"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 30,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.427Z",
+    "updated_at": "2026-08-04T13:46:48.427Z",
+    "project": 10,
+    "value": "99.9%",
+    "label": "Uptime"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 33,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.427Z",
+    "updated_at": "2026-08-04T13:46:48.427Z",
+    "project": 11,
+    "value": "22%",
+    "label": "Fees saved"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 36,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.433Z",
+    "updated_at": "2026-08-04T13:46:48.433Z",
+    "project": 12,
+    "value": "SOC 2",
+    "label": "Audited"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 39,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.436Z",
+    "updated_at": "2026-08-04T13:46:48.436Z",
+    "project": 13,
+    "value": "1.1s",
+    "label": "LCP"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 42,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.438Z",
+    "updated_at": "2026-08-04T13:46:48.438Z",
+    "project": 14,
+    "value": "HIPAA",
+    "label": "Aligned"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 45,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.441Z",
+    "updated_at": "2026-08-04T13:46:48.441Z",
+    "project": 15,
+    "value": "4.8",
+    "label": "App rating"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 48,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.443Z",
+    "updated_at": "2026-08-04T13:46:48.443Z",
+    "project": 16,
+    "value": "A+",
+    "label": "Vitals"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 51,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.444Z",
+    "updated_at": "2026-08-04T13:46:48.444Z",
+    "project": 17,
+    "value": "3",
+    "label": "Products"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 54,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.446Z",
+    "updated_at": "2026-08-04T13:46:48.446Z",
+    "project": 18,
+    "value": "1.0s",
+    "label": "LCP"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 57,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.448Z",
+    "updated_at": "2026-08-04T13:46:48.448Z",
+    "project": 19,
+    "value": "4.9",
+    "label": "Reviews"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 60,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.452Z",
+    "updated_at": "2026-08-04T13:46:48.452Z",
+    "project": 20,
+    "value": "+29%",
+    "label": "Pass rate"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 63,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.454Z",
+    "updated_at": "2026-08-04T13:46:48.454Z",
+    "project": 21,
+    "value": "18%",
+    "label": "Fees saved"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 66,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.458Z",
+    "updated_at": "2026-08-04T13:46:48.458Z",
+    "project": 22,
+    "value": "11",
+    "label": "Branches"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 69,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.461Z",
+    "updated_at": "2026-08-04T13:46:48.461Z",
+    "project": 23,
+    "value": "0.9s",
+    "label": "LCP"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 72,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.463Z",
+    "updated_at": "2026-08-04T13:46:48.463Z",
+    "project": 24,
+    "value": "4.7",
+    "label": "Rating"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 75,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.466Z",
+    "updated_at": "2026-08-04T13:46:48.466Z",
+    "project": 25,
+    "value": "40",
+    "label": "Schools"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 78,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.468Z",
+    "updated_at": "2026-08-04T13:46:48.468Z",
+    "project": 26,
+    "value": "A+",
+    "label": "Vitals"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 81,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.471Z",
+    "updated_at": "2026-08-04T13:46:48.471Z",
+    "project": 27,
+    "value": "ISO",
+    "label": "Certified"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 84,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.473Z",
+    "updated_at": "2026-08-04T13:46:48.473Z",
+    "project": 28,
+    "value": "1.1s",
+    "label": "LCP"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 87,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.475Z",
+    "updated_at": "2026-08-04T13:46:48.475Z",
+    "project": 29,
+    "value": "4.9",
+    "label": "Rating"
+  }
+},
+{
+  "model": "core.projectmetric",
+  "pk": 90,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.477Z",
+    "updated_at": "2026-08-04T13:46:48.477Z",
+    "project": 30,
+    "value": "22",
+    "label": "Tutors"
+  }
+},
+{
+  "model": "core.blogsection",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-08-04T13:09:32.620Z",
+    "eyebrow": "Our Blog",
+    "heading": "Ideas, notes and releases",
+    "subheading": "What we are building, what we are learning, and what we think is worth your time.",
+    "empty_message": "The first post is on its way — check back shortly."
+  }
+},
+{
+  "model": "core.blogcategory",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T13:29:23.667Z",
+    "updated_at": "2026-08-04T13:29:23.667Z",
+    "name": "Insights",
+    "slug": "insights"
+  }
+},
+{
+  "model": "core.blogcategory",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T13:29:23.672Z",
+    "updated_at": "2026-08-04T13:29:23.672Z",
+    "name": "Engineering",
+    "slug": "engineering"
+  }
+},
+{
+  "model": "core.blogcategory",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T13:29:23.672Z",
+    "updated_at": "2026-08-04T13:29:23.672Z",
+    "name": "Design",
+    "slug": "design"
+  }
+},
+{
+  "model": "core.blogcategory",
+  "pk": 4,
+  "fields": {
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-08-04T13:29:23.672Z",
+    "updated_at": "2026-08-04T13:29:23.672Z",
+    "name": "Company news",
+    "slug": "company-news"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 5,
+  "fields": {
+    "title": "What clients actually ask for in a first call",
+    "category": 1,
+    "slug": "what-clients-actually-ask-for-in-a-first-call",
+    "author": "Jun Technology",
+    "published_at": "2026-08-04",
+    "cover": "",
+    "excerpt": "Six months of discovery calls, and the three questions that come up every single time.",
+    "body": "Almost every first conversation lands on the same three worries: how long it takes, who writes the words, and what happens after launch.\n\nThe timeline question is really a question about certainty. We answer it by fixing the scope, not the hours.\n\nThe words are the hard part. A site without copy is a design exercise, so we agree the owner of every page before anything is designed.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.499Z",
+    "updated_at": "2026-08-04T13:46:48.499Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 6,
+  "fields": {
+    "title": "Why we still render on the server",
+    "category": 2,
+    "slug": "why-we-still-render-on-the-server",
+    "author": "Jun Technology",
+    "published_at": "2026-08-01",
+    "cover": "",
+    "excerpt": "A short case for boring, fast pages, and the trade-offs we accept to get them.",
+    "body": "A marketing site's job is to load quickly on a mid-range phone on a bad connection. Very little else matters.\n\nServer rendering gets us there with less machinery: no hydration cost, no waterfall of client requests, no framework to keep current.\n\nWe give up some interactivity. For a site whose busiest interaction is a contact form, that is a bargain.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.501Z",
+    "updated_at": "2026-08-04T13:46:48.501Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 7,
+  "fields": {
+    "title": "Designing in the browser",
+    "category": 3,
+    "slug": "designing-in-the-browser",
+    "author": "Jun Technology",
+    "published_at": "2026-07-29",
+    "cover": "",
+    "excerpt": "The prototype is the spec. Here is what that changes about how we work.",
+    "body": "A static mock is a picture of a website. It cannot show a hover, a loading state, or what happens at 380 pixels wide.\n\nDesigning in the browser removes the translation step, and with it the argument about whether the build matches the design.\n\nIt also front-loads the awkward questions. Long titles, missing images and empty states show up on day two instead of week six.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.503Z",
+    "updated_at": "2026-08-04T13:46:48.503Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 8,
+  "fields": {
+    "title": "How we scope a project in one workshop",
+    "category": 1,
+    "slug": "how-we-scope-a-project-in-one-workshop",
+    "author": "Jun Technology",
+    "published_at": "2026-07-26",
+    "cover": "",
+    "excerpt": "Two hours, a whiteboard and a list of pages nobody is allowed to add to.",
+    "body": "Scope creep is rarely dramatic. It is one more page, one more field, one more integration.\n\nWe spend the first session listing every page and naming an owner for each, then agree that anything new displaces something else.\n\nIt sounds rigid. In practice it is the reason projects land on the date we promised.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.505Z",
+    "updated_at": "2026-08-04T13:46:48.505Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 9,
+  "fields": {
+    "title": "Image formats, measured",
+    "category": 2,
+    "slug": "image-formats-measured",
+    "author": "Jun Technology",
+    "published_at": "2026-07-23",
+    "cover": "",
+    "excerpt": "What actually moved the needle when we audited image delivery across ten client sites.",
+    "body": "Modern formats helped, but not as much as simply not shipping a 4000-pixel-wide hero to a phone.\n\nThe biggest single win was setting explicit dimensions, which removed layout shift entirely.\n\nLazy loading below the fold came third, and only mattered on long pages.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.507Z",
+    "updated_at": "2026-08-04T13:46:48.507Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 10,
+  "fields": {
+    "title": "Type scales that survive real content",
+    "category": 3,
+    "slug": "type-scales-that-survive-real-content",
+    "author": "Jun Technology",
+    "published_at": "2026-07-20",
+    "cover": "",
+    "excerpt": "Choosing sizes that still work when the headline is four words longer than the mock.",
+    "body": "Every type scale looks good with placeholder text. The test is a real headline written by someone who was not thinking about your grid.\n\nWe clamp headline sizes to a viewport range rather than picking fixed breakpoint values.\n\nAnd we always design the longest plausible title, not the shortest.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.507Z",
+    "updated_at": "2026-08-04T13:46:48.507Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 11,
+  "fields": {
+    "title": "Handing a site over without a handover document",
+    "category": 4,
+    "slug": "handing-a-site-over-without-a-handover-document",
+    "author": "Jun Technology",
+    "published_at": "2026-07-17",
+    "cover": "",
+    "excerpt": "If the dashboard needs a manual, the dashboard is wrong.",
+    "body": "We used to ship a PDF explaining which field controlled what. Nobody read it.\n\nNow every field carries its own help text, and every screen says what happens when you save.\n\nThe measure of success is a client changing something on launch day without emailing us.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.509Z",
+    "updated_at": "2026-08-04T13:46:48.509Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 12,
+  "fields": {
+    "title": "The case against carousels, revisited",
+    "category": 3,
+    "slug": "the-case-against-carousels-revisited",
+    "author": "Jun Technology",
+    "published_at": "2026-07-14",
+    "cover": "",
+    "excerpt": "We rebuilt one anyway. Here is when it earns its place.",
+    "body": "The research against carousels is about hero sliders that hide content behind a timer.\n\nA gallery a visitor controls is a different thing, and it tests well.\n\nThe rule we settled on: never put something a visitor needs behind an animation they did not start.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.511Z",
+    "updated_at": "2026-08-04T13:46:48.511Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 13,
+  "fields": {
+    "title": "Migrating a site without losing rankings",
+    "category": 2,
+    "slug": "migrating-a-site-without-losing-rankings",
+    "author": "Jun Technology",
+    "published_at": "2026-07-11",
+    "cover": "",
+    "excerpt": "A checklist we run before, during and after every launch.",
+    "body": "Redirects are the whole game. Every old URL needs a home, and a spreadsheet is the only way to be sure.\n\nWe crawl the old site, map every path, then test the redirect map against that crawl before switching DNS.\n\nAfterwards we watch coverage reports daily for a fortnight, not once at the end of the month.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.513Z",
+    "updated_at": "2026-08-04T13:46:48.513Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 14,
+  "fields": {
+    "title": "What a good brief looks like",
+    "category": 1,
+    "slug": "what-a-good-brief-looks-like",
+    "author": "Jun Technology",
+    "published_at": "2026-07-08",
+    "cover": "",
+    "excerpt": "The three pages of information that make everything after them faster.",
+    "body": "A good brief names the audience, the one action you want them to take, and the thing you do that competitors do not.\n\nEverything else — colours, references, favourite sites — is useful but secondary.\n\nWhen a brief is missing those three, the first workshop is about writing them.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.513Z",
+    "updated_at": "2026-08-04T13:46:48.515Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 15,
+  "fields": {
+    "title": "Accessibility is mostly not a plugin",
+    "category": 2,
+    "slug": "accessibility-is-mostly-not-a-plugin",
+    "author": "Jun Technology",
+    "published_at": "2026-07-05",
+    "cover": "",
+    "excerpt": "The fixes that actually help, and the widgets that do not.",
+    "body": "Overlay widgets promise compliance in one line of JavaScript. They do not deliver it.\n\nReal progress came from semantic markup, keyboard focus states and colour contrast — none of which are glamorous.\n\nWe test with the keyboard first. If a page cannot be used without a mouse, nothing else counts.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.515Z",
+    "updated_at": "2026-08-04T13:46:48.515Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 16,
+  "fields": {
+    "title": "Working with a marketing team, not around one",
+    "category": 4,
+    "slug": "working-with-a-marketing-team-not-around-one",
+    "author": "Jun Technology",
+    "published_at": "2026-07-02",
+    "cover": "",
+    "excerpt": "Why the blog is the first thing we build, not the last.",
+    "body": "A blog added at the end is a blog nobody uses. It arrives after the launch rush, with no workflow around it.\n\nBuilding it early means the team publishes during the project and finds the rough edges while we can still fix them.\n\nBy launch, publishing is a habit rather than a new tool.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.518Z",
+    "updated_at": "2026-08-04T13:46:48.518Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 17,
+  "fields": {
+    "title": "Dark mode without doubling the work",
+    "category": 3,
+    "slug": "dark-mode-without-doubling-the-work",
+    "author": "Jun Technology",
+    "published_at": "2026-06-29",
+    "cover": "",
+    "excerpt": "Custom properties, one palette, and the traps we hit anyway.",
+    "body": "Two themes are not two designs. They are one design with two sets of values.\n\nEverything that resolves to a colour goes through a custom property, including shadows and gradients.\n\nThe trap is imagery. A screenshot with a white background undoes the whole effect.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.518Z",
+    "updated_at": "2026-08-04T13:46:48.518Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 18,
+  "fields": {
+    "title": "Measuring a marketing site properly",
+    "category": 1,
+    "slug": "measuring-a-marketing-site-properly",
+    "author": "Jun Technology",
+    "published_at": "2026-06-26",
+    "cover": "",
+    "excerpt": "Vanity metrics, useful metrics, and the one number we report every month.",
+    "body": "Sessions go up when a newsletter goes out. That tells you about the newsletter.\n\nWe report qualified enquiries, because that is the thing the site is for.\n\nEverything else is diagnostic: useful when the number moves, meaningless on its own.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.518Z",
+    "updated_at": "2026-08-04T13:46:48.518Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 19,
+  "fields": {
+    "title": "Forms that people finish",
+    "category": 3,
+    "slug": "forms-that-people-finish",
+    "author": "Jun Technology",
+    "published_at": "2026-06-23",
+    "cover": "",
+    "excerpt": "Field order, error copy and the surprising cost of one extra question.",
+    "body": "Every field you add costs completions. The phone number field is usually the most expensive.\n\nErrors belong next to the field, in words describing what to do rather than what went wrong.\n\nAnd the button should say what happens, not 'Submit'.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.518Z",
+    "updated_at": "2026-08-04T13:46:48.518Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 20,
+  "fields": {
+    "title": "Our deployment checklist",
+    "category": 2,
+    "slug": "our-deployment-checklist",
+    "author": "Jun Technology",
+    "published_at": "2026-06-20",
+    "cover": "",
+    "excerpt": "Eleven things we check before a site goes live, in order.",
+    "body": "Most launch problems are not code. They are a missing environment variable or a DNS record with a long TTL.\n\nThe checklist starts with backups and ends with a real submission through the contact form.\n\nAnything that has bitten us once gets added to it permanently.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.518Z",
+    "updated_at": "2026-08-04T13:46:48.518Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 21,
+  "fields": {
+    "title": "When to say no to a feature",
+    "category": 1,
+    "slug": "when-to-say-no-to-a-feature",
+    "author": "Jun Technology",
+    "published_at": "2026-06-17",
+    "cover": "",
+    "excerpt": "Three questions we ask before agreeing to build something.",
+    "body": "Who maintains it? Most feature requests are cheap to build and expensive to keep.\n\nWhat happens if it is empty? Features that look broken without content usually stay broken.\n\nWhat does it displace? Time is the only genuinely fixed resource.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.518Z",
+    "updated_at": "2026-08-04T13:46:48.518Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 22,
+  "fields": {
+    "title": "Naming things for the people who edit them",
+    "category": 3,
+    "slug": "naming-things-for-the-people-who-edit-them",
+    "author": "Jun Technology",
+    "published_at": "2026-06-14",
+    "cover": "",
+    "excerpt": "Why our field labels do not match our database columns.",
+    "body": "'Hero panel metric 2 label' means something to a developer and nothing to anyone else.\n\nLabels should describe what a visitor will see, in the words the client already uses.\n\nIt costs nothing and removes an entire category of support email.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.518Z",
+    "updated_at": "2026-08-04T13:46:48.518Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 23,
+  "fields": {
+    "title": "A year of Core Web Vitals",
+    "category": 2,
+    "slug": "a-year-of-core-web-vitals",
+    "author": "Jun Technology",
+    "published_at": "2026-06-11",
+    "cover": "",
+    "excerpt": "What changed, what did not, and where the remaining points hide.",
+    "body": "Layout shift was the easiest to fix and the most commonly ignored.\n\nInteraction latency is the one that catches modern sites, usually from third-party scripts.\n\nThe remaining points are almost always in something someone else's tag manager loaded.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.518Z",
+    "updated_at": "2026-08-04T13:46:48.518Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 24,
+  "fields": {
+    "title": "How we price fixed-scope work",
+    "category": 4,
+    "slug": "how-we-price-fixed-scope-work",
+    "author": "Jun Technology",
+    "published_at": "2026-06-08",
+    "cover": "",
+    "excerpt": "Transparency about the thing agencies are usually least transparent about.",
+    "body": "We price the scope, not the hours, because the client is buying an outcome.\n\nThat only works if the scope is genuinely fixed, which is why the workshop matters so much.\n\nChanges are quoted as changes. No surprises in either direction.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.518Z",
+    "updated_at": "2026-08-04T13:46:48.518Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 25,
+  "fields": {
+    "title": "The content freeze that saves a launch",
+    "category": 1,
+    "slug": "the-content-freeze-that-saves-a-launch",
+    "author": "Jun Technology",
+    "published_at": "2026-06-05",
+    "cover": "",
+    "excerpt": "Two weeks before go-live, the copy stops moving.",
+    "body": "Late copy changes are the single most common cause of a slipped launch date.\n\nA freeze is not about control. It is about giving proofreading and testing a stable target.\n\nAnything after the freeze goes live the week after launch, from the dashboard, by the client.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.531Z",
+    "updated_at": "2026-08-04T13:46:48.531Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 26,
+  "fields": {
+    "title": "Component libraries for sites, not apps",
+    "category": 2,
+    "slug": "component-libraries-for-sites-not-apps",
+    "author": "Jun Technology",
+    "published_at": "2026-06-02",
+    "cover": "",
+    "excerpt": "Why we keep ours deliberately small.",
+    "body": "A marketing site needs maybe fifteen components. A library of ninety is a liability.\n\nSmall libraries stay consistent because there is only one way to do each thing.\n\nWhen we need a ninety-component library, we are usually building an application instead.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.535Z",
+    "updated_at": "2026-08-04T13:46:48.535Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 27,
+  "fields": {
+    "title": "What we learned from rebuilding our own site",
+    "category": 4,
+    "slug": "what-we-learned-from-rebuilding-our-own-site",
+    "author": "Jun Technology",
+    "published_at": "2026-05-30",
+    "cover": "",
+    "excerpt": "Doing to ourselves what we do to clients, and finding the same problems.",
+    "body": "We had no content owner, so the copy was late. We had no scope, so it grew.\n\nThe fix was the same process we sell, applied to ourselves.\n\nIt shipped three weeks after we started treating it like a client project.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.537Z",
+    "updated_at": "2026-08-04T13:46:48.537Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 28,
+  "fields": {
+    "title": "Motion that earns its keep",
+    "category": 3,
+    "slug": "motion-that-earns-its-keep",
+    "author": "Jun Technology",
+    "published_at": "2026-05-27",
+    "cover": "",
+    "excerpt": "Animation as an explanation, not decoration.",
+    "body": "Motion is useful when it tells you where something came from or where it went.\n\nIt is noise when it fires on scroll for its own sake.\n\nWe keep durations short and give everything a reason to move.\n\nThis is demo content, generated by `python manage.py seed_demo`. Remove every demo row again with `python manage.py seed_demo --clear`.",
+    "is_active": true,
+    "created_at": "2026-08-04T13:46:48.537Z",
+    "updated_at": "2026-08-04T13:46:48.537Z"
   }
 },
 {
@@ -995,6 +2913,136 @@
   }
 },
 {
+  "model": "core.contentpage",
+  "pk": 2,
+  "fields": {
+    "slug": "privacy",
+    "title": "Privacy Policy",
+    "intro": "What we collect when you use this website, why, and what you can ask us to do about it.",
+    "body": "What we collect:\n\nWhen you send an enquiry we collect the name, email address, phone number, subject and message you type into the form, along with your IP address and browser, which are recorded to help us identify spam.\n\nWhy we collect it:\n\nSolely to reply to your enquiry and keep a record of the conversation. We do not sell it and we do not use it for advertising.\n\nHow long we keep it:\n\nEnquiries stay in our dashboard until they are no longer needed. You can ask us to delete yours at any time.\n\nAnalytics:\n\nIf analytics are enabled, an anonymised record of the pages you visit is collected. It is never linked to your enquiry.\n\nYour rights:\n\nYou can ask what we hold about you, ask for it to be corrected, or ask for it to be deleted. Contact us through the form on the home page.\n\nREPLACE THIS PAGE before launch. It is a starting point written by your developers, not legal advice — have it reviewed against the law that applies to you.",
+    "is_active": true,
+    "updated_at": "2026-08-04T17:10:02.775Z"
+  }
+},
+{
+  "model": "core.contentpage",
+  "pk": 1,
+  "fields": {
+    "slug": "terms",
+    "title": "Terms & Conditions",
+    "intro": "The terms you agree to when you use this website or engage us for work.",
+    "body": "Using this website:\n\nBy using this website you agree to these terms. If you do not agree with them, please stop using the site.\n\nOur work:\n\nEvery engagement is governed by the written proposal and statement of work signed by both parties. Where those documents and these terms differ, the signed documents win.\n\nIntellectual property:\n\nThe design, text, graphics and code of this website belong to us unless stated otherwise. Work produced for a client transfers to that client on final payment, as set out in the relevant proposal.\n\nLiability:\n\nWe take care to keep the information on this site accurate but make no warranty that it is complete or current. We are not liable for loss arising from reliance on it.\n\nChanges:\n\nWe may update these terms. The date at the top of this page shows when they were last changed.\n\nREPLACE THIS PAGE before launch. It is a starting point written by your developers, not legal advice — have your solicitor review it.",
+    "is_active": true,
+    "updated_at": "2026-08-04T17:10:02.775Z"
+  }
+},
+{
+  "model": "core.faqsection",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-08-04T17:10:02.743Z",
+    "eyebrow": "FAQs",
+    "heading": "Questions we get asked",
+    "subheading": "If yours is not here, the contact form is at the bottom of the page."
+  }
+},
+{
+  "model": "core.faqitem",
+  "pk": 1,
+  "fields": {
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-08-04T17:10:02.777Z",
+    "updated_at": "2026-08-04T17:10:02.777Z",
+    "question": "How long does a website take?",
+    "answer": "A marketing site is usually three to six weeks from the kick-off workshop to launch. The single biggest factor is how quickly the copy and images arrive, which is why we agree an owner for each page on day one."
+  }
+},
+{
+  "model": "core.faqitem",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "is_active": true,
+    "created_at": "2026-08-04T17:10:02.777Z",
+    "updated_at": "2026-08-04T17:10:02.777Z",
+    "question": "What does it cost?",
+    "answer": "We quote a fixed price against a fixed scope, so there are no hourly surprises. Send us an enquiry describing what you need and we will come back with a proposal and a number."
+  }
+},
+{
+  "model": "core.faqitem",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "is_active": true,
+    "created_at": "2026-08-04T17:10:02.778Z",
+    "updated_at": "2026-08-04T17:10:02.778Z",
+    "question": "Do you write the content?",
+    "answer": "We can. Most clients supply their own words and we edit them for the web; if you would rather we wrote them, we quote for that separately."
+  }
+},
+{
+  "model": "core.faqitem",
+  "pk": 4,
+  "fields": {
+    "order": 3,
+    "is_active": true,
+    "created_at": "2026-08-04T17:10:02.779Z",
+    "updated_at": "2026-08-04T17:10:02.779Z",
+    "question": "Can we edit the site ourselves afterwards?",
+    "answer": "Yes — that is the point of the dashboard. Every word, number and image on the site can be changed without a developer, and we walk your team through it before launch."
+  }
+},
+{
+  "model": "core.faqitem",
+  "pk": 5,
+  "fields": {
+    "order": 4,
+    "is_active": true,
+    "created_at": "2026-08-04T17:10:02.779Z",
+    "updated_at": "2026-08-04T17:10:02.779Z",
+    "question": "Do you offer support after launch?",
+    "answer": "Yes. We offer a monthly plan covering updates, backups, security patches and a set number of content changes. It is optional and you can cancel it at any time."
+  }
+},
+{
+  "model": "core.faqitem",
+  "pk": 6,
+  "fields": {
+    "order": 5,
+    "is_active": true,
+    "created_at": "2026-08-04T17:10:02.780Z",
+    "updated_at": "2026-08-04T17:10:02.780Z",
+    "question": "Will the site work on mobile?",
+    "answer": "Every page is built and tested on phones first. We also test on tablets and on the browsers your visitors actually use."
+  }
+},
+{
+  "model": "core.faqitem",
+  "pk": 7,
+  "fields": {
+    "order": 6,
+    "is_active": true,
+    "created_at": "2026-08-04T17:10:02.780Z",
+    "updated_at": "2026-08-04T17:10:02.780Z",
+    "question": "Do you help with SEO?",
+    "answer": "The build is SEO-first: fast pages, clean markup, proper headings, sitemaps and metadata you control. Ongoing keyword and content work is a separate service."
+  }
+},
+{
+  "model": "core.faqitem",
+  "pk": 8,
+  "fields": {
+    "order": 7,
+    "is_active": true,
+    "created_at": "2026-08-04T17:10:02.781Z",
+    "updated_at": "2026-08-04T17:10:02.781Z",
+    "question": "Who owns the site when it is finished?",
+    "answer": "You do. Code, design and content transfer to you on final payment, and we hand over every account and credential."
+  }
+},
+{
   "model": "core.footersettings",
   "pk": 1,
   "fields": {
@@ -1012,7 +3060,8 @@
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.713Z",
     "updated_at": "2026-07-31T08:41:42.713Z",
-    "title": "Company"
+    "title": "Company",
+    "source": "links"
   }
 },
 {
@@ -1022,8 +3071,9 @@
     "order": 1,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.724Z",
-    "updated_at": "2026-07-31T08:41:42.724Z",
-    "title": "Services"
+    "updated_at": "2026-08-04T17:10:02.783Z",
+    "title": "Services",
+    "source": "services"
   }
 },
 {
@@ -1034,7 +3084,8 @@
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.731Z",
     "updated_at": "2026-07-31T08:41:42.731Z",
-    "title": "Resources"
+    "title": "Resources",
+    "source": "links"
   }
 },
 {
@@ -1052,28 +3103,15 @@
 },
 {
   "model": "core.footerlink",
-  "pk": 5,
-  "fields": {
-    "order": 0,
-    "is_active": true,
-    "created_at": "2026-07-31T08:41:42.724Z",
-    "updated_at": "2026-07-31T08:41:42.724Z",
-    "column": 2,
-    "label": "Website Development",
-    "url": "#services"
-  }
-},
-{
-  "model": "core.footerlink",
   "pk": 9,
   "fields": {
     "order": 0,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.733Z",
-    "updated_at": "2026-07-31T08:41:42.733Z",
+    "updated_at": "2026-08-04T17:10:02.784Z",
     "column": 3,
     "label": "Blog",
-    "url": "#voices"
+    "url": "/blog/"
   }
 },
 {
@@ -1091,28 +3129,15 @@
 },
 {
   "model": "core.footerlink",
-  "pk": 6,
-  "fields": {
-    "order": 1,
-    "is_active": true,
-    "created_at": "2026-07-31T08:41:42.729Z",
-    "updated_at": "2026-07-31T08:41:42.729Z",
-    "column": 2,
-    "label": "UI/UX Design",
-    "url": "#services"
-  }
-},
-{
-  "model": "core.footerlink",
   "pk": 10,
   "fields": {
     "order": 1,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.733Z",
-    "updated_at": "2026-07-31T08:41:42.733Z",
+    "updated_at": "2026-08-04T17:10:02.785Z",
     "column": 3,
     "label": "FAQs",
-    "url": "#contact"
+    "url": "/faq/"
   }
 },
 {
@@ -1130,28 +3155,15 @@
 },
 {
   "model": "core.footerlink",
-  "pk": 7,
-  "fields": {
-    "order": 2,
-    "is_active": true,
-    "created_at": "2026-07-31T08:41:42.729Z",
-    "updated_at": "2026-07-31T08:41:42.729Z",
-    "column": 2,
-    "label": "Website Promotion",
-    "url": "#services"
-  }
-},
-{
-  "model": "core.footerlink",
   "pk": 11,
   "fields": {
     "order": 2,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.735Z",
-    "updated_at": "2026-07-31T08:41:42.735Z",
+    "updated_at": "2026-08-04T17:10:02.785Z",
     "column": 3,
     "label": "Privacy Policy",
-    "url": "#contact"
+    "url": "/privacy/"
   }
 },
 {
@@ -1169,28 +3181,15 @@
 },
 {
   "model": "core.footerlink",
-  "pk": 8,
-  "fields": {
-    "order": 3,
-    "is_active": true,
-    "created_at": "2026-07-31T08:41:42.731Z",
-    "updated_at": "2026-07-31T08:41:42.731Z",
-    "column": 2,
-    "label": "SEO Optimization",
-    "url": "#services"
-  }
-},
-{
-  "model": "core.footerlink",
   "pk": 12,
   "fields": {
     "order": 3,
     "is_active": true,
     "created_at": "2026-07-31T08:41:42.737Z",
-    "updated_at": "2026-07-31T08:41:42.737Z",
+    "updated_at": "2026-08-04T17:10:02.786Z",
     "column": 3,
     "label": "Terms & Conditions",
-    "url": "#contact"
+    "url": "/terms/"
   }
 },
 {
