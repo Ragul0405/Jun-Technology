@@ -59,12 +59,14 @@ class PublicSiteTests(TestCase):
         self.assertIn("Projects Delivered", body)
 
     def test_contact_form_stores_message(self):
+        service = models.Service.objects.first()
         response = self.client.post(
             reverse("core:contact_submit"),
             {
                 "name": "Ada Lovelace",
                 "email": "ada@example.com",
                 "phone": "+1 555 0100",
+                "service": service.pk,
                 "subject": "New website",
                 "message": "We would like a quote for a new marketing site.",
             },
@@ -90,6 +92,7 @@ class PublicSiteTests(TestCase):
             {
                 "name": "Bot",
                 "email": "bot@example.com",
+                "service": models.Service.objects.first().pk,
                 "subject": "Cheap links",
                 "message": "Buy our backlinks today please.",
                 "website": "http://spam.example",
@@ -537,6 +540,93 @@ class PublicSiteTests(TestCase):
         self.assertIn("?page=2&amp;category=insights", body)
 
     # -- footer pages, FAQ and service enquiries --------------------------- #
+    # -- enquiry service and industry -------------------------------------- #
+    def _enquiry(self, **extra):
+        payload = {
+            "name": "Ada Lovelace",
+            "email": "ada@example.com",
+            "service": models.Service.objects.first().pk,
+            "subject": "New website",
+            "message": "We would like a quote for a new marketing site.",
+        }
+        payload.update(extra)
+        return self.client.post(reverse("core:contact_submit"), payload)
+
+    def test_enquiry_records_the_chosen_service(self):
+        service = models.Service.objects.first()
+        self.assertEqual(self._enquiry().status_code, 200)
+        message = models.ContactMessage.objects.get()
+        self.assertEqual(message.service, service)
+        self.assertEqual(message.service_name, service.title)
+        self.assertEqual(message.service_label, service.title)
+
+    def test_enquiry_records_the_industry_when_given(self):
+        category = models.ProjectCategory.objects.first()
+        self._enquiry(category=category.pk)
+        message = models.ContactMessage.objects.get()
+        self.assertEqual(message.category, category)
+        self.assertEqual(message.category_label, category.name)
+
+    def test_industry_is_optional(self):
+        self.assertEqual(self._enquiry().status_code, 200)
+        self.assertEqual(models.ContactMessage.objects.get().category_label, "\u2014")
+
+    def test_service_is_required(self):
+        response = self._enquiry(service="")
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("service", response.json()["errors"])
+        self.assertEqual(models.ContactMessage.objects.count(), 0)
+
+    def test_a_hidden_service_cannot_be_chosen(self):
+        service = models.Service.objects.first()
+        service.is_active = False
+        service.save(update_fields=["is_active"])
+        response = self._enquiry(service=service.pk)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("service", response.json()["errors"])
+
+    def test_enquiry_survives_its_service_being_deleted(self):
+        service = models.Service.objects.first()
+        title = service.title
+        self._enquiry()
+        service.delete()
+
+        message = models.ContactMessage.objects.get()
+        self.assertIsNone(message.service)
+        # The snapshot keeps the record meaningful.
+        self.assertEqual(message.service_label, title)
+
+    def test_form_offers_only_live_services_and_categories(self):
+        from django.utils.html import escape
+
+        body = self.client.get(reverse("core:home")).content.decode()
+        form = body[body.index('<form data-form') : body.index("</form>")]
+        for service in models.Service.objects.filter(is_active=True):
+            self.assertIn(f'value="{service.pk}"', form)
+            self.assertIn(escape(service.title), form)
+        for category in models.ProjectCategory.objects.filter(is_active=True):
+            self.assertIn(escape(category.name), form)
+        self.assertIn('name="service"', form)
+        self.assertIn('name="category"', form)
+
+    def test_enquiry_email_names_the_service(self):
+        from django.core import mail as django_mail
+        from django.test import override_settings
+
+        config = models.EmailSettings.load()
+        config.notify_email = "hello@example.com"
+        config.save()
+
+        with override_settings(
+            EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend"
+        ):
+            self._enquiry(category=models.ProjectCategory.objects.first().pk)
+
+        self.assertEqual(len(django_mail.outbox), 1)
+        body = django_mail.outbox[0].body
+        self.assertIn(models.Service.objects.first().title, body)
+        self.assertIn(models.ProjectCategory.objects.first().name, body)
+
     def test_terms_and_privacy_pages_render(self):
         from django.utils.html import escape
 

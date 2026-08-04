@@ -17,12 +17,13 @@
   {% if page.object_list %}
   <div class="table-wrap" style="border:none">
     <table>
-      <thead><tr><th>From</th><th>Subject</th><th>Phone</th><th>Status</th><th>Received</th><th></th></tr></thead>
+      <thead><tr><th>From</th><th>Subject</th><th>Service</th><th>Phone</th><th>Status</th><th>Received</th><th></th></tr></thead>
       <tbody>
         {% for m in page.object_list %}
         <tr>
           <td><a href="{% url 'dashboard:message_detail' m.pk %}">{{ m.name }}</a><div class="help" style="margin:2px 0 0">{{ m.email }}</div></td>
-          <td>{{ m.subject|truncatechars:50 }}</td>
+          <td>{{ m.subject|truncatechars:44 }}</td>
+          <td>{{ m.service_label }}{% if m.category_label != "—" %}<div class="help" style="margin:2px 0 0">{{ m.category_label }}</div>{% endif %}</td>
           <td>{{ m.phone|default:"—" }}</td>
           <td><span class="pill pill-{{ m.status }}">{{ m.get_status_display }}</span></td>
           <td>{{ m.created_at|date:"j M Y, H:i" }}</td>

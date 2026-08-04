@@ -13,6 +13,13 @@ from .mail import (
 
 @override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend")
 class EnquiryMailTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # The form now requires a service; this class does not seed content.
+        cls.service = models.Service.objects.create(
+            icon="code", title="Website Development", description="Sites."
+        )
+
     def _enquiry(self, **kwargs):
         defaults = {
             "name": "Ada Lovelace",
@@ -67,6 +74,7 @@ class EnquiryMailTests(TestCase):
             {
                 "name": "Grace Hopper",
                 "email": "grace@example.com",
+                "service": self.service.pk,
                 "subject": "Ecommerce build",
                 "message": "Please send a proposal for an online store.",
             },
@@ -90,6 +98,7 @@ class EnquiryMailTests(TestCase):
             {
                 "name": "Alan Turing",
                 "email": "alan@example.com",
+                "service": self.service.pk,
                 "subject": "Portal",
                 "message": "We need a secure internal portal built.",
             },

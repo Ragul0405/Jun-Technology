@@ -69,7 +69,7 @@ Content commands:
 | Contact & map | Copy, contact detail rows, the map location, button and success text |
 | Email / SMTP | Where enquiries are emailed, the mail server used to send them, and a "send test email" button |
 | Footer | Blurb, copyright, columns, links, social links |
-| Enquiries | Every contact-form submission, with status tracking |
+| Enquiries | Every contact-form submission, with the service and industry asked about, and status tracking |
 
 Every repeatable item has an **order** number and a **Visible** toggle, so
 content can be reordered or hidden without deleting it.
@@ -225,6 +225,17 @@ live site.
 
 ## Footer, pages and service enquiries
 
+**The enquiry form** asks which **Service** the visitor needs — required, and
+chosen from the live services only, so a hidden or deleted service can never be
+submitted — plus an optional **Industry** taken from the project categories.
+Both are shown in the dashboard's enquiry list and detail, and named in the
+notification email.
+
+Each enquiry keeps the service and industry twice: as a link, so the dashboard
+can filter on them, and as plain text, so a record still says what was asked
+for after that service is renamed or deleted. Enquiries taken before this
+existed simply show a dash.
+
 **Services column.** The footer's services column fills itself from the
 services ticked **Feature in footer** (Dashboard → Services). Each one links to
 `/?service=<slug>#contact`, which opens the home page at the contact form with
@@ -333,7 +344,7 @@ generic.
 ## Verifying the design did not drift
 
 ```bash
-python manage.py test              # 106 tests: rendering, content, SEO, mail, fixtures, flip cards, dashboard CRUD
+python manage.py test              # 114 tests: rendering, content, SEO, mail, fixtures, flip cards, dashboard CRUD
 python scripts/compare_design.py   # every inline style of the original must still render
 ```
 

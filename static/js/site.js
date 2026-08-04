@@ -856,20 +856,31 @@
       if (!match) return;
       var name = (cfg.services || {})[match[1]];
       if (!name) return;
+      var picker = form.querySelector('[name="service"]');
+      if (picker) {
+        for (var i = 0; i < picker.options.length; i++) {
+          if (picker.options[i].text === name) {
+            picker.selectedIndex = i;
+            picker.style.borderColor = "rgba(74,222,128,.55)";
+            break;
+          }
+        }
+      }
       var subject = form.querySelector('[name="subject"]');
-      if (!subject || subject.value) return;
-      subject.value = name + " enquiry";
-      var field = subject.closest("[data-field]");
-      var label = field && field.querySelector("[data-label]");
-      if (label) {
-        label.style.transform = "translateY(-9px) scale(.74)";
-        label.style.color = "rgba(143,180,255,.9)";
+      if (subject && !subject.value) {
+        subject.value = name + " enquiry";
+        var label = subject.closest("[data-field]").querySelector("[data-label]");
+        if (label) {
+          label.style.transform = "translateY(-9px) scale(.74)";
+          label.style.color = "rgba(143,180,255,.9)";
+        }
       }
       var message = form.querySelector('[name="message"]');
       if (message && !message.value) message.focus();
     }
 
     function float(label, isOn) {
+      if (!label) return; // the dropdowns caption themselves
       label.style.transform = isOn ? "translateY(-9px) scale(.74)" : "none";
       label.style.color = isOn
         ? "rgba(143,180,255,.9)"

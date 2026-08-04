@@ -21,6 +21,8 @@
       <div class="field"><span class="field-label">Name</span>{{ message.name }}</div>
       <div class="field"><span class="field-label">Email</span><a href="mailto:{{ message.email }}">{{ message.email }}</a></div>
       <div class="field"><span class="field-label">Phone</span>{{ message.phone|default:"—" }}</div>
+      <div class="field"><span class="field-label">Service</span>{{ message.service_label }}</div>
+      <div class="field"><span class="field-label">Industry</span>{{ message.category_label }}</div>
       <div class="field" style="margin:0"><span class="field-label">Subject</span>{{ message.subject }}</div>
     </div>
 

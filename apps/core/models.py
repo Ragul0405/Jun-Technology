@@ -1020,6 +1020,26 @@ class ContactMessage(models.Model):
     name = models.CharField(max_length=120)
     email = models.EmailField()
     phone = models.CharField(max_length=40, blank=True)
+    # The service and category are kept twice: as a link, so the dashboard can
+    # filter on them, and as plain text, so an enquiry still records what was
+    # asked for after that service or category is renamed or deleted.
+    service = models.ForeignKey(
+        "Service",
+        on_delete=models.SET_NULL,
+        related_name="enquiries",
+        null=True,
+        blank=True,
+    )
+    service_name = models.CharField(max_length=80, blank=True)
+    category = models.ForeignKey(
+        "ProjectCategory",
+        on_delete=models.SET_NULL,
+        related_name="enquiries",
+        null=True,
+        blank=True,
+        verbose_name="Industry",
+    )
+    category_name = models.CharField(max_length=60, blank=True)
     subject = models.CharField(max_length=200)
     message = models.TextField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="new")
@@ -1033,6 +1053,22 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"{self.name} — {self.subject}"
+
+    def save(self, *args, **kwargs):
+        # Snapshot the names so the record outlives the rows it points at.
+        if self.service_id and not self.service_name:
+            self.service_name = self.service.title
+        if self.category_id and not self.category_name:
+            self.category_name = self.category.name
+        super().save(*args, **kwargs)
+
+    @property
+    def service_label(self):
+        return self.service_name or (self.service.title if self.service else "—")
+
+    @property
+    def category_label(self):
+        return self.category_name or (self.category.name if self.category else "—")
 
 
 # --------------------------------------------------------------------------- #

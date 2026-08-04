@@ -70,6 +70,8 @@ def send_enquiry_notification(message):
         f"Name:    {message.name}\n"
         f"Email:   {message.email}\n"
         f"Phone:   {message.phone or '—'}\n"
+        f"Service: {message.service_label}\n"
+        f"Industry: {message.category_label}\n"
         f"Subject: {message.subject}\n"
         f"Sent:    {timezone.localtime(message.created_at):%d %B %Y, %H:%M}\n\n"
         f"{message.message}\n"
