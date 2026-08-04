@@ -225,9 +225,19 @@ live site.
 
 ## Footer, pages and service enquiries
 
-**The enquiry form** asks which **Service** the visitor needs — required, and
-chosen from the live services only, so a hidden or deleted service can never be
-submitted — plus an optional **Industry** taken from the project categories.
+**The enquiry form** asks which **Service** the visitor needs and, optionally,
+their **Industry**. Both are optional, and both are chosen from live rows only,
+so a hidden or deleted service can never be submitted.
+
+Their dropdowns are drawn by the site, not the operating system: a native
+`<select>` panel is white and square whatever the page looks like, so `site.js`
+keeps the real control for form posting and keyboard use and replaces only its
+panel. Without JavaScript the native control still works, themed as far as the
+browser allows.
+
+Clicking a service in the footer **while already on the home page** does not
+reload it — the service is picked, the page scrolls to the form, and no loader
+appears. Arriving from another page skips the loader too.
 Both are shown in the dashboard's enquiry list and detail, and named in the
 notification email.
 

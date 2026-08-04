@@ -117,6 +117,12 @@
   function setupLoader() {
     var loader = one("[data-loader]");
     if (!loader) return;
+    // Arriving from a service link means the visitor asked for the contact
+    // form, not a title sequence — take the loader away immediately.
+    if (/[?&]service=/.test(window.location.search)) {
+      if (loader.parentNode) loader.parentNode.removeChild(loader);
+      return;
+    }
     var progress = 0;
     var timer = setInterval(function () {
       progress = Math.min(100, progress + 9 + Math.random() * 17);
@@ -1145,6 +1151,178 @@
   }
 
   // ------------------------------------------------------------------ //
+  // Themed dropdowns
+  // ------------------------------------------------------------------ //
+  /**
+   * A native <select> drops a panel drawn by the operating system — white,
+   * square, nothing like the rest of the page. The select stays in the DOM so
+   * the form still posts normally and keyboard users keep native behaviour;
+   * it is just visually replaced by a panel we control.
+   */
+  /**
+   * Service links on the page the contact form is already on.
+   *
+   * Following the href would reload the home page — loader, hero animation and
+   * all — just to reach a form that is already below. Instead pick the
+   * service, scroll down, and leave the address bar tidy.
+   */
+  function setupServiceLinks() {
+    var form = one("[data-form]");
+    if (!form) return;
+    var picker = form.querySelector('[name="service"]');
+    var contact = one("#contact");
+    if (!picker || !contact) return;
+
+    q('a[href*="?service="]').forEach(function (link) {
+      on(link, "click", function (e) {
+        var match = /[?&]service=([\w-]+)/.exec(link.getAttribute("href") || "");
+        var name = match && (cfg.services || {})[match[1]];
+        if (!name) return; // unknown service — let the browser follow the link
+        e.preventDefault();
+
+        for (var i = 0; i < picker.options.length; i++) {
+          if (picker.options[i].text === name) {
+            picker.selectedIndex = i;
+            picker.dispatchEvent(new Event("change", { bubbles: true }));
+            break;
+          }
+        }
+        var subject = form.querySelector('[name="subject"]');
+        if (subject && !subject.value) {
+          subject.value = name + " enquiry";
+          var label = subject.closest("[data-field]").querySelector("[data-label]");
+          if (label) {
+            label.style.transform = "translateY(-9px) scale(.74)";
+            label.style.color = "rgba(143,180,255,.9)";
+          }
+        }
+        contact.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (window.history && history.replaceState) {
+          history.replaceState(null, "", "#contact");
+        }
+      });
+    });
+  }
+
+  function setupSelects() {
+    var open = null;
+
+    function closeAll(except) {
+      q("[data-select-panel]").forEach(function (panel) {
+        if (panel === except) return;
+        panel.style.opacity = "0";
+        panel.style.transform = "translateY(-6px)";
+        panel.style.pointerEvents = "none";
+      });
+      if (except == null) open = null;
+    }
+
+    q("[data-select]").forEach(function (select) {
+      var field = select.parentNode;
+      var caret = field.querySelector("[data-select-caret]");
+
+      // What the visitor sees instead of the native control.
+      var face = document.createElement("div");
+      face.setAttribute("data-select-face", "");
+      face.style.cssText =
+        "position:absolute;left:15px;right:34px;top:24px;font-size:14.5px;" +
+        "color:var(--tx,#e8ecf8);pointer-events:none;white-space:nowrap;" +
+        "overflow:hidden;text-overflow:ellipsis";
+      field.appendChild(face);
+
+      var panel = document.createElement("div");
+      panel.setAttribute("data-select-panel", "");
+      panel.style.cssText =
+        "position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:40;" +
+        "max-height:246px;overflow-y:auto;padding:6px;border-radius:14px;" +
+        "border:1px solid var(--w13,rgba(255,255,255,.13));" +
+        "background:var(--pnlA,rgba(13,19,40,.98));backdrop-filter:blur(18px);" +
+        "box-shadow:0 30px 60px -30px rgba(0,0,0,.95);opacity:0;" +
+        "transform:translateY(-6px);pointer-events:none;" +
+        "transition:opacity .25s ease,transform .3s cubic-bezier(.16,1,.3,1)";
+      field.appendChild(panel);
+
+      function paintFace() {
+        var chosen = select.options[select.selectedIndex];
+        face.textContent = chosen ? chosen.text : "";
+        face.style.color = select.value
+          ? "var(--tx,#e8ecf8)"
+          : "var(--tx42,rgba(232,236,248,.42))";
+      }
+
+      Array.prototype.forEach.call(select.options, function (option, index) {
+        var row = document.createElement("button");
+        row.type = "button";
+        row.setAttribute("data-cursor", "expand");
+        row.textContent = option.text;
+        row.style.cssText =
+          "display:block;width:100%;text-align:left;padding:10px 12px;" +
+          "border:0;border-radius:10px;background:none;cursor:pointer;" +
+          "font-family:inherit;font-size:14px;color:" +
+          (option.value
+            ? "var(--tx8,rgba(232,236,248,.8))"
+            : "var(--tx42,rgba(232,236,248,.42))") +
+          ";transition:background .2s ease,color .2s ease";
+        on(row, "mouseenter", function () {
+          row.style.background = "var(--w07,rgba(255,255,255,.07))";
+          row.style.color = "var(--tx,#e8ecf8)";
+        });
+        on(row, "mouseleave", function () {
+          row.style.background = "none";
+          row.style.color = option.value
+            ? "var(--tx8,rgba(232,236,248,.8))"
+            : "var(--tx42,rgba(232,236,248,.42))";
+        });
+        on(row, "click", function () {
+          select.selectedIndex = index;
+          paintFace();
+          closeAll();
+          // Let the form's own validation and styling react.
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+          select.dispatchEvent(new Event("blur", { bubbles: true }));
+        });
+        panel.appendChild(row);
+      });
+
+      // The native control sits on top, invisible, so clicks and keyboard
+      // focus still reach it — we only suppress its own dropdown.
+      select.style.color = "transparent";
+      select.style.textShadow = "none";
+
+      on(select, "mousedown", function (e) {
+        e.preventDefault();
+        var isOpen = panel.style.pointerEvents === "auto";
+        closeAll(isOpen ? null : panel);
+        if (isOpen) {
+          panel.style.opacity = "0";
+          panel.style.transform = "translateY(-6px)";
+          panel.style.pointerEvents = "none";
+          open = null;
+        } else {
+          panel.style.opacity = "1";
+          panel.style.transform = "none";
+          panel.style.pointerEvents = "auto";
+          open = panel;
+        }
+        select.focus();
+      });
+      on(select, "keydown", function (e) {
+        if (e.key === "Escape") closeAll();
+      });
+      on(select, "change", paintFace);
+      if (caret) {
+        caret.style.transition = "transform .3s cubic-bezier(.16,1,.3,1)";
+      }
+
+      paintFace();
+    });
+
+    on(document, "click", function (e) {
+      if (!e.target.closest || !e.target.closest("[data-field]")) closeAll();
+    });
+  }
+
+  // ------------------------------------------------------------------ //
   // Boot
   // ------------------------------------------------------------------ //
   function init() {
@@ -1162,6 +1340,8 @@
     setupFilters();
     setupModal();
     setupForm();
+    setupSelects();
+    setupServiceLinks();
     setupNavExtras();
   }
 

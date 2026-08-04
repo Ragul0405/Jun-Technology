@@ -89,3 +89,16 @@ input, textarea, button { font-family:inherit; }
   display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3;
   overflow:hidden; min-height:4.95em
 }
+
+/* ------------------------------------------------------------------ */
+/* Dropdowns                                                           */
+/* The native panel is drawn by the OS and cannot be themed, so site.js */
+/* replaces it. These rules are the fallback for the moment before the  */
+/* script runs, and for anyone browsing without JavaScript.             */
+/* ------------------------------------------------------------------ */
+[data-select] option{ background:#0d1328; color:#e8ecf8 }
+[data-theme="light"] [data-select] option{ background:#ffffff; color:#0d1328 }
+[data-select-panel]::-webkit-scrollbar{ width:8px }
+[data-select-panel]::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,.14); border-radius:8px
+}

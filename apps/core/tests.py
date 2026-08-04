@@ -571,11 +571,12 @@ class PublicSiteTests(TestCase):
         self.assertEqual(self._enquiry().status_code, 200)
         self.assertEqual(models.ContactMessage.objects.get().category_label, "\u2014")
 
-    def test_service_is_required(self):
+    def test_service_is_optional(self):
         response = self._enquiry(service="")
-        self.assertEqual(response.status_code, 400)
-        self.assertIn("service", response.json()["errors"])
-        self.assertEqual(models.ContactMessage.objects.count(), 0)
+        self.assertEqual(response.status_code, 200)
+        message = models.ContactMessage.objects.get()
+        self.assertIsNone(message.service)
+        self.assertEqual(message.service_label, "—")
 
     def test_a_hidden_service_cannot_be_chosen(self):
         service = models.Service.objects.first()
