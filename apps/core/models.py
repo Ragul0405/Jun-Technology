@@ -461,7 +461,14 @@ class Service(OrderedModel):
         verbose_name="Feature in footer",
         help_text="List this service in the footer's services column.",
     )
-    description = models.TextField()
+    description = models.TextField(help_text="Short blurb shown on the card.")
+    detail_body = models.TextField(
+        blank=True,
+        help_text=(
+            "The service's own page. Leave a blank line between paragraphs. "
+            "Leave empty to reuse the short blurb above."
+        ),
+    )
     link_label = models.CharField(
         max_length=40,
         default="Learn more",
@@ -496,12 +503,23 @@ class Service(OrderedModel):
         """Readable state for the dashboard's Services table."""
         return "Featured" if self.show_in_footer else "\u2014"
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("core:service_detail", args=[self.slug])
+
     @property
     def enquiry_url(self):
         """Home page, contact form open, this service already chosen."""
         from django.urls import reverse
 
         return f"{reverse('core:home')}?service={self.slug}#contact"
+
+    @property
+    def paragraphs(self):
+        """The detail page's body, split into paragraphs."""
+        body = self.detail_body or self.description
+        return [p.strip() for p in (body or "").split("\n\n") if p.strip()]
 
 
 # --------------------------------------------------------------------------- #

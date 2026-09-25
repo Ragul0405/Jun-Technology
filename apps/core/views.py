@@ -68,10 +68,10 @@ def _projects_payload(projects):
 
 #: How many projects the home page shows before sending visitors to the
 #: full listing page.
-HOME_PROJECT_LIMIT = 12
+HOME_PROJECT_LIMIT = 6
 
 #: Same idea for the home page's blog section.
-HOME_BLOG_LIMIT = 8
+HOME_BLOG_LIMIT = 6
 
 
 def _visible_projects():
@@ -228,6 +228,33 @@ def content_page(request, slug):
     """Terms, privacy policy — any plain prose page."""
     page = get_object_or_404(ContentPage, slug=slug, is_active=True)
     return render(request, "site/content_page.html", _chrome(page=page))
+
+
+def services(request):
+    """Every service, one page — linked from the footer's "Services" link."""
+    return render(
+        request,
+        "site/services.html",
+        _chrome(
+            services_section=ServicesSection.load(),
+            services=Service.objects.filter(is_active=True),
+        ),
+    )
+
+
+def service_detail(request, slug):
+    """One service's own page, linked from the "Our core services" cards."""
+    service = get_object_or_404(Service, slug=slug, is_active=True)
+    others = Service.objects.filter(is_active=True).exclude(pk=service.pk)[:3]
+    return render(
+        request,
+        "site/service_detail.html",
+        _chrome(
+            services_section=ServicesSection.load(),
+            service=service,
+            other_services=others,
+        ),
+    )
 
 
 def faq(request):

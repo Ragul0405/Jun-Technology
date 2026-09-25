@@ -1,12 +1,12 @@
 {% load site_extras %}
-  <section id="contact" data-screen-label="Contact" style="position:relative;z-index:1;padding:100px 40px">
+  <section id="contact" data-screen-label="Contact" style="position:relative;z-index:1;padding:50px 40px">
     <div style="max-width:1200px;margin:0 auto">
       <div data-reveal style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
         {% if contact.eyebrow %}<div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc1,#8fb4ff)">{{ contact.eyebrow }}</div>{% endif %}
         <h2 style="margin:{% if contact.eyebrow %}16px{% else %}0{% endif %} 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">{{ contact.heading }}</h2>
         <p style="margin:14px auto 0;max-width:540px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">{{ contact.subheading }}</p>
       </div>
-      <div style="margin-top:52px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;align-items:start">
+      <div data-contact-grid style="margin-top:52px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px;align-items:start">
         <div data-reveal style="display:flex;flex-direction:column;gap:12px;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
           {% for detail in contact_details %}
           <div data-lift style="display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease" style-hover="border-color:rgba(143,180,255,.3)">

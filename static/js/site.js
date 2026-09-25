@@ -14,7 +14,7 @@
   var cfg = readJSON("jt-config") || {};
   var PROJECTS = readJSON("jt-projects") || [];
   var cleanups = [];
-  var theme = "dark";
+  var theme = "light";
   var rafCursor = null;
   var rafParticles = null;
   var rafMap = null;
@@ -79,36 +79,16 @@
   // ------------------------------------------------------------------ //
   // Theme
   // ------------------------------------------------------------------ //
-  function applyTheme(mode) {
-    theme = mode === "light" ? "light" : "dark";
-    root.setAttribute("data-theme", theme);
+  function applyTheme() {
+    theme = "light";
+    root.setAttribute("data-theme", "light");
     var fx = one("[data-fx]");
-    if (fx) fx.style.opacity = theme === "light" ? ".42" : "1";
-    var d = one('[data-theme-ico="dark"]');
-    var l = one('[data-theme-ico="light"]');
-    if (d && l) {
-      var isLight = theme === "light";
-      d.style.opacity = isLight ? "0" : "1";
-      d.style.transform = isLight ? "rotate(90deg) scale(.5)" : "none";
-      l.style.opacity = isLight ? "1" : "0";
-      l.style.transform = isLight ? "none" : "rotate(-90deg) scale(.5)";
-    }
-    document.body.style.background = theme === "light" ? "#f2f5fb" : "#04060f";
+    if (fx) fx.style.opacity = ".42";
+    document.body.style.background = "#f2f5fb";
   }
 
   function setupTheme() {
-    var saved = null;
-    try {
-      saved = localStorage.getItem("jt-theme");
-    } catch (e) {}
-    applyTheme(saved || cfg.theme || "dark");
-    var toggle = one("[data-theme-toggle]");
-    on(toggle, "click", function () {
-      applyTheme(theme === "dark" ? "light" : "dark");
-      try {
-        localStorage.setItem("jt-theme", theme);
-      } catch (e) {}
-    });
+    applyTheme();
   }
 
   // ------------------------------------------------------------------ //
@@ -155,6 +135,8 @@
     var txt = one("[data-cursor-text]");
     var spot = one("[data-spotlight]");
     if (!dot || !ring) return;
+    dot.style.display = "none";
+    ring.style.display = "none";
 
     var fine = window.matchMedia("(pointer:fine)").matches;
     var st = {
@@ -171,6 +153,7 @@
     // off, and on any driver the simulation cannot run on.
     var splashCanvas = one("[data-splash]");
     if (splashCanvas) {
+      splashCanvas.style.opacity = ".5";
       var wanted = fine && cfg.customCursor !== false && window.SplashCursor;
       var splash = wanted
         ? window.SplashCursor.start(splashCanvas, {
@@ -182,19 +165,6 @@
         : null;
       if (splash) cleanups.push(splash.destroy);
       else splashCanvas.style.display = "none";
-    }
-
-    if (fine && cfg.customCursor !== false) {
-      document.documentElement.style.cursor = "none";
-      on(
-        document,
-        "mousemove",
-        function () {
-          dot.style.opacity = "1";
-          ring.style.opacity = "1";
-        },
-        { once: true }
-      );
     }
 
     on(window, "mousemove", function (e) {
@@ -372,6 +342,17 @@
       pill.style.width = a.offsetWidth + "px";
       pill.style.transform = "translateX(" + a.offsetLeft + "px)";
       pill.style.opacity = "1";
+    }
+
+    // A page like /blog/ has no sections to scroll-spy, so its nav link is
+    // marked "current" server-side instead — light it up once, up front.
+    var current = one("[data-nav-current]");
+    if (current) {
+      q("[data-nav-links] a").forEach(function (l) {
+        l.style.color =
+          l === current ? "var(--tx,#fff)" : "var(--tx66,rgba(232,236,248,.66))";
+      });
+      movePill(current);
     }
 
     function onScroll() {
@@ -592,8 +573,10 @@
           if (url.charAt(0) === "#") {
             var target = document.querySelector(url);
             if (target) target.scrollIntoView({ behavior: "smooth" });
+          } else if (/^https?:\/\//i.test(url) && url.indexOf(location.origin) !== 0) {
+            window.open(url, "_blank", "noopener"); // an external link_url override
           } else {
-            window.open(url, "_blank", "noopener");
+            window.location.href = url; // this service's own page
           }
         });
       }
@@ -632,18 +615,6 @@
         c.style.boxShadow = "none";
       });
     });
-
-    var mq = one("[data-marquee]");
-    var wrap = one("[data-marquee-wrap]");
-    if (mq && wrap && mq.children.length) {
-      mq.innerHTML += mq.innerHTML;
-      on(wrap, "mouseenter", function () {
-        mq.style.animationPlayState = "paused";
-      });
-      on(wrap, "mouseleave", function () {
-        mq.style.animationPlayState = "running";
-      });
-    }
 
     q("[data-lift]").forEach(function (el) {
       on(el, "mouseenter", function () {
@@ -715,8 +686,7 @@
   // ------------------------------------------------------------------ //
   function setupFilters() {
     // Filtering is done by the server now — each pill is a link to the project
-    // listing page. All this does is light up the one matching this page, and
-    // hold the ticker still while the pointer is over it.
+    // listing page. All this does is light up the one matching this page.
     var pills = q("[data-filter]");
     var active = cfg.activeCategory || "all";
 
@@ -729,16 +699,44 @@
       pill.style.borderColor = isOn ? "transparent" : "var(--w09,rgba(255,255,255,.09))";
       pill.style.transform = isOn ? "translateY(-2px)" : "none";
     });
+  }
 
-    var track = one("[data-cat-track]");
-    var zone = one("[data-cat-marquee]");
-    if (!track || !zone) return;
-    on(zone, "mouseenter", function () {
-      track.style.animationPlayState = "paused";
-    });
-    on(zone, "mouseleave", function () {
-      track.style.animationPlayState = "running";
-    });
+  // ------------------------------------------------------------------ //
+  // Arrow-driven strips — category pills and the testimonial cards both
+  // scroll one step per click instead of drifting on their own, so nothing
+  // moves out from under a visitor mid-click.
+  // ------------------------------------------------------------------ //
+  function setupCarouselArrows() {
+    function wire(scroller, prevBtn, nextBtn) {
+      if (!scroller || !prevBtn || !nextBtn) return;
+      function step() {
+        return Math.round(scroller.clientWidth * 0.8);
+      }
+      function refresh() {
+        // Both arrows stay put at the two ends of the strip — near "All" on
+        // the left, the far corner on the right — so the control is always
+        // visible. They just dim and stop responding once there's nowhere
+        // left to go that way (including when nothing overflows at all).
+        var max = scroller.scrollWidth - scroller.clientWidth;
+        var atStart = scroller.scrollLeft <= 2;
+        var atEnd = scroller.scrollLeft >= max - 2;
+        prevBtn.style.opacity = atStart ? ".35" : "1";
+        prevBtn.style.pointerEvents = atStart ? "none" : "auto";
+        nextBtn.style.opacity = atEnd ? ".35" : "1";
+        nextBtn.style.pointerEvents = atEnd ? "none" : "auto";
+      }
+      on(prevBtn, "click", function () {
+        scroller.scrollBy({ left: -step(), behavior: "smooth" });
+      });
+      on(nextBtn, "click", function () {
+        scroller.scrollBy({ left: step(), behavior: "smooth" });
+      });
+      on(scroller, "scroll", refresh);
+      on(window, "resize", refresh);
+      refresh();
+    }
+    wire(one("[data-cat-scroll]"), one("[data-cat-prev]"), one("[data-cat-next]"));
+    wire(one("[data-marquee-wrap]"), one("[data-testi-prev]"), one("[data-testi-next]"));
   }
 
   // ------------------------------------------------------------------ //
@@ -1358,6 +1356,7 @@
     setupInteractions();
     setupFlipDecks();
     setupFilters();
+    setupCarouselArrows();
     setupModal();
     setupForm();
     setupSelects();

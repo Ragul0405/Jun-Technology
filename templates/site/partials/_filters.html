@@ -1,8 +1,8 @@
 {% comment %}
 Category filters, used by both the portfolio and the blog. "All" is pinned on
-the left so it is always reachable; the categories run past it on a ticker. The
-scrolling track holds the list twice so the -50% marquee keyframe loops
-seamlessly, and the duplicate is hidden from screen readers.
+the left so it is always reachable; the rest sit in a manually-scrolled strip
+with prev/next arrows, since a pill someone is trying to click shouldn't be
+sliding out from under the pointer.
 
 Params:
   filter_all_url    where the unfiltered list lives
@@ -10,15 +10,17 @@ Params:
   filter_items      the categories (each needs .name and .slug)
 {% endcomment %}
       <div data-cat-marquee style="margin-top:34px;display:flex;align-items:center;gap:10px">
-        <a href="{{ filter_all_url }}" data-filter="all" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">{{ filter_all_label|default:"All" }}</a>
-        <div style="flex:1;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)">
-          <div data-cat-track style="display:flex;width:max-content;gap:10px;animation:marquee {{ marquee_seconds|default:34 }}s linear infinite">
-            {% for pass in "12" %}
-            <div{% if not forloop.first %} aria-hidden="true"{% endif %} style="display:flex;gap:10px;flex:none;padding-right:10px">
-              {% for item in filter_items %}<a href="{{ filter_all_url }}?category={{ item.slug }}" data-filter="{{ item.slug }}" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">{{ item.name }}</a>
-              {% endfor %}
-            </div>
+        <a href="{{ filter_all_url }}" data-filter="all" data-cursor="expand" style="flex:none;padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">{{ filter_all_label|default:"All" }}</a>
+        <button type="button" data-cat-prev aria-label="Scroll categories left" data-cursor="expand" style="flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .3s ease,opacity .3s ease" style-hover="background:var(--w075,rgba(255,255,255,.075))">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M15 18l-6-6 6-6"></path></svg>
+        </button>
+        <div data-cat-scroll style="flex:1;min-width:0;overflow-x:auto;scroll-behavior:smooth;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)">
+          <div data-cat-track style="display:flex;width:max-content;gap:10px">
+            {% for item in filter_items %}<a href="{{ filter_all_url }}?category={{ item.slug }}" data-filter="{{ item.slug }}" data-cursor="expand" style="padding:10px 20px;border-radius:100px;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));font-size:13px;cursor:pointer;transition:color .35s ease,background .35s ease,border-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1)">{{ item.name }}</a>
             {% endfor %}
           </div>
         </div>
+        <button type="button" data-cat-next aria-label="Scroll categories right" data-cursor="expand" style="flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--w09,rgba(255,255,255,.09));background:var(--w04,rgba(255,255,255,.04));color:var(--tx62,rgba(232,236,248,.62));display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .3s ease,opacity .3s ease" style-hover="background:var(--w075,rgba(255,255,255,.075))">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M9 18l6-6-6-6"></path></svg>
+        </button>
       </div>

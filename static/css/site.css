@@ -9,6 +9,10 @@ input, textarea, button { font-family:inherit; }
 ::selection { background:rgba(59,130,246,.4); }
 /* Contact details are optionally clickable (tel:/mailto:) without changing how they look. */
 [data-contact-link], [data-contact-link]:hover { color:inherit; }
+/* Arrow-driven strips scroll natively (so touch/trackpad swiping still works)
+   but hide the scrollbar chrome, since the arrows are the intended control. */
+[data-cat-scroll], [data-marquee-wrap] { scrollbar-width:none; -ms-overflow-style:none; }
+[data-cat-scroll]::-webkit-scrollbar, [data-marquee-wrap]::-webkit-scrollbar { display:none; }
 @keyframes auroraA { 0%{transform:translate3d(-6%,-4%,0) scale(1)} 50%{transform:translate3d(10%,8%,0) scale(1.25)} 100%{transform:translate3d(-6%,-4%,0) scale(1)} }
 @keyframes auroraB { 0%{transform:translate3d(6%,6%,0) scale(1.1)} 50%{transform:translate3d(-12%,-6%,0) scale(.9)} 100%{transform:translate3d(6%,6%,0) scale(1.1)} }
 @keyframes auroraC { 0%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(-8%,12%,0) scale(1.2)} 100%{transform:translate3d(0,0,0) scale(1)} }
@@ -18,13 +22,44 @@ input, textarea, button { font-family:inherit; }
 @keyframes spinRev { to { transform:rotate(-360deg) } }
 @keyframes conic { to { transform:rotate(360deg) } }
 @keyframes pulseRing { 0%{transform:scale(.6);opacity:.9} 100%{transform:scale(2.6);opacity:0} }
-@keyframes marquee { from{transform:translate3d(0,0,0)} to{transform:translate3d(-50%,0,0)} }
 @keyframes scrollDot { 0%{transform:translateY(0);opacity:0} 25%{opacity:1} 100%{transform:translateY(20px);opacity:0} }
 @keyframes wordUp { to { transform:translateY(0) rotate(0); opacity:1 } }
 @keyframes loaderSpin { 0%{transform:rotate(0) scale(1)} 50%{transform:rotate(180deg) scale(.84)} 100%{transform:rotate(360deg) scale(1)} }
 @keyframes dash { to { stroke-dashoffset:-260 } }
 @keyframes pixBlink { 0%,100%{opacity:.35} 50%{opacity:1} }
 @media (max-width:900px){ [data-hide-mobile]{ display:none !important } }
+
+/* ------------------------------------------------------------------ */
+/* Small phones                                                        */
+/* Every section grid below is authored with a minmax() floor sized    */
+/* for desktop columns (258-340px). On a narrow phone that floor is    */
+/* wider than the content area, so the single remaining track can't    */
+/* shrink to fit and the page overflows horizontally. Below 640px we   */
+/* drop those floors and let each grid run one full-width column, and  */
+/* give sections a little of their side padding back for content room. */
+/* ------------------------------------------------------------------ */
+@media (max-width:640px){
+  section, footer, article {
+    padding-left:20px !important;
+    padding-right:20px !important;
+  }
+  [data-hero-grid], [data-about-grid], [data-contact-grid],
+  [data-services-grid], [data-grid], [data-blog-grid], [data-related-grid] {
+    grid-template-columns:1fr !important;
+  }
+  [data-form] { grid-template-columns:1fr !important }
+  [data-form] [data-field], [data-form] button[data-submit] {
+    grid-column:1 / -1 !important;
+  }
+  /* Grid items default to min-width:auto, which lets a card's unbreakable
+     content (a line the grid can't wrap) force its track wider than the
+     container instead of shrinking to fit — the classic grid "blowout".
+     Letting them shrink is what actually makes the 1fr column above work. */
+  [data-grid] > [data-card], [data-blog-grid] > [data-card],
+  [data-blog-grid] > a, [data-related-grid] > a {
+    min-width:0;
+  }
+}
 [data-root][data-theme="light"]{
   --bg:#f2f5fb;--tx:#0b1224;
   --tx9:rgba(11,18,36,.92);--tx72:rgba(11,18,36,.8);--tx7:rgba(11,18,36,.78);--tx66:rgba(11,18,36,.7);

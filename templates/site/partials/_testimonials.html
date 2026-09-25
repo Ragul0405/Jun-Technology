@@ -1,12 +1,16 @@
 {% load site_extras %}
-  <section id="voices" data-screen-label="Testimonials" style="position:relative;z-index:1;padding:100px 0">
+  <section id="voices" data-screen-label="Testimonials" style="position:relative;z-index:1;padding:50px 0">
     <div data-reveal style="text-align:center;padding:0 40px;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
       {% if testimonials_section.eyebrow %}<div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc2,#c4b5fd)">{{ testimonials_section.eyebrow }}</div>{% endif %}
       <h2 style="margin:{% if testimonials_section.eyebrow %}16px{% else %}0{% endif %} 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">{{ testimonials_section.heading }}</h2>
       <p style="margin:14px auto 0;max-width:560px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">{{ testimonials_section.subheading }}</p>
     </div>
-    <div data-marquee-wrap style="position:relative;margin-top:52px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
-      <div data-marquee style="display:flex;gap:20px;width:max-content;animation:marquee {{ testimonials_section.scroll_seconds }}s linear infinite;padding:10px 20px">
+    <div style="position:relative;margin-top:52px">
+      <button type="button" data-testi-prev aria-label="Previous testimonial" data-cursor="expand" style="position:absolute;left:6px;top:50%;margin-top:-21px;z-index:2;width:42px;height:42px;border-radius:50%;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--bgA78,rgba(255,255,255,.86));color:var(--tx,#0b1224);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 14px 30px -14px rgba(0,0,0,.5);transition:background .3s ease,transform .3s cubic-bezier(.16,1,.3,1)" style-hover="transform:translateY(-1px) scale(1.05)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><path d="M15 18l-6-6 6-6"></path></svg>
+      </button>
+      <div data-marquee-wrap style="position:relative;overflow-x:auto;scroll-behavior:smooth;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+      <div data-marquee style="display:flex;gap:20px;width:max-content;padding:10px 20px">
         {% for item in testimonials %}
         <div data-tcard data-tilt="5" style="width:380px;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w055,rgba(255,255,255,.055)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s ease;transform-style:preserve-3d">
           {% icon "quote" stroke=item.accent_solid size="24px" extra="opacity:.7" %}
@@ -18,5 +22,9 @@
         </div>
         {% endfor %}
       </div>
+      </div>
+      <button type="button" data-testi-next aria-label="Next testimonial" data-cursor="expand" style="position:absolute;right:6px;top:50%;margin-top:-21px;z-index:2;width:42px;height:42px;border-radius:50%;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--bgA78,rgba(255,255,255,.86));color:var(--tx,#0b1224);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 14px 30px -14px rgba(0,0,0,.5);transition:background .3s ease,transform .3s cubic-bezier(.16,1,.3,1)" style-hover="transform:translateY(-1px) scale(1.05)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><path d="M9 18l6-6-6-6"></path></svg>
+      </button>
     </div>
   </section>

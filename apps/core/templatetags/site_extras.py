@@ -21,6 +21,23 @@ def nav_href(context, target):
     return target
 
 
+@register.simple_tag(takes_context=True)
+def nav_is_current(context, target):
+    """
+    Whether this nav link is the page currently open.
+
+    Only real pages (`/blog/`, not `#voices`) can be "current" this way —
+    section links are highlighted by scroll position instead, and that only
+    happens on the home page where those sections actually exist.
+    """
+    if target.startswith("#"):
+        return False
+    request = context.get("request")
+    if request is None:
+        return False
+    return request.path == target or request.path.startswith(target)
+
+
 @register.simple_tag
 def icon(key, stroke="currentColor", size="18px", width="1.6", extra=""):
     """Render one of the design's SVG icons with the original markup."""

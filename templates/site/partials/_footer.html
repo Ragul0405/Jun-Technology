@@ -20,14 +20,24 @@
         {% for column in footer_columns %}
         <div>
           <div style="font-family:'Sora',sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx9,rgba(232,236,248,.9))">{{ column.title }}</div>
+          {% if column.source == "services" %}
           <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px">
-            {% if column.source == "services" %}{% for service in footer_services %}<a href="{{ service.enquiry_url }}" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">{{ service.title }}</a>
-            {% endfor %}{% else %}{% for link in column.links.all %}{% if link.is_active %}<a href="{% nav_href link.url %}" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">{{ link.label }}</a>
-            {% endif %}{% endfor %}{% endif %}
+            {% for service in footer_services|slice:":4" %}<a href="{{ service.get_absolute_url }}" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">{{ service.title }}</a>
+            {% endfor %}
           </div>
+          {% if footer_services|length > 4 %}
+          <a href="{% url 'core:services' %}" data-flink data-cursor="expand" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:13px;color:var(--acc1,#8fb4ff);transition:gap .35s ease" style-hover="gap:10px">See all services <span>→</span></a>
+          {% endif %}
+          {% else %}
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px">
+            {% for link in column.links.all %}{% if link.is_active %}<a href="{% nav_href link.url %}" data-flink style="font-size:13.5px;color:var(--tx5,rgba(232,236,248,.5));transition:color .3s ease,transform .35s cubic-bezier(.16,1,.3,1);width:fit-content" style-hover="color:var(--tx,#fff)">{{ link.label }}</a>
+            {% endif %}{% endfor %}
+          </div>
+          {% endif %}
         </div>
         {% endfor %}
       </div>
+
       <div style="margin-top:44px;padding-top:22px;border-top:1px solid var(--w07,rgba(255,255,255,.07));display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
         <div style="font-size:12.5px;color:var(--tx4,rgba(232,236,248,.4))">{{ footer.copyright_text }}</div>
         <a href="{% nav_href '#home' %}" data-cursor="expand" data-magnetic="5" style="display:inline-flex;align-items:center;gap:9px;padding:9px 16px;border-radius:100px;border:1px solid var(--w1,rgba(255,255,255,.1));background:var(--w04,rgba(255,255,255,.04));font-size:12.5px;color:var(--tx7,rgba(232,236,248,.7));transition:background .35s ease,border-color .35s ease" style-hover="background:rgba(59,130,246,.16);border-color:rgba(59,130,246,.45)">{{ footer.back_to_top_label }}</a>

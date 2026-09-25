@@ -1,0 +1,56 @@
+{% extends "site/base.html" %}
+{% load static site_extras %}
+
+{% block title %}{{ service.title }} — {{ site.meta_title }}{% endblock %}
+{% block description %}{{ service.description|truncatewords:30 }}{% endblock %}
+
+{% block body %}
+<div data-root data-theme="light" style="position:relative;min-height:100vh;background:var(--bg,#04060f);color:var(--tx,#e8ecf8);overflow:hidden">
+
+  {% include "site/partials/_page_chrome.html" %}
+
+  <article style="position:relative;z-index:1;padding:168px 40px 90px">
+    <div style="max-width:760px;margin:0 auto">
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <a href="{% url 'core:home' %}#services" data-cursor="expand" style="display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--acc1,#8fb4ff)">← {{ services_section.eyebrow|default:"Services" }}</a>
+        <div style="margin-top:22px;display:flex;align-items:center;gap:16px">
+          <div style="width:56px;height:56px;flex:none;border-radius:17px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center">
+            {% icon service.icon stroke="var(--acc4,#c7d8fe)" size="25px" %}
+          </div>
+          <h1 style="margin:0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(28px,3.6vw,44px);line-height:1.1;letter-spacing:-.035em;text-wrap:balance">{{ service.title }}</h1>
+        </div>
+      </div>
+
+      <div data-reveal data-delay="120" style="margin-top:34px;opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        {% for paragraph in service.paragraphs %}
+        <p style="margin:0 0 20px;font-size:16.5px;line-height:1.8;color:var(--tx7,rgba(232,236,248,.7));text-wrap:pretty">{{ paragraph }}</p>
+        {% endfor %}
+      </div>
+
+      <div data-reveal data-delay="180" style="margin-top:14px;opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <a href="{{ service.enquiry_url }}" data-magnetic="8" data-ripple data-cursor="expand" style="position:relative;overflow:hidden;display:inline-flex;padding:16px 28px;border-radius:18px;font-family:'Sora',sans-serif;font-size:14.5px;font-weight:500;color:#fff;background:linear-gradient(120deg,#3b82f6,#6d5cff);box-shadow:0 20px 44px -18px rgba(70,110,255,.95);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease">Get a quote for {{ service.title }}</a>
+      </div>
+    </div>
+
+    {% if other_services %}
+    <div style="max-width:1200px;margin:80px auto 0">
+      <h2 style="margin:0 0 22px;font-family:'Sora',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.02em">Other services</h2>
+      <div data-related-grid style="display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:18px">
+        {% for other in other_services %}
+        <a href="{{ other.get_absolute_url }}" data-cursor="expand" style="display:flex;flex-direction:column;gap:10px;padding:20px 22px;border-radius:20px;border:1px solid var(--w07,rgba(255,255,255,.07));background:var(--pnl6,rgba(9,12,26,.6));color:inherit;transition:border-color .4s ease,transform .5s cubic-bezier(.16,1,.3,1)" style-hover="border-color:rgba(143,180,255,.32)">
+          <div style="width:38px;height:38px;flex:none;border-radius:13px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center">{% icon other.icon stroke="var(--acc4,#c7d8fe)" size="17px" %}</div>
+          <span style="font-family:'Sora',sans-serif;font-size:16px;font-weight:500">{{ other.title }}</span>
+          <span style="font-size:13px;line-height:1.6;color:var(--tx58,rgba(232,236,248,.58))">{{ other.description|truncatewords:16 }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </article>
+
+  {% include "site/partials/_footer.html" %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}{% include "site/partials/_page_scripts.html" %}{% endblock %}

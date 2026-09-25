@@ -1,0 +1,40 @@
+{% extends "site/base.html" %}
+{% load static site_extras %}
+
+{% block title %}{{ services_section.heading }} — {{ site.meta_title }}{% endblock %}
+{% block description %}{{ services_section.subheading }}{% endblock %}
+
+{% block body %}
+<div data-root data-theme="light" style="position:relative;min-height:100vh;background:var(--bg,#04060f);color:var(--tx,#e8ecf8);overflow:hidden">
+
+  {% include "site/partials/_page_chrome.html" %}
+
+  <section id="services" data-screen-label="Services" style="position:relative;z-index:1;padding:168px 40px 100px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="text-align:center;opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        {% if services_section.eyebrow %}<div style="font-family:'Sora',sans-serif;font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--acc2,#c4b5fd)">{{ services_section.eyebrow }}</div>{% endif %}
+        <h1 style="margin:{% if services_section.eyebrow %}16px{% else %}0{% endif %} 0 0;font-family:'Sora',sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,46px);letter-spacing:-.035em">{{ services_section.heading }}</h1>
+        <p style="margin:14px auto 0;max-width:560px;font-size:15.5px;line-height:1.7;color:var(--tx55,rgba(232,236,248,.55))">{{ services_section.subheading }}</p>
+      </div>
+
+      <div data-services-grid style="margin-top:54px;display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:20px">
+        {% for service in services %}
+        <a href="{{ service.get_absolute_url }}" data-cursor="expand" style="position:relative;overflow:hidden;height:100%;display:block;padding:26px;border-radius:24px;border:1px solid var(--w07,rgba(255,255,255,.07));background:linear-gradient(160deg,var(--w05,rgba(255,255,255,.05)),var(--w012,rgba(255,255,255,.012)));backdrop-filter:blur(14px);color:inherit;transition:transform .55s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .55s ease" style-hover="border-color:rgba(96,165,250,.42);box-shadow:0 40px 80px -40px rgba(59,130,246,.75)">
+          <div style="width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,rgba(59,130,246,.3),rgba(124,92,255,.22));border:1px solid var(--w1,rgba(255,255,255,.1));display:flex;align-items:center;justify-content:center">
+            {% icon service.icon stroke="var(--acc4,#c7d8fe)" size="21px" %}
+          </div>
+          <div style="margin-top:20px;font-family:'Sora',sans-serif;font-size:16.5px;font-weight:500">{{ service.title }}</div>
+          <div style="margin-top:9px;font-size:13.8px;line-height:1.65;color:var(--tx55,rgba(232,236,248,.55))">{{ service.description }}</div>
+          <div style="margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--acc1,#8fb4ff)">Learn more <span>→</span></div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {% include "site/partials/_footer.html" %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}{% include "site/partials/_page_scripts.html" %}{% endblock %}
